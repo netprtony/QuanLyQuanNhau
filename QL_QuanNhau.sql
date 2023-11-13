@@ -44,12 +44,12 @@ create table Bills(
 
 go
 create table Orders(
-    order_id varchar(10) primary key,
 	bill_id varchar(10),
-    order_item_id  varchar(10),
+    item_id  varchar(10),
     quantity INT default 1,
+	constraint pk_billOrder primary key (bill_id, item_id)
     constraint fk_ordersBillId FOREIGN KEY (bill_id) REFERENCES Bills(bill_id),
-    constraint fk_orderItemsId FOREIGN KEY (order_item_id) REFERENCES Items(item_id)
+    constraint fk_orderItemsId FOREIGN KEY (item_id) REFERENCES Items(item_id)
 )
 
 
@@ -61,10 +61,11 @@ BEGIN
     update Bills
 	set total_bill += i.quantity * it.item_price
 	from inserted i, Items it
-	where i.order_item_id= it.item_id and Bills.bill_id = i.bill_id
+	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
 END
-
+go
 drop trigger trg_OrderAdded
+go
 create trigger tri_updateBill
 on Orders
 for delete, update
@@ -73,9 +74,9 @@ begin
     update Bills
 	set total_bill -= d.quantity * it.item_price
 	from deleted d, Items it
-	where d.order_item_id= it.item_id and Bills.bill_id = d.bill_id
+	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
 end
-
+go
 select * from Orders, Bills
 insert into Categories values
 	('C001', N'Món Xào'),
@@ -161,9 +162,9 @@ select * from Bills
 delete from Orders 
 where order_id = 'O001'
 update Orders set quantity = 3 where order_id = 'O001'
-insert into Orders (order_id, bill_id, order_item_id, quantity) values 
+insert into Orders (order_id, bill_id, item_id, quantity) values 
 	('O003', 'BI001', 'I004', 1)--89
-insert into Orders (order_id, bill_id, order_item_id, quantity) values 
+insert into Orders (order_id, bill_id, item_id, quantity) values 
 	('O002', 'BI001', 'I022', 2)--39
 set dateformat DMY
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
@@ -172,7 +173,7 @@ insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table
 	('BI003', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB001'),
 	('BI004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB003'),
 	('BI005', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB005')
-insert into Orders (order_id, bill_id, order_item_id, quantity) values 
+insert into Orders (order_id, bill_id, item_id, quantity) values 
 	('O004', 'BI001', 'I004', 1),
 	('O002', 'BI001', 'I024', 1),
 	('O003', 'BI001', 'I026', 24),
@@ -203,8 +204,8 @@ insert into Orders (order_id, bill_id, order_item_id, quantity) values
 delete from Orders
 delete from Bills
 select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng' from Bills b, Tables t where b.table_id = t.table_id
-select * from Items i, Orders o where i.item_id = o.order_item_id and o.bill_id = 'BI001'
-select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Items i, Orders o where i.item_id = o.order_item_id and o.bill_id = 'BI001'
+select * from Items i, Orders o where i.item_id = o.item_id and o.bill_id = 'BI001'
+select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Items i, Orders o where i.item_id = o.item_id and o.bill_id = 'BI001'
 select * from Orders
  select count(*) from Orders
 create trigger trig_upsale
@@ -217,7 +218,7 @@ begin
 		update Bills
 		set total_bill -= i.quantity * it.item_price * 0.2
 		from inserted i, Items it
-		where i.order_item_id= it.item_id and Bills.bill_id = i.bill_id
+		where i.item_id= it.item_id and Bills.bill_id = i.bill_id
 	end	
 end
 drop trigger trig_upsale
