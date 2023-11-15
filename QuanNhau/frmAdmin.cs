@@ -108,8 +108,15 @@ namespace QuanNhau
             Load_DgvCategory();
             Load_DgvTables();
             Load_DgvBills();
+            Load_DgvAcc();
         }
-
+        void Load_DgvAcc()
+        {
+            BDConnection db = new BDConnection();
+            string strView = "select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a";
+            DataTable dt = db.getDataTable(strView);
+            dtgv_acc.DataSource = dt;
+        }
         private void btn_addDish_Click(object sender, EventArgs e)
         {
             if (CheckPKCoincidence(tb_idItem.Text))
