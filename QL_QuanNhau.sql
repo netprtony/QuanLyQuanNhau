@@ -222,3 +222,4 @@ begin
 	end	
 end
 drop trigger trig_upsale
+select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a

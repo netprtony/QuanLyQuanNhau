@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btn_exit = new System.Windows.Forms.Button();
             this.btn_login = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tb_pass = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tb_username = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -57,6 +57,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(665, 257);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Location = new System.Drawing.Point(83, 16);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(482, 66);
+            this.panel4.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(131, 27);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(291, 27);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(31, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(121, 21);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Tên đăng nhập";
             // 
             // btn_exit
             // 
@@ -92,7 +118,7 @@
             // 
             this.tb_pass.Location = new System.Drawing.Point(131, 18);
             this.tb_pass.Name = "tb_pass";
-            this.tb_pass.Size = new System.Drawing.Size(291, 23);
+            this.tb_pass.Size = new System.Drawing.Size(291, 27);
             this.tb_pass.TabIndex = 2;
             this.tb_pass.UseSystemPasswordChar = true;
             // 
@@ -101,7 +127,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(31, 21);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.Size = new System.Drawing.Size(78, 21);
             this.label2.TabIndex = 1;
             this.label2.Text = "Mật khẩu";
             // 
@@ -114,36 +140,11 @@
             this.panel2.Size = new System.Drawing.Size(482, 66);
             this.panel2.TabIndex = 1;
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.textBox1);
-            this.panel4.Controls.Add(this.label3);
-            this.panel4.Location = new System.Drawing.Point(83, 16);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(482, 66);
-            this.panel4.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(131, 27);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(291, 23);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 16);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Tên đăng nhập";
-            // 
             // tb_username
             // 
             this.tb_username.Location = new System.Drawing.Point(131, 27);
             this.tb_username.Name = "tb_username";
-            this.tb_username.Size = new System.Drawing.Size(291, 23);
+            this.tb_username.Size = new System.Drawing.Size(291, 27);
             this.tb_username.TabIndex = 1;
             // 
             // label1
@@ -151,14 +152,14 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(31, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 16);
+            this.label1.Size = new System.Drawing.Size(121, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tên đăng nhập";
             // 
             // frmLogin
             // 
             this.AcceptButton = this.btn_login;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_exit;
             this.ClientSize = new System.Drawing.Size(717, 282);
@@ -168,12 +169,12 @@
             this.Text = "Đăng nhập";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.panel1.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }

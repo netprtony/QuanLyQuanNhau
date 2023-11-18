@@ -32,7 +32,7 @@ namespace QuanNhau
         void Load_DgvItems()
         {
             BDConnection db = new BDConnection();
-            string strView = "select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả' from Items i, Categories c where c.category_id = i.category_id";
+            string strView = "select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả', item_unit as N'Đơn vị' from Items i, Categories c where c.category_id = i.category_id";
             DataTable dt = db.getDataTable(strView);
             dtgv_Item.DataSource = dt;
         }
@@ -122,21 +122,21 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idItem.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "Insert into Items values ('" + tb_idItem.Text + "', N'" + tb_dishItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '" + cb_cateItem.SelectedValue + "')";
+                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '"+cbo_unit.SelectedItem+"' '" + cb_cateItem.SelectedValue + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
-                    MessageBox.Show("Đã  thêm món " + tb_dishItem.Text + " vào thực đơn ", "Thông báo");
+                    MessageBox.Show("Đã  thêm món " + tb_nameItem.Text + " vào thực đơn ", "Thông báo");
                     Load_DgvItems();
                 }
                 else
                 {
-                    MessageBox.Show("Món "+tb_dishItem.Text+" thêm vào thực đơn không thành công!", "Lỗi");
+                    MessageBox.Show("Món "+tb_nameItem.Text+" thêm vào thực đơn không thành công!", "Lỗi");
                 }
             }
             else
             {
-                MessageBox.Show("Kiểm tra lại mã số " + tb_idItem.Text + " của mặt hàng " + tb_dishItem.Text + " bị trùng mã");
+                MessageBox.Show("Kiểm tra lại mã số " + tb_idItem.Text + " của mặt hàng " + tb_nameItem.Text + " bị trùng mã");
             }
         }
 
@@ -150,7 +150,7 @@ namespace QuanNhau
             if (e.RowIndex == -1) return;
             DataGridViewRow r = dtgv_Item.Rows[e.RowIndex];
             tb_idItem.Text = r.Cells[0].Value.ToString();
-            tb_dishItem.Text = r.Cells[1].Value.ToString();
+            tb_nameItem.Text = r.Cells[1].Value.ToString();
             tb_priceItem.Text = r.Cells[2].Value.ToString();
             cb_cateItem.Text = r.Cells[4].Value.ToString();
             tb_despItem.Text = r.Cells[5].Value.ToString();
@@ -159,16 +159,12 @@ namespace QuanNhau
         private void btn_changeDish_Click(object sender, EventArgs e)
         {
             BDConnection db = new BDConnection();
-            string strQuery = "update Items set item_name = N'" + tb_dishItem.Text + "', item_price = " + decimal.Parse(tb_priceItem.Text) + ", item_description = N'" + tb_despItem.Text + "', category_id = '" + cb_cateItem.SelectedValue + "' where item_id = '" + tb_idItem.Text + "'";
+            string strQuery = "update Items set item_name = N'" + tb_nameItem.Text + "', item_price = " + decimal.Parse(tb_priceItem.Text) + ", item_description = N'" + tb_despItem.Text + "', category_id = '" + cb_cateItem.SelectedValue + "' where item_id = '" + tb_idItem.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {
-                MessageBox.Show("Mặt hàng " + tb_dishItem.Text + " đã vào thực đơn ", "Thông báo");
+                MessageBox.Show("Mặt hàng " + tb_nameItem.Text + " đã vào thực đơn ", "Thông báo");
                 Load_DgvItems();
-            }
-            else
-            {
-                MessageBox.Show("Mặt hàng " + tb_dishItem.Text + " thêm vào thực đơn không thành công!", "Lỗi");
             }
         }
 
@@ -210,7 +206,22 @@ namespace QuanNhau
 
         private void btn_delCate_Click(object sender, EventArgs e)
         {
-
+            BDConnection db = new BDConnection();
+            DialogResult result = MessageBox.Show("Bạn có xóa danh mục " + tb_nameCate.Text + " không?", "Thông báo xóa danh mục!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(result == DialogResult.Yes)
+            {
+                string strQuery = "delete from Categories where category_id = '" + tb_idCate.Text + "'";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã đã danh mục " + tb_nameCate.Text + "", "Thông báo");
+                    Load_DgvCategory();
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi");
+                }
+            }
         }
 
         private void dtgv_cate_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -223,7 +234,83 @@ namespace QuanNhau
 
         private void btn_delItem_Click(object sender, EventArgs e)
         {
+            BDConnection db = new BDConnection();
+            DialogResult result = MessageBox.Show("Bạn có xóa mặt hàng " + tb_nameCate.Text + " không?", "Thông báo xóa mặt hàng!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                string strQuery = "delete from Items where item_id = '" + tb_idItem.Text + "'";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã đã mặt hàng " + tb_nameItem.Text + "", "Thông báo");
+                    Load_DgvItems();
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi");
+                }
+            }
+        }
 
+        private void dtgv_table_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dtgv_table_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+            DataGridViewRow r = dtgv_table.Rows[e.RowIndex];
+            tb_idTable.Text = r.Cells[0].Value.ToString();
+            tb_nameTable.Text = r.Cells[1].Value.ToString();
+        }
+
+        private void btn_addTable_Click(object sender, EventArgs e)
+        {
+            if (CheckPKCoincidence(tb_idTable.Text))
+            {
+                BDConnection db = new BDConnection();
+                string strQuery = "insert into Table values ('" + tb_idTable.Text + "', '" + tb_nameTable.Text + "')";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã thêm bàn " + tb_nameTable.Text + " vào ", "Thông báo");
+                    Load_DgvItems();
+                }
+                else
+                {
+                    MessageBox.Show("Bàn " + tb_nameTable.Text + " thêm không thành công!", "Lỗi");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kiểm tra lại mã số " + tb_idTable.Text + " của bàn " + tb_nameTable.Text + " bị trùng mã");
+            }
+            Load_DgvTables();
+        }
+
+        private void btn_changeTable_Click(object sender, EventArgs e)
+        {
+            BDConnection db = new BDConnection();
+            string strQuery = "update Table set table_name = N'" + tb_nameTable.Text + "',  where table_id = '" + tb_idTable.Text + "'";
+            int k = db.getNonQuery(strQuery);
+            if (k == 1)
+            {
+                MessageBox.Show("Bàn " + tb_nameTable.Text + " đã được sửa thành công  ", "Thông báo");
+            }
+            Load_DgvTables();
+        }
+
+        private void btn_changeCate_Click(object sender, EventArgs e)
+        {
+            BDConnection db = new BDConnection();
+            string strQuery = "update Categories set category_name = N'" + tb_nameCate.Text + "' where category_id = '" + tb_idCate.Text + "'";
+            int k = db.getNonQuery(strQuery);
+            if (k == 1)
+            {
+                MessageBox.Show("Danh mục " + tb_nameCate.Text + " đã được sửa thành công  ", "Thông báo");
+            }
+            Load_DgvTables();
         }
     }
 }

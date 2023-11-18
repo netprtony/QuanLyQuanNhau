@@ -37,5 +37,10 @@ namespace QuanNhau
             f.ShowDialog();
             this.Show();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -15,8 +15,12 @@ namespace QuanNhau
         public frmManager()
         {
             InitializeComponent();
+            load_lstTable();
         }
+        private void load_lstTable()
+        {
 
+        }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
@@ -31,6 +35,16 @@ namespace QuanNhau
         {
             frmAdmin f = new frmAdmin();
             f.ShowDialog();
+        }
+
+        private void frmManager_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cb_addBeverage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

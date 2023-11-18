@@ -51,9 +51,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.dtgv_table = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.panel26 = new System.Windows.Forms.Panel();
-            this.tb_staTable = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
             this.tb_nameTable = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -98,7 +95,7 @@
             this.tb_priceItem = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.tb_dishItem = new System.Windows.Forms.TextBox();
+            this.tb_nameItem = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cb_cateItem = new System.Windows.Forms.ComboBox();
@@ -121,6 +118,8 @@
             this.dtp_dateStart = new System.Windows.Forms.DateTimePicker();
             this.dtgv_bill = new System.Windows.Forms.DataGridView();
             this.tc_admin = new System.Windows.Forms.TabControl();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbo_unit = new System.Windows.Forms.ComboBox();
             this.tp_acc.SuspendLayout();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_acc)).BeginInit();
@@ -133,7 +132,6 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_table)).BeginInit();
             this.panel4.SuspendLayout();
-            this.panel26.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel22.SuspendLayout();
             this.panel25.SuspendLayout();
@@ -188,6 +186,7 @@
             this.dtgv_acc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_acc.Location = new System.Drawing.Point(3, 3);
             this.dtgv_acc.Name = "dtgv_acc";
+            this.dtgv_acc.RowHeadersWidth = 51;
             this.dtgv_acc.Size = new System.Drawing.Size(693, 562);
             this.dtgv_acc.TabIndex = 1;
             // 
@@ -361,12 +360,14 @@
             this.dtgv_table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_table.Location = new System.Drawing.Point(3, 3);
             this.dtgv_table.Name = "dtgv_table";
+            this.dtgv_table.RowHeadersWidth = 51;
             this.dtgv_table.Size = new System.Drawing.Size(693, 562);
             this.dtgv_table.TabIndex = 1;
+            this.dtgv_table.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_table_CellClick);
+            this.dtgv_table.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_table_CellContentClick);
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.panel26);
             this.panel4.Controls.Add(this.panel19);
             this.panel4.Controls.Add(this.panel22);
             this.panel4.Location = new System.Drawing.Point(6, 144);
@@ -374,36 +375,11 @@
             this.panel4.Size = new System.Drawing.Size(713, 430);
             this.panel4.TabIndex = 4;
             // 
-            // panel26
-            // 
-            this.panel26.Controls.Add(this.tb_staTable);
-            this.panel26.Controls.Add(this.label13);
-            this.panel26.Location = new System.Drawing.Point(59, 181);
-            this.panel26.Name = "panel26";
-            this.panel26.Size = new System.Drawing.Size(562, 71);
-            this.panel26.TabIndex = 9;
-            // 
-            // tb_staTable
-            // 
-            this.tb_staTable.Location = new System.Drawing.Point(153, 25);
-            this.tb_staTable.Name = "tb_staTable";
-            this.tb_staTable.Size = new System.Drawing.Size(339, 26);
-            this.tb_staTable.TabIndex = 2;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(36, 33);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(84, 18);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Trạng thái";
-            // 
             // panel19
             // 
             this.panel19.Controls.Add(this.tb_nameTable);
             this.panel19.Controls.Add(this.label9);
-            this.panel19.Location = new System.Drawing.Point(59, 104);
+            this.panel19.Location = new System.Drawing.Point(59, 161);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(562, 71);
             this.panel19.TabIndex = 8;
@@ -428,7 +404,7 @@
             // 
             this.panel22.Controls.Add(this.tb_idTable);
             this.panel22.Controls.Add(this.label10);
-            this.panel22.Location = new System.Drawing.Point(59, 27);
+            this.panel22.Location = new System.Drawing.Point(59, 84);
             this.panel22.Name = "panel22";
             this.panel22.Size = new System.Drawing.Size(562, 71);
             this.panel22.TabIndex = 6;
@@ -477,6 +453,7 @@
             this.btn_changeTable.TabIndex = 9;
             this.btn_changeTable.Text = "Sửa";
             this.btn_changeTable.UseVisualStyleBackColor = true;
+            this.btn_changeTable.Click += new System.EventHandler(this.btn_changeTable_Click);
             // 
             // btn_delTable
             // 
@@ -495,6 +472,7 @@
             this.btn_addTable.TabIndex = 7;
             this.btn_addTable.Text = "Thêm";
             this.btn_addTable.UseVisualStyleBackColor = true;
+            this.btn_addTable.Click += new System.EventHandler(this.btn_addTable_Click);
             // 
             // tp_dishCate
             // 
@@ -522,6 +500,7 @@
             this.dtgv_cate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_cate.Location = new System.Drawing.Point(3, 3);
             this.dtgv_cate.Name = "dtgv_cate";
+            this.dtgv_cate.RowHeadersWidth = 51;
             this.dtgv_cate.Size = new System.Drawing.Size(693, 562);
             this.dtgv_cate.TabIndex = 1;
             this.dtgv_cate.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_cate_CellClick);
@@ -613,6 +592,7 @@
             this.btn_changeCate.TabIndex = 9;
             this.btn_changeCate.Text = "Sửa";
             this.btn_changeCate.UseVisualStyleBackColor = true;
+            this.btn_changeCate.Click += new System.EventHandler(this.btn_changeCate_Click);
             // 
             // btn_delCate
             // 
@@ -711,6 +691,7 @@
             this.dtgv_Item.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_Item.Location = new System.Drawing.Point(3, 2);
             this.dtgv_Item.Name = "dtgv_Item";
+            this.dtgv_Item.RowHeadersWidth = 51;
             this.dtgv_Item.Size = new System.Drawing.Size(693, 548);
             this.dtgv_Item.TabIndex = 0;
             this.dtgv_Item.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_dish_CellClick);
@@ -799,19 +780,19 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.tb_dishItem);
+            this.panel6.Controls.Add(this.tb_nameItem);
             this.panel6.Controls.Add(this.label2);
             this.panel6.Location = new System.Drawing.Point(59, 98);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(562, 71);
             this.panel6.TabIndex = 2;
             // 
-            // tb_dishItem
+            // tb_nameItem
             // 
-            this.tb_dishItem.Location = new System.Drawing.Point(103, 30);
-            this.tb_dishItem.Name = "tb_dishItem";
-            this.tb_dishItem.Size = new System.Drawing.Size(339, 26);
-            this.tb_dishItem.TabIndex = 2;
+            this.tb_nameItem.Location = new System.Drawing.Point(103, 30);
+            this.tb_nameItem.Name = "tb_nameItem";
+            this.tb_nameItem.Size = new System.Drawing.Size(339, 26);
+            this.tb_nameItem.TabIndex = 2;
             // 
             // label2
             // 
@@ -824,6 +805,8 @@
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.cbo_unit);
+            this.panel8.Controls.Add(this.label13);
             this.panel8.Controls.Add(this.cb_cateItem);
             this.panel8.Controls.Add(this.label4);
             this.panel8.Location = new System.Drawing.Point(59, 175);
@@ -836,7 +819,7 @@
             this.cb_cateItem.FormattingEnabled = true;
             this.cb_cateItem.Location = new System.Drawing.Point(103, 20);
             this.cb_cateItem.Name = "cb_cateItem";
-            this.cb_cateItem.Size = new System.Drawing.Size(339, 26);
+            this.cb_cateItem.Size = new System.Drawing.Size(140, 26);
             this.cb_cateItem.TabIndex = 3;
             // 
             // label4
@@ -892,6 +875,7 @@
             this.dtgv_AllorderOfbill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_AllorderOfbill.Location = new System.Drawing.Point(864, 209);
             this.dtgv_AllorderOfbill.Name = "dtgv_AllorderOfbill";
+            this.dtgv_AllorderOfbill.RowHeadersWidth = 51;
             this.dtgv_AllorderOfbill.Size = new System.Drawing.Size(562, 362);
             this.dtgv_AllorderOfbill.TabIndex = 2;
             // 
@@ -1007,6 +991,7 @@
             this.dtgv_bill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_bill.Location = new System.Drawing.Point(6, 7);
             this.dtgv_bill.Name = "dtgv_bill";
+            this.dtgv_bill.RowHeadersWidth = 51;
             this.dtgv_bill.Size = new System.Drawing.Size(852, 564);
             this.dtgv_bill.TabIndex = 0;
             this.dtgv_bill.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_bill_CellClick);
@@ -1024,6 +1009,37 @@
             this.tc_admin.SelectedIndex = 0;
             this.tc_admin.Size = new System.Drawing.Size(1440, 607);
             this.tc_admin.TabIndex = 0;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(264, 28);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(56, 18);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Đơn vị";
+            // 
+            // cbo_unit
+            // 
+            this.cbo_unit.AutoCompleteCustomSource.AddRange(new string[] {
+            "Dĩa",
+            "Chai",
+            "Lon",
+            "Nồi",
+            "Trứng"});
+            this.cbo_unit.FormattingEnabled = true;
+            this.cbo_unit.Items.AddRange(new object[] {
+            "Dĩa",
+            "Lon",
+            "Chai",
+            "Nồi",
+            "Chén",
+            "Nêu",
+            "Trứng"});
+            this.cbo_unit.Location = new System.Drawing.Point(334, 20);
+            this.cbo_unit.Name = "cbo_unit";
+            this.cbo_unit.Size = new System.Drawing.Size(140, 26);
+            this.cbo_unit.TabIndex = 4;
             // 
             // frmAdmin
             // 
@@ -1051,8 +1067,6 @@
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_table)).EndInit();
             this.panel4.ResumeLayout(false);
-            this.panel26.ResumeLayout(false);
-            this.panel26.PerformLayout();
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
             this.panel22.ResumeLayout(false);
@@ -1102,9 +1116,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dtgv_table;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.TextBox tb_staTable;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.TextBox tb_nameTable;
         private System.Windows.Forms.Label label9;
@@ -1145,7 +1156,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.TextBox tb_dishItem;
+        private System.Windows.Forms.TextBox tb_nameItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.ComboBox cb_cateItem;
@@ -1190,6 +1201,7 @@
         private System.Windows.Forms.Label lb_biliId;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
-
+        private System.Windows.Forms.ComboBox cbo_unit;
+        private System.Windows.Forms.Label label13;
     }
 }
