@@ -98,6 +98,8 @@
             this.tb_nameItem = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.cbo_unit = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.cb_cateItem = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -118,8 +120,9 @@
             this.dtp_dateStart = new System.Windows.Forms.DateTimePicker();
             this.dtgv_bill = new System.Windows.Forms.DataGridView();
             this.tc_admin = new System.Windows.Forms.TabControl();
-            this.label13 = new System.Windows.Forms.Label();
-            this.cbo_unit = new System.Windows.Forms.ComboBox();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.tb_pass = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.tp_acc.SuspendLayout();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_acc)).BeginInit();
@@ -158,6 +161,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_bill)).BeginInit();
             this.tc_admin.SuspendLayout();
+            this.panel26.SuspendLayout();
             this.SuspendLayout();
             // 
             // tp_acc
@@ -165,10 +169,10 @@
             this.tp_acc.Controls.Add(this.panel9);
             this.tp_acc.Controls.Add(this.panel10);
             this.tp_acc.Controls.Add(this.panel14);
-            this.tp_acc.Location = new System.Drawing.Point(4, 27);
+            this.tp_acc.Location = new System.Drawing.Point(4, 23);
             this.tp_acc.Name = "tp_acc";
             this.tp_acc.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_acc.Size = new System.Drawing.Size(1432, 576);
+            this.tp_acc.Size = new System.Drawing.Size(1432, 580);
             this.tp_acc.TabIndex = 4;
             this.tp_acc.Text = "Tài khoản";
             this.tp_acc.UseVisualStyleBackColor = true;
@@ -189,9 +193,11 @@
             this.dtgv_acc.RowHeadersWidth = 51;
             this.dtgv_acc.Size = new System.Drawing.Size(693, 562);
             this.dtgv_acc.TabIndex = 1;
+            this.dtgv_acc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_acc_CellClick);
             // 
             // panel10
             // 
+            this.panel10.Controls.Add(this.panel26);
             this.panel10.Controls.Add(this.btn_restPass);
             this.panel10.Controls.Add(this.panel11);
             this.panel10.Controls.Add(this.panel12);
@@ -203,7 +209,7 @@
             // 
             // btn_restPass
             // 
-            this.btn_restPass.Location = new System.Drawing.Point(534, 258);
+            this.btn_restPass.Location = new System.Drawing.Point(534, 335);
             this.btn_restPass.Name = "btn_restPass";
             this.btn_restPass.Size = new System.Drawing.Size(87, 68);
             this.btn_restPass.TabIndex = 11;
@@ -214,7 +220,7 @@
             // 
             this.panel11.Controls.Add(this.cb_typeAcc);
             this.panel11.Controls.Add(this.label5);
-            this.panel11.Location = new System.Drawing.Point(59, 181);
+            this.panel11.Location = new System.Drawing.Point(59, 258);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(562, 71);
             this.panel11.TabIndex = 9;
@@ -222,9 +228,12 @@
             // cb_typeAcc
             // 
             this.cb_typeAcc.FormattingEnabled = true;
+            this.cb_typeAcc.Items.AddRange(new object[] {
+            "Staff",
+            "Admin"});
             this.cb_typeAcc.Location = new System.Drawing.Point(153, 25);
             this.cb_typeAcc.Name = "cb_typeAcc";
-            this.cb_typeAcc.Size = new System.Drawing.Size(339, 26);
+            this.cb_typeAcc.Size = new System.Drawing.Size(339, 22);
             this.cb_typeAcc.TabIndex = 1;
             // 
             // label5
@@ -232,7 +241,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(36, 33);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 18);
+            this.label5.Size = new System.Drawing.Size(94, 14);
             this.label5.TabIndex = 0;
             this.label5.Text = "Loại tài khoản";
             // 
@@ -249,7 +258,7 @@
             // 
             this.tb_displayAcc.Location = new System.Drawing.Point(153, 25);
             this.tb_displayAcc.Name = "tb_displayAcc";
-            this.tb_displayAcc.Size = new System.Drawing.Size(339, 26);
+            this.tb_displayAcc.Size = new System.Drawing.Size(339, 22);
             this.tb_displayAcc.TabIndex = 2;
             // 
             // label6
@@ -257,7 +266,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(36, 33);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 18);
+            this.label6.Size = new System.Drawing.Size(84, 14);
             this.label6.TabIndex = 0;
             this.label6.Text = "Tên hiển thị:";
             // 
@@ -274,7 +283,7 @@
             // 
             this.tb_username.Location = new System.Drawing.Point(153, 29);
             this.tb_username.Name = "tb_username";
-            this.tb_username.Size = new System.Drawing.Size(339, 26);
+            this.tb_username.Size = new System.Drawing.Size(339, 22);
             this.tb_username.TabIndex = 1;
             // 
             // label7
@@ -282,7 +291,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(36, 33);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(113, 18);
+            this.label7.Size = new System.Drawing.Size(95, 14);
             this.label7.TabIndex = 0;
             this.label7.Text = "Tên tài khoản:";
             // 
@@ -332,16 +341,17 @@
             this.btn_addAcc.TabIndex = 7;
             this.btn_addAcc.Text = "Thêm";
             this.btn_addAcc.UseVisualStyleBackColor = true;
+            this.btn_addAcc.Click += new System.EventHandler(this.btn_addAcc_Click);
             // 
             // tp_table
             // 
             this.tp_table.Controls.Add(this.panel3);
             this.tp_table.Controls.Add(this.panel4);
             this.tp_table.Controls.Add(this.panel25);
-            this.tp_table.Location = new System.Drawing.Point(4, 27);
+            this.tp_table.Location = new System.Drawing.Point(4, 23);
             this.tp_table.Name = "tp_table";
             this.tp_table.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_table.Size = new System.Drawing.Size(1432, 576);
+            this.tp_table.Size = new System.Drawing.Size(1432, 580);
             this.tp_table.TabIndex = 3;
             this.tp_table.Text = "Bàn ";
             this.tp_table.UseVisualStyleBackColor = true;
@@ -388,7 +398,7 @@
             // 
             this.tb_nameTable.Location = new System.Drawing.Point(153, 25);
             this.tb_nameTable.Name = "tb_nameTable";
-            this.tb_nameTable.Size = new System.Drawing.Size(339, 26);
+            this.tb_nameTable.Size = new System.Drawing.Size(339, 22);
             this.tb_nameTable.TabIndex = 2;
             // 
             // label9
@@ -396,7 +406,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(36, 33);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(71, 18);
+            this.label9.Size = new System.Drawing.Size(60, 14);
             this.label9.TabIndex = 0;
             this.label9.Text = "Tên bàn:";
             // 
@@ -413,7 +423,7 @@
             // 
             this.tb_idTable.Location = new System.Drawing.Point(153, 29);
             this.tb_idTable.Name = "tb_idTable";
-            this.tb_idTable.Size = new System.Drawing.Size(339, 26);
+            this.tb_idTable.Size = new System.Drawing.Size(339, 22);
             this.tb_idTable.TabIndex = 1;
             // 
             // label10
@@ -421,7 +431,7 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(36, 33);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 18);
+            this.label10.Size = new System.Drawing.Size(25, 14);
             this.label10.TabIndex = 0;
             this.label10.Text = "ID:";
             // 
@@ -463,6 +473,7 @@
             this.btn_delTable.TabIndex = 8;
             this.btn_delTable.Text = "Xóa";
             this.btn_delTable.UseVisualStyleBackColor = true;
+            this.btn_delTable.Click += new System.EventHandler(this.btn_delTable_Click);
             // 
             // btn_addTable
             // 
@@ -479,10 +490,10 @@
             this.tp_dishCate.Controls.Add(this.panel20);
             this.tp_dishCate.Controls.Add(this.panel18);
             this.tp_dishCate.Controls.Add(this.panel17);
-            this.tp_dishCate.Location = new System.Drawing.Point(4, 27);
+            this.tp_dishCate.Location = new System.Drawing.Point(4, 23);
             this.tp_dishCate.Name = "tp_dishCate";
             this.tp_dishCate.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_dishCate.Size = new System.Drawing.Size(1432, 576);
+            this.tp_dishCate.Size = new System.Drawing.Size(1432, 580);
             this.tp_dishCate.TabIndex = 2;
             this.tp_dishCate.Text = "Danh mục";
             this.tp_dishCate.UseVisualStyleBackColor = true;
@@ -527,7 +538,7 @@
             // 
             this.tb_nameCate.Location = new System.Drawing.Point(153, 25);
             this.tb_nameCate.Name = "tb_nameCate";
-            this.tb_nameCate.Size = new System.Drawing.Size(339, 26);
+            this.tb_nameCate.Size = new System.Drawing.Size(339, 22);
             this.tb_nameCate.TabIndex = 2;
             // 
             // label11
@@ -535,7 +546,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(36, 33);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(114, 18);
+            this.label11.Size = new System.Drawing.Size(97, 14);
             this.label11.TabIndex = 0;
             this.label11.Text = "Tên danh mục:";
             // 
@@ -552,7 +563,7 @@
             // 
             this.tb_idCate.Location = new System.Drawing.Point(153, 29);
             this.tb_idCate.Name = "tb_idCate";
-            this.tb_idCate.Size = new System.Drawing.Size(339, 26);
+            this.tb_idCate.Size = new System.Drawing.Size(339, 22);
             this.tb_idCate.TabIndex = 1;
             // 
             // label12
@@ -560,7 +571,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(36, 33);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 18);
+            this.label12.Size = new System.Drawing.Size(25, 14);
             this.label12.TabIndex = 0;
             this.label12.Text = "ID:";
             // 
@@ -619,10 +630,10 @@
             this.tp_dish.Controls.Add(this.panel21);
             this.tp_dish.Controls.Add(this.panel1);
             this.tp_dish.Controls.Add(this.panel2);
-            this.tp_dish.Location = new System.Drawing.Point(4, 27);
+            this.tp_dish.Location = new System.Drawing.Point(4, 23);
             this.tp_dish.Name = "tp_dish";
             this.tp_dish.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_dish.Size = new System.Drawing.Size(1432, 576);
+            this.tp_dish.Size = new System.Drawing.Size(1432, 580);
             this.tp_dish.TabIndex = 1;
             this.tp_dish.Text = "Mặt hàng";
             this.tp_dish.UseVisualStyleBackColor = true;
@@ -725,7 +736,7 @@
             // 
             this.tb_despItem.Location = new System.Drawing.Point(83, 28);
             this.tb_despItem.Name = "tb_despItem";
-            this.tb_despItem.Size = new System.Drawing.Size(192, 26);
+            this.tb_despItem.Size = new System.Drawing.Size(192, 22);
             this.tb_despItem.TabIndex = 5;
             // 
             // label15
@@ -733,7 +744,7 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(13, 31);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(68, 18);
+            this.label15.Size = new System.Drawing.Size(56, 14);
             this.label15.TabIndex = 6;
             this.label15.Text = "Ghi chú:";
             // 
@@ -741,7 +752,7 @@
             // 
             this.tb_findItem.Location = new System.Drawing.Point(162, 361);
             this.tb_findItem.Name = "tb_findItem";
-            this.tb_findItem.Size = new System.Drawing.Size(339, 26);
+            this.tb_findItem.Size = new System.Drawing.Size(339, 22);
             this.tb_findItem.TabIndex = 10;
             // 
             // btn_findItem
@@ -766,7 +777,7 @@
             // 
             this.tb_priceItem.Location = new System.Drawing.Point(50, 30);
             this.tb_priceItem.Name = "tb_priceItem";
-            this.tb_priceItem.Size = new System.Drawing.Size(156, 26);
+            this.tb_priceItem.Size = new System.Drawing.Size(156, 22);
             this.tb_priceItem.TabIndex = 4;
             // 
             // label3
@@ -774,7 +785,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(15, 33);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 18);
+            this.label3.Size = new System.Drawing.Size(29, 14);
             this.label3.TabIndex = 0;
             this.label3.Text = "Giá:";
             // 
@@ -791,7 +802,7 @@
             // 
             this.tb_nameItem.Location = new System.Drawing.Point(103, 30);
             this.tb_nameItem.Name = "tb_nameItem";
-            this.tb_nameItem.Size = new System.Drawing.Size(339, 26);
+            this.tb_nameItem.Size = new System.Drawing.Size(339, 22);
             this.tb_nameItem.TabIndex = 2;
             // 
             // label2
@@ -799,7 +810,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(15, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 18);
+            this.label2.Size = new System.Drawing.Size(64, 14);
             this.label2.TabIndex = 0;
             this.label2.Text = "Tên món:";
             // 
@@ -814,12 +825,43 @@
             this.panel8.Size = new System.Drawing.Size(562, 71);
             this.panel8.TabIndex = 4;
             // 
+            // cbo_unit
+            // 
+            this.cbo_unit.AutoCompleteCustomSource.AddRange(new string[] {
+            "Dĩa",
+            "Chai",
+            "Lon",
+            "Nồi",
+            "Trứng"});
+            this.cbo_unit.FormattingEnabled = true;
+            this.cbo_unit.Items.AddRange(new object[] {
+            "Dĩa",
+            "Lon",
+            "Chai",
+            "Nồi",
+            "Chén",
+            "Nêu",
+            "Trứng"});
+            this.cbo_unit.Location = new System.Drawing.Point(334, 20);
+            this.cbo_unit.Name = "cbo_unit";
+            this.cbo_unit.Size = new System.Drawing.Size(140, 22);
+            this.cbo_unit.TabIndex = 4;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(264, 28);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(46, 14);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Đơn vị";
+            // 
             // cb_cateItem
             // 
             this.cb_cateItem.FormattingEnabled = true;
             this.cb_cateItem.Location = new System.Drawing.Point(103, 20);
             this.cb_cateItem.Name = "cb_cateItem";
-            this.cb_cateItem.Size = new System.Drawing.Size(140, 26);
+            this.cb_cateItem.Size = new System.Drawing.Size(140, 22);
             this.cb_cateItem.TabIndex = 3;
             // 
             // label4
@@ -827,7 +869,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(15, 28);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 18);
+            this.label4.Size = new System.Drawing.Size(72, 14);
             this.label4.TabIndex = 0;
             this.label4.Text = "Danh mục:";
             // 
@@ -844,7 +886,7 @@
             // 
             this.tb_idItem.Location = new System.Drawing.Point(103, 25);
             this.tb_idItem.Name = "tb_idItem";
-            this.tb_idItem.Size = new System.Drawing.Size(339, 26);
+            this.tb_idItem.Size = new System.Drawing.Size(339, 22);
             this.tb_idItem.TabIndex = 1;
             // 
             // label1
@@ -852,7 +894,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(15, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 18);
+            this.label1.Size = new System.Drawing.Size(25, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID:";
             // 
@@ -861,10 +903,10 @@
             this.tp_bill.Controls.Add(this.dtgv_AllorderOfbill);
             this.tp_bill.Controls.Add(this.panel15);
             this.tp_bill.Controls.Add(this.dtgv_bill);
-            this.tp_bill.Location = new System.Drawing.Point(4, 27);
+            this.tp_bill.Location = new System.Drawing.Point(4, 23);
             this.tp_bill.Name = "tp_bill";
             this.tp_bill.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_bill.Size = new System.Drawing.Size(1432, 576);
+            this.tp_bill.Size = new System.Drawing.Size(1432, 580);
             this.tp_bill.TabIndex = 0;
             this.tp_bill.Text = "Doanh thu";
             this.tp_bill.UseVisualStyleBackColor = true;
@@ -911,7 +953,7 @@
             this.lb_totalBill.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lb_totalBill.Location = new System.Drawing.Point(114, 88);
             this.lb_totalBill.Name = "lb_totalBill";
-            this.lb_totalBill.Size = new System.Drawing.Size(73, 18);
+            this.lb_totalBill.Size = new System.Drawing.Size(62, 14);
             this.lb_totalBill.TabIndex = 6;
             this.lb_totalBill.Text = "Chưa hiện";
             // 
@@ -921,7 +963,7 @@
             this.lb_biliId.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lb_biliId.Location = new System.Drawing.Point(114, 47);
             this.lb_biliId.Name = "lb_biliId";
-            this.lb_biliId.Size = new System.Drawing.Size(73, 18);
+            this.lb_biliId.Size = new System.Drawing.Size(62, 14);
             this.lb_biliId.TabIndex = 5;
             this.lb_biliId.Text = "Chưa hiện";
             // 
@@ -930,7 +972,7 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(6, 88);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 18);
+            this.label17.Size = new System.Drawing.Size(70, 14);
             this.label17.TabIndex = 4;
             this.label17.Text = "Tổng tiền:";
             // 
@@ -939,7 +981,7 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(6, 47);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(35, 18);
+            this.label16.Size = new System.Drawing.Size(29, 14);
             this.label16.TabIndex = 3;
             this.label16.Text = "Mã:";
             // 
@@ -957,7 +999,7 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(11, 82);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(78, 18);
+            this.label14.Size = new System.Drawing.Size(65, 14);
             this.label14.TabIndex = 3;
             this.label14.Text = "Đến ngày";
             // 
@@ -966,7 +1008,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(11, 32);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 18);
+            this.label8.Size = new System.Drawing.Size(57, 14);
             this.label8.TabIndex = 2;
             this.label8.Text = "Từ ngày";
             // 
@@ -975,7 +1017,7 @@
             this.dtp_dateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_dateEnd.Location = new System.Drawing.Point(82, 76);
             this.dtp_dateEnd.Name = "dtp_dateEnd";
-            this.dtp_dateEnd.Size = new System.Drawing.Size(200, 26);
+            this.dtp_dateEnd.Size = new System.Drawing.Size(200, 22);
             this.dtp_dateEnd.TabIndex = 2;
             // 
             // dtp_dateStart
@@ -983,7 +1025,7 @@
             this.dtp_dateStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_dateStart.Location = new System.Drawing.Point(82, 26);
             this.dtp_dateStart.Name = "dtp_dateStart";
-            this.dtp_dateStart.Size = new System.Drawing.Size(200, 26);
+            this.dtp_dateStart.Size = new System.Drawing.Size(200, 22);
             this.dtp_dateStart.TabIndex = 1;
             // 
             // dtgv_bill
@@ -1010,40 +1052,34 @@
             this.tc_admin.Size = new System.Drawing.Size(1440, 607);
             this.tc_admin.TabIndex = 0;
             // 
-            // label13
+            // panel26
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(264, 28);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(56, 18);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Đơn vị";
+            this.panel26.Controls.Add(this.tb_pass);
+            this.panel26.Controls.Add(this.label18);
+            this.panel26.Location = new System.Drawing.Point(59, 181);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(562, 71);
+            this.panel26.TabIndex = 9;
             // 
-            // cbo_unit
+            // tb_pass
             // 
-            this.cbo_unit.AutoCompleteCustomSource.AddRange(new string[] {
-            "Dĩa",
-            "Chai",
-            "Lon",
-            "Nồi",
-            "Trứng"});
-            this.cbo_unit.FormattingEnabled = true;
-            this.cbo_unit.Items.AddRange(new object[] {
-            "Dĩa",
-            "Lon",
-            "Chai",
-            "Nồi",
-            "Chén",
-            "Nêu",
-            "Trứng"});
-            this.cbo_unit.Location = new System.Drawing.Point(334, 20);
-            this.cbo_unit.Name = "cbo_unit";
-            this.cbo_unit.Size = new System.Drawing.Size(140, 26);
-            this.cbo_unit.TabIndex = 4;
+            this.tb_pass.Location = new System.Drawing.Point(153, 25);
+            this.tb_pass.Name = "tb_pass";
+            this.tb_pass.Size = new System.Drawing.Size(339, 22);
+            this.tb_pass.TabIndex = 2;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(36, 33);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(65, 14);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "Mật khẩu";
             // 
             // frmAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1468, 633);
             this.Controls.Add(this.tc_admin);
@@ -1105,6 +1141,8 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_bill)).EndInit();
             this.tc_admin.ResumeLayout(false);
+            this.panel26.ResumeLayout(false);
+            this.panel26.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1203,5 +1241,8 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbo_unit;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel panel26;
+        private System.Windows.Forms.TextBox tb_pass;
+        private System.Windows.Forms.Label label18;
     }
 }

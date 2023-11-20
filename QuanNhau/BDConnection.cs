@@ -10,7 +10,8 @@ namespace QuanNhau
 {
     class BDConnection
     {
-        private string strConnect = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = "Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private string strConnect = V;
         SqlConnection connect;
         public BDConnection()
         {
@@ -53,75 +54,6 @@ namespace QuanNhau
             DataSet ds = new DataSet();
             da.Fill(ds);
             return ds.Tables[0];
-        }
-        public class DataProvider
-        {
-            private string connectionSTR = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
-
-            public DataTable ExecuteQuery(string query, object[] parameter = null)
-            {
-                DataTable data = new DataTable();
-
-                using (SqlConnection connection = new SqlConnection(connectionSTR))
-                {
-                    connection.Open();
-
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    if (parameter != null)
-                    {
-                        string[] listPara = query.Split(' ');
-                        int i = 0;
-                        foreach (string item in listPara)
-                        {
-                            if (item.Contains('@'))
-                            {
-                                command.Parameters.AddWithValue(item, parameter[i]);
-                                i++;
-                            }
-                        }
-                    }
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-
-                    adapter.Fill(data);
-
-                    connection.Close();
-                }
-
-                return data;
-            }
-            public object ExecuteScalar(string query, object[] parameter = null)
-            {
-                object data = 0;
-
-                using (SqlConnection connection = new SqlConnection(connectionSTR))
-                {
-                    connection.Open();
-
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    if (parameter != null)
-                    {
-                        string[] listPara = query.Split(' ');
-                        int i = 0;
-                        foreach (string item in listPara)
-                        {
-                            if (item.Contains('@'))
-                            {
-                                command.Parameters.AddWithValue(item, parameter[i]);
-                                i++;
-                            }
-                        }
-                    }
-
-                    data = command.ExecuteScalar();
-
-                    connection.Close();
-                }
-
-                return data;
-            }
         }
     }
 }

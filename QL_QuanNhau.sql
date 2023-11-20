@@ -125,6 +125,7 @@ insert into Items values
 	('I029', N'Bia Saigon Special - Sài Gòn lùn', N'Nồng độ cồn 4.9%', 18500, N'Chai','C009'),
 	('I030', N'Bia Sài Gòn Gold lon 330ml', N'Nồng độ cồn 5.0%', 22600, N'Lon','C009')
 insert into Account values
+	(N'Admin', 'admin', 'admin', 1),
 	(N'Huỳnh Vĩ Khang', 'vikhang2805', null, 1),
 	(N'Đào Quí Mùi', 'muidao1506', null, 0),
 	(N'Đỗ Hoàng La Giang', 'lagiang1508', null, 0),
@@ -223,3 +224,14 @@ begin
 end
 drop trigger trig_upsale
 select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a
+go
+create proc USP_GetAccountByName
+@username varchar(50)
+as
+begin
+	select * from Account where UserName = @username
+end
+go
+exec USP_GetAccountByName @username = 'vikhang2805'
+select * from Account where  UserName  = 'admin' and PassWord = ''
+go

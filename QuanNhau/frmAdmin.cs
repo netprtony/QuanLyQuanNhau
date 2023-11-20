@@ -10,14 +10,15 @@ namespace QuanNhau
         {
             InitializeComponent();
         }
-        bool CheckPKCoincidence(string ck)
+        #region Method
+        private bool CheckPKCoincidence(string ck)
         {
             BDConnection db = new BDConnection();
             string str = "Select Count(*) from Items where item_id ='"+ ck + "'";
             int k = (int)db.getScalar(str);
             return k == 0 ? true : false;
         }
-        void Load_comboxCategory()
+        private void Load_comboxCategory()
         {
             BDConnection db = new BDConnection();
             string strQuery = "select * from Categories";
@@ -29,48 +30,52 @@ namespace QuanNhau
             cb_cateItem.DisplayMember = "category_name";
             cb_cateItem.ValueMember = "category_id";
         }
-        void Load_DgvItems()
+        
+        private void Load_DgvItems()
         {
             BDConnection db = new BDConnection();
             string strView = "select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả', item_unit as N'Đơn vị' from Items i, Categories c where c.category_id = i.category_id";
             DataTable dt = db.getDataTable(strView);
             dtgv_Item.DataSource = dt;
         }
-        void Load_DgvCategory()
+        private void Load_DgvCategory()
         {
             BDConnection db = new BDConnection();
             string strView = "select category_id as 'ID', category_name as N'Tên danh mục' from Categories";
             DataTable dt = db.getDataTable(strView);
             dtgv_cate.DataSource = dt;
         }
-        void Load_DgvTables()
+        private void Load_DgvTables()
         {
             BDConnection db = new BDConnection();
             string strView = "select table_id as 'ID', table_name as N'Tên bàn' from Tables ";
             DataTable dt = db.getDataTable(strView);
             dtgv_table.DataSource = dt;
         }
-        void Load_DgvAccount()
-        {
-            BDConnection db = new BDConnection();
-            string strView = "select Display as N'Tên nhân viên', UserName as N'Tên tài khoản', case when Type = 1 then 'Adimin' else N'Nhân viên' end as 'Loại nhân viên' from Account";
-            DataTable dt = db.getDataTable(strView);
-            dtgv_acc.DataSource = dt;
-        }
-        void Load_DgvBills()
+
+        private void Load_DgvBills()
         {
             BDConnection db = new BDConnection();
             string strView = "select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng', b.total_bill as N'Tổng hóa đơn' from Bills b, Tables t where b.table_id = t.table_id";
             DataTable dt = db.getDataTable(strView);
             dtgv_bill.DataSource = dt;
         }
-        void Load_DgvAllOrderOfBill(string Query)
+        private void Load_DgvAllOrderOfBill(string Query)
         {
             BDConnection db = new BDConnection();
             string strView = "select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Items i, Orders o where i.item_id = o.order_item_id and o.bill_id = '" + Query + "'";
             DataTable dt = db.getDataTable(strView);
             dtgv_AllorderOfbill.DataSource = dt;
         }
+        private void Load_DgvAcc()
+        {
+            BDConnection db = new BDConnection();
+            string strView = "select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', PassWord as N'Mật khẩu' , CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a";
+            DataTable dt = db.getDataTable(strView);
+            dtgv_acc.DataSource = dt;
+        }
+        #endregion
+        #region Events
         private void dtgv_dish_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
                 
@@ -110,19 +115,13 @@ namespace QuanNhau
             Load_DgvBills();
             Load_DgvAcc();
         }
-        void Load_DgvAcc()
-        {
-            BDConnection db = new BDConnection();
-            string strView = "select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a";
-            DataTable dt = db.getDataTable(strView);
-            dtgv_acc.DataSource = dt;
-        }
+        
         private void btn_addDish_Click(object sender, EventArgs e)
         {
             if (CheckPKCoincidence(tb_idItem.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '"+cbo_unit.SelectedItem+"' '" + cb_cateItem.SelectedValue + "')";
+                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '"+cbo_unit.SelectedItem+"', '" + cb_cateItem.SelectedValue + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -151,9 +150,11 @@ namespace QuanNhau
             DataGridViewRow r = dtgv_Item.Rows[e.RowIndex];
             tb_idItem.Text = r.Cells[0].Value.ToString();
             tb_nameItem.Text = r.Cells[1].Value.ToString();
-            tb_priceItem.Text = r.Cells[2].Value.ToString();
+            tb_priceItem.Text = r.Cells[3].Value.ToString();
             cb_cateItem.Text = r.Cells[4].Value.ToString();
             tb_despItem.Text = r.Cells[5].Value.ToString();
+            cbo_unit.Text = r.Cells[2].Value.ToString();
+
         }
 
         private void btn_changeDish_Click(object sender, EventArgs e)
@@ -214,7 +215,7 @@ namespace QuanNhau
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
-                    MessageBox.Show("Đã đã danh mục " + tb_nameCate.Text + "", "Thông báo");
+                    MessageBox.Show("Đã xóa danh mục " + tb_nameCate.Text + "", "Thông báo");
                     Load_DgvCategory();
                 }
                 else
@@ -242,7 +243,7 @@ namespace QuanNhau
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
-                    MessageBox.Show("Đã đã mặt hàng " + tb_nameItem.Text + "", "Thông báo");
+                    MessageBox.Show("Đã xóa mặt hàng " + tb_nameItem.Text + "", "Thông báo");
                     Load_DgvItems();
                 }
                 else
@@ -270,21 +271,21 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idTable.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "insert into Table values ('" + tb_idTable.Text + "', '" + tb_nameTable.Text + "')";
+                string strQuery = "insert into Tables (table_id, table_name) values ('" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
-                    MessageBox.Show("Đã thêm bàn " + tb_nameTable.Text + " vào ", "Thông báo");
+                    MessageBox.Show("Đã thêm " + tb_nameTable.Text + " vào ", "Thông báo");
                     Load_DgvItems();
                 }
                 else
                 {
-                    MessageBox.Show("Bàn " + tb_nameTable.Text + " thêm không thành công!", "Lỗi");
+                    MessageBox.Show("" + tb_nameTable.Text + " thêm không thành công!", "Lỗi");
                 }
             }
             else
             {
-                MessageBox.Show("Kiểm tra lại mã số " + tb_idTable.Text + " của bàn " + tb_nameTable.Text + " bị trùng mã");
+                MessageBox.Show("Kiểm tra lại mã số " + tb_idTable.Text + " của " + tb_nameTable.Text + " bị trùng mã");
             }
             Load_DgvTables();
         }
@@ -292,11 +293,11 @@ namespace QuanNhau
         private void btn_changeTable_Click(object sender, EventArgs e)
         {
             BDConnection db = new BDConnection();
-            string strQuery = "update Table set table_name = N'" + tb_nameTable.Text + "',  where table_id = '" + tb_idTable.Text + "'";
+            string strQuery = "update Tables set table_name = N'" + tb_nameTable.Text + "' where table_id = '" + tb_idTable.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {
-                MessageBox.Show("Bàn " + tb_nameTable.Text + " đã được sửa thành công  ", "Thông báo");
+                MessageBox.Show("" + tb_nameTable.Text + " đã được sửa thành công  ", "Thông báo");
             }
             Load_DgvTables();
         }
@@ -310,7 +311,63 @@ namespace QuanNhau
             {
                 MessageBox.Show("Danh mục " + tb_nameCate.Text + " đã được sửa thành công  ", "Thông báo");
             }
-            Load_DgvTables();
+            Load_DgvCategory();
+        }
+
+        private void btn_delTable_Click(object sender, EventArgs e)
+        {
+            BDConnection db = new BDConnection();
+            DialogResult result = MessageBox.Show("Bạn có xóa bàn " + tb_nameTable.Text + " không?", "Thông báo xóa bàn!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                string strQuery = "delete from Tables where table_id = '" + tb_idTable.Text + "'";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã xóa " + tb_nameCate.Text + "", "Thông báo");
+                    Load_DgvTables();
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi");
+                }
+            }
+        }
+
+        private void btn_addAcc_Click(object sender, EventArgs e)
+        {
+            if (CheckPKCoincidence(tb_username.Text))
+            {
+                BDConnection db = new BDConnection();
+                string strQuery = "insert into Account values ('" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + cb_typeAcc.Text + "')";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã thêm tài khoản " + tb_username.Text + " vào ", "Thông báo");
+                    Load_DgvItems();
+                }
+                else
+                {
+                    MessageBox.Show("Tài khoản" + tb_username.Text + " thêm không thành công!", "Lỗi");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kiểm tra lại tên đăng nhập " + tb_username.Text + " của " + tb_username.Text + " bị trùng mã");
+            }
+            Load_DgvAcc();
+        }
+
+        private void dtgv_acc_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+            DataGridViewRow r = dtgv_acc.Rows[e.RowIndex];
+            tb_displayAcc.Text = r.Cells[0].Value.ToString();
+            tb_username.Text = r.Cells[1].Value.ToString();
+            tb_pass.Text = r.Cells[2].Value.ToString();
+            cb_typeAcc.Text = r.Cells[3].Value.ToString();
         }
     }
+    #endregion
 }
+

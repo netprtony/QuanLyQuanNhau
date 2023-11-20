@@ -17,6 +17,9 @@ namespace QuanNhau
             InitializeComponent();
             load_lstTable();
         }
+        #region Method
+        #endregion
+        #region Events
         private void load_lstTable()
         {
 
@@ -46,5 +49,13 @@ namespace QuanNhau
         {
 
         }
+        
+
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
     }
 }
