@@ -59,7 +59,7 @@ namespace QuanNhau
         #region Method
         private bool Login(string username, string password)
         {
-            BDConnection db = new BDConnection();
+            DBConnection db = new DBConnection();
             string strQuery = "exec USP_LoginAccount @username = '" + username + "' , @password = '" + password + "'";
             DataTable res = db.getDataTable(strQuery);
             return res.Rows.Count > 0;

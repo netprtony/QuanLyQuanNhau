@@ -8,16 +8,16 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 namespace QuanNhau
 {
-    class BDConnection
+    class DBConnection
     {
-        private const string V = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = @"Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
         private string strConnect = V;
         SqlConnection connect;
-        public BDConnection()
+        public DBConnection()
         {
             connect = new SqlConnection(strConnect);
         }
-        public BDConnection(string strcon)
+        public DBConnection(string strcon)
         {
             connect = new SqlConnection(strcon);
         }
@@ -55,6 +55,7 @@ namespace QuanNhau
             da.Fill(ds);
             return ds.Tables[0];
         }
+
         public List<Table> LoadTableList()
         {
             List<Table> tableList = new List<Table>();
@@ -66,7 +67,7 @@ namespace QuanNhau
             }
             return tableList;
         }
-        public static double TableWidth = 50;
-        public static double TableHeight = 50;
+        public int TableWidth = 50;
+        public int TableHeight = 50;
     }
 }

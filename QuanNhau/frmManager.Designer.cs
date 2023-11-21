@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.flowLayoutTable = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpTable = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.nud_countdish = new System.Windows.Forms.NumericUpDown();
             this.btn_addDish = new System.Windows.Forms.Button();
@@ -56,18 +56,18 @@
             // 
             // flowLayoutTable
             // 
-            this.flowLayoutTable.Controls.Add(this.flowLayoutPanel1);
-            this.flowLayoutTable.Location = new System.Drawing.Point(12, 50);
+            this.flowLayoutTable.Controls.Add(this.flpTable);
+            this.flowLayoutTable.Location = new System.Drawing.Point(12, 27);
             this.flowLayoutTable.Name = "flowLayoutTable";
-            this.flowLayoutTable.Size = new System.Drawing.Size(774, 560);
+            this.flowLayoutTable.Size = new System.Drawing.Size(780, 583);
             this.flowLayoutTable.TabIndex = 0;
             // 
-            // flowLayoutPanel1
+            // flpTable
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(771, 557);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.flpTable.Location = new System.Drawing.Point(3, 3);
+            this.flpTable.Name = "flpTable";
+            this.flpTable.Size = new System.Drawing.Size(771, 580);
+            this.flpTable.TabIndex = 0;
             // 
             // panel1
             // 
@@ -75,9 +75,9 @@
             this.panel1.Controls.Add(this.btn_addDish);
             this.panel1.Controls.Add(this.cb_addBeverage);
             this.panel1.Controls.Add(this.cb_addDish);
-            this.panel1.Location = new System.Drawing.Point(792, 50);
+            this.panel1.Location = new System.Drawing.Point(798, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(430, 100);
+            this.panel1.Size = new System.Drawing.Size(430, 101);
             this.panel1.TabIndex = 1;
             // 
             // nud_countdish
@@ -104,26 +104,26 @@
             // cb_addBeverage
             // 
             this.cb_addBeverage.FormattingEnabled = true;
-            this.cb_addBeverage.Location = new System.Drawing.Point(14, 59);
+            this.cb_addBeverage.Location = new System.Drawing.Point(3, 59);
             this.cb_addBeverage.Name = "cb_addBeverage";
-            this.cb_addBeverage.Size = new System.Drawing.Size(265, 21);
+            this.cb_addBeverage.Size = new System.Drawing.Size(276, 21);
             this.cb_addBeverage.TabIndex = 1;
             this.cb_addBeverage.SelectedIndexChanged += new System.EventHandler(this.cb_addBeverage_SelectedIndexChanged);
             // 
             // cb_addDish
             // 
             this.cb_addDish.FormattingEnabled = true;
-            this.cb_addDish.Location = new System.Drawing.Point(14, 17);
+            this.cb_addDish.Location = new System.Drawing.Point(3, 17);
             this.cb_addDish.Name = "cb_addDish";
-            this.cb_addDish.Size = new System.Drawing.Size(265, 21);
+            this.cb_addDish.Size = new System.Drawing.Size(276, 21);
             this.cb_addDish.TabIndex = 0;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.lstView_bill);
-            this.panel2.Location = new System.Drawing.Point(792, 156);
+            this.panel2.Location = new System.Drawing.Point(798, 134);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(430, 348);
+            this.panel2.Size = new System.Drawing.Size(430, 370);
             this.panel2.TabIndex = 2;
             // 
             // lstView_bill
@@ -131,7 +131,7 @@
             this.lstView_bill.HideSelection = false;
             this.lstView_bill.Location = new System.Drawing.Point(3, 3);
             this.lstView_bill.Name = "lstView_bill";
-            this.lstView_bill.Size = new System.Drawing.Size(424, 342);
+            this.lstView_bill.Size = new System.Drawing.Size(424, 364);
             this.lstView_bill.TabIndex = 0;
             this.lstView_bill.UseCompatibleStateImageBehavior = false;
             // 
@@ -140,9 +140,9 @@
             this.panel3.Controls.Add(this.cb_switchTable);
             this.panel3.Controls.Add(this.btn_switchTable);
             this.panel3.Controls.Add(this.btn_pay);
-            this.panel3.Location = new System.Drawing.Point(792, 510);
+            this.panel3.Location = new System.Drawing.Point(798, 510);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(430, 100);
+            this.panel3.Size = new System.Drawing.Size(424, 100);
             this.panel3.TabIndex = 2;
             // 
             // cb_switchTable
@@ -204,14 +204,14 @@
             // thôngTinCáNhânToolStripMenuItem
             // 
             this.thôngTinCáNhânToolStripMenuItem.Name = "thôngTinCáNhânToolStripMenuItem";
-            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.thôngTinCáNhânToolStripMenuItem.Text = "Thông tin cá nhân";
             this.thôngTinCáNhânToolStripMenuItem.Click += new System.EventHandler(this.thôngTinCáNhânToolStripMenuItem_Click);
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             this.đăngXuấtToolStripMenuItem.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem_Click);
             // 
@@ -261,7 +261,7 @@
         private System.Windows.Forms.ToolStripMenuItem thôngTinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thôngTinCáNhânToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flpTable;
     }
 }
 

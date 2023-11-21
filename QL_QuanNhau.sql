@@ -171,7 +171,11 @@ insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table
 	('BI002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB002'),
 	('BI003', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB001'),
 	('BI004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB003'),
-	('BI005', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB005')
+	('BI005', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB005'),
+	('BI006', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB007'),
+	('BI007', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB010'),
+	('BI008', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB012'),
+	('BI009', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB015')
 go
 insert into Orders values 
 	('BI001', 'I004', 1),
@@ -199,7 +203,30 @@ insert into Orders values
 	('BI005', 'I021', 1),
 	('BI005', 'I014', 1),
 	('BI005', 'I024', 1),
-	('BI005', 'I026', 24)
+	('BI005', 'I026', 24),
+	('BI006', 'I001', 1),
+	('BI006', 'I003', 1),
+	('BI006', 'I004', 1),
+	('BI006', 'I005', 1),
+	('BI006', 'I006', 1),
+	('BI006', 'I007', 1),
+	('BI006', 'I008', 1),
+	('BI007', 'I009', 1),
+	('BI007', 'I010', 1),
+	('BI007', 'I012', 1),
+	('BI007', 'I013', 1),
+	('BI007', 'I014', 1),
+	('BI007', 'I015', 1),
+	('BI008', 'I016', 1),
+	('BI008', 'I017', 1),
+	('BI008', 'I018', 1),
+	('BI008', 'I019', 1),
+	('BI008', 'I020', 1),
+	('BI009', 'I021', 1),
+	('BI009', 'I022', 1),
+	('BI009', 'I023', 1),
+	('BI009', 'I024', 1),
+	('BI009', 'I025', 1)
 go
 create trigger trig_upsale
 on Orders
@@ -217,6 +244,7 @@ end
 go
 create proc USP_GetTableList
 as select * from Tables
+go
 exec USP_GetTableList
 go
 create proc USP_LoginAccount 
@@ -226,3 +254,10 @@ begin
 	select * from Account where UserName = @username and PassWord = @password
 end
 go
+create proc USP_GetAllOrderOfBill
+@ID_BILL varchar(10)
+as 
+begin
+	select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Orders o, Items i where i.item_id = o.item_id and bill_id = @ID_BILL
+end
+

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuanNhau
 {
-    class Table
+    public class Table
     {
         public Table (string id, string name, bool status)
         {

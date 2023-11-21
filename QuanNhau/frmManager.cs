@@ -15,25 +15,21 @@ namespace QuanNhau
         public frmManager()
         {
             InitializeComponent();
-            load_lstTable();
+            //LoadTable();
         }
         #region Method
-        private void LoadTable()
+        void LoadTable()
         {
-            BDConnection db = new BDConnection();
+            DBConnection db = new DBConnection();
             List<Table> tableList = db.LoadTableList();
             foreach(Table item in tableList)
             {
-                Button btn = new Button();
-
+                Button btn = new Button() { Width = db.TableWidth, Height = db.TableHeight};
+                flpTable.Controls.Add(btn);
             }
         }
         #endregion
         #region Events
-        private void load_lstTable()
-        {
-
-        }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
