@@ -1,4 +1,7 @@
-﻿use master
+﻿
+use master
+drop database QL_QuanNhau
+use master
 create database QL_QuanNhau
 use QL_QuanNhau
 go
@@ -13,6 +16,7 @@ create table Tables(
 	table_name nvarchar(50) default N'Chưa đặt tên bàn',
 	status bit default 0
 )
+go
 create table Account 
 (
 	Display nvarchar(50) default N'Chưa đặt tên hiện thị',
@@ -20,6 +24,7 @@ create table Account
 	PassWord varchar(50) default 'ngaosoochen',
 	Type bit default 0
 )
+go
 create table Items
 (
 	item_id varchar(10) primary key	,
@@ -47,12 +52,12 @@ create table Orders(
 	bill_id varchar(10),
     item_id  varchar(10),
     quantity INT default 1,
-	constraint pk_billOrder primary key (bill_id, item_id)
+	constraint pk_billOrder primary key (bill_id, item_id),
     constraint fk_ordersBillId FOREIGN KEY (bill_id) REFERENCES Bills(bill_id),
     constraint fk_orderItemsId FOREIGN KEY (item_id) REFERENCES Items(item_id)
 )
 
-
+go
 CREATE TRIGGER trg_OrderAdded
 ON Orders
 for INSERT, update
@@ -63,8 +68,6 @@ BEGIN
 	from inserted i, Items it
 	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
 END
-go
-drop trigger trg_OrderAdded
 go
 create trigger tri_updateBill
 on Orders
@@ -77,7 +80,6 @@ begin
 	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
 end
 go
-select * from Orders, Bills
 insert into Categories values
 	('C001', N'Món Xào'),
 	('C002', N'Món Lẩu'),
@@ -93,6 +95,7 @@ insert into Categories values
 	('C012', N'Tráng miệng'),
 	('C013', N'Ốc'),
 	('C014', N'Cua-ghẹ')
+go
 insert into Items values
 	('I001', N'Mì xào rau muống', null, 59000, N'Dĩa', 'C001'),
 	('I002', N'Mì xào tỏi', null, 64000, N'Dĩa', 'C001'),
@@ -124,14 +127,16 @@ insert into Items values
 	('I028', N'Bia 333', N'Nồng độ cồn 5.3%', 19000, N'Lon','C009'),
 	('I029', N'Bia Saigon Special - Sài Gòn lùn', N'Nồng độ cồn 4.9%', 18500, N'Chai','C009'),
 	('I030', N'Bia Sài Gòn Gold lon 330ml', N'Nồng độ cồn 5.0%', 22600, N'Lon','C009')
+go
 insert into Account values
 	(N'Admin', 'admin', 'admin', 1),
-	(N'Huỳnh Vĩ Khang', 'vikhang2805', null, 1),
-	(N'Đào Quí Mùi', 'muidao1506', null, 0),
-	(N'Đỗ Hoàng La Giang', 'lagiang1508', null, 0),
-	(N'Phạm Quỳnh Anh', 'quynhanh1810', null, 1),
-	(N'Nguyễn Mạnh Phát', 'manhphat123', null, 0),
-	(N'Ngô Thị Nhàn', 'thinhan123', null, 0)
+	(N'Huỳnh Vĩ Khang', 'vikhang2805', '123', 1),
+	(N'Đào Quí Mùi', 'muidao1506', '123', 0),
+	(N'Đỗ Hoàng La Giang', 'lagiang1508', '123', 0),
+	(N'Phạm Quỳnh Anh', 'quynhanh1810', '123', 1),
+	(N'Nguyễn Mạnh Phát', 'manhphat123', '123', 0),
+	(N'Ngô Thị Nhàn', 'thinhan123', '123', 0)
+go
 insert into Tables values 
 	('TB001', N'Bàn số 1', 0),
 	('TB002', N'Bàn số 2', 0),
@@ -158,57 +163,44 @@ insert into Tables values
 	('TB023', N'Bàn số 23', 0),
 	('TB024', N'Bàn số 24', 0),
 	('TB025', N'Bàn số 25', 0)
-select * from Orders
-select * from Bills
-delete from Orders 
-where order_id = 'O001'
-update Orders set quantity = 3 where order_id = 'O001'
-insert into Orders (order_id, bill_id, item_id, quantity) values 
-	('O003', 'BI001', 'I004', 1)--89
-insert into Orders (order_id, bill_id, item_id, quantity) values 
-	('O002', 'BI001', 'I022', 2)--39
+go
 set dateformat DMY
+go
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
 	('BI001', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'muidao1506', 'TB001'),
 	('BI002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB002'),
 	('BI003', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB001'),
 	('BI004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB003'),
 	('BI005', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB005')
-insert into Orders (order_id, bill_id, item_id, quantity) values 
-	('O004', 'BI001', 'I004', 1),
-	('O002', 'BI001', 'I024', 1),
-	('O003', 'BI001', 'I026', 24),
-	('O004', 'BI001', 'I021', 10),
-	('O005', 'BI001', 'I021', 1),
-	('O006', 'BI002', 'I021', 1),
-	('O007', 'BI002', 'I021', 1),
-	('O008', 'BI002', 'I014', 1),
-	('O009', 'BI002', 'I024', 1),
-	('O010', 'BI003', 'I026', 24),
-	('O011', 'BI003', 'I021', 1),
-	('O012', 'BI003', 'I021', 1),
-	('O013', 'BI003', 'I014', 1),
-	('O014', 'BI003', 'I024', 1),
-	('O015', 'BI003', 'I026', 24),
-	('O016', 'BI004', 'I026', 24),
-	('O017', 'BI004', 'I021', 1),
-	('O018', 'BI004', 'I021', 1),
-	('O019', 'BI004', 'I014', 1),
-	('O020', 'BI004', 'I024', 1),
-	('O021', 'BI004', 'I026', 24),
-	('O022', 'BI005', 'I026', 24),
-	('O023', 'BI005', 'I021', 1),
-	('O024', 'BI005', 'I021', 1),
-	('O025', 'BI005', 'I014', 1),
-	('O026', 'BI005', 'I024', 1),
-	('O027', 'BI005', 'I026', 24)
-delete from Orders
-delete from Bills
-select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng' from Bills b, Tables t where b.table_id = t.table_id
-select * from Items i, Orders o where i.item_id = o.item_id and o.bill_id = 'BI001'
-select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Items i, Orders o where i.item_id = o.item_id and o.bill_id = 'BI001'
-select * from Orders
- select count(*) from Orders
+go
+insert into Orders values 
+	('BI001', 'I004', 1),
+	('BI001', 'I024', 1),
+	('BI001', 'I026', 24),
+	('BI001', 'I021', 1),
+	('BI001', 'I022', 1),
+	('BI001', 'I025', 1),
+	('BI002', 'I021', 1),
+	('BI002', 'I014', 1),
+	('BI002', 'I005', 1),
+	('BI002', 'I006', 1),
+	('BI002', 'I026', 24),
+	('BI002', 'I024', 1),
+	('BI003', 'I026', 24),
+	('BI003', 'I005', 1),
+	('BI003', 'I021', 1),
+	('BI003', 'I011', 1),
+	('BI003', 'I014', 1),
+	('BI003', 'I024', 1),
+	('BI004', 'I021', 1),
+	('BI004', 'I014', 1),
+	('BI004', 'I024', 1),
+	('BI004', 'I026', 24),
+	('BI005', 'I021', 1),
+	('BI005', 'I014', 1),
+	('BI005', 'I024', 1),
+	('BI005', 'I026', 24)
+go
 create trigger trig_upsale
 on Orders
 for insert, update
@@ -222,16 +214,15 @@ begin
 		where i.item_id= it.item_id and Bills.bill_id = i.bill_id
 	end	
 end
-drop trigger trig_upsale
-select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a
 go
-create proc USP_GetAccountByName
-@username varchar(50)
+create proc USP_GetTableList
+as select * from Tables
+exec USP_GetTableList
+go
+create proc USP_LoginAccount 
+@username varchar(50), @password varchar(50)
 as
-begin
-	select * from Account where UserName = @username
+begin	
+	select * from Account where UserName = @username and PassWord = @password
 end
-go
-exec USP_GetAccountByName @username = 'vikhang2805'
-select * from Account where  UserName  = 'admin' and PassWord = ''
 go

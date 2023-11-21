@@ -17,8 +17,8 @@ namespace QuanNhau
         }
         public Table(DataRow row)
         {
-            this.ID = row["id"].ToString();
-            this.Name = row["name"].ToString();
+            this.ID = row["table_id"].ToString();
+            this.Name = row["table_name"].ToString();
             this.Status = (bool)row["status"];
         }
         private string name;

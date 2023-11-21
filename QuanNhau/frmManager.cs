@@ -18,6 +18,16 @@ namespace QuanNhau
             load_lstTable();
         }
         #region Method
+        private void LoadTable()
+        {
+            BDConnection db = new BDConnection();
+            List<Table> tableList = db.LoadTableList();
+            foreach(Table item in tableList)
+            {
+                Button btn = new Button();
+
+            }
+        }
         #endregion
         #region Events
         private void load_lstTable()

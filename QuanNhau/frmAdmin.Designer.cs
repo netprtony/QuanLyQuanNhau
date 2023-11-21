@@ -32,6 +32,9 @@
             this.panel9 = new System.Windows.Forms.Panel();
             this.dtgv_acc = new System.Windows.Forms.DataGridView();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.tb_pass = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.btn_restPass = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.cb_typeAcc = new System.Windows.Forms.ComboBox();
@@ -120,13 +123,11 @@
             this.dtp_dateStart = new System.Windows.Forms.DateTimePicker();
             this.dtgv_bill = new System.Windows.Forms.DataGridView();
             this.tc_admin = new System.Windows.Forms.TabControl();
-            this.panel26 = new System.Windows.Forms.Panel();
-            this.tb_pass = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.tp_acc.SuspendLayout();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_acc)).BeginInit();
             this.panel10.SuspendLayout();
+            this.panel26.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel13.SuspendLayout();
@@ -161,7 +162,6 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_bill)).BeginInit();
             this.tc_admin.SuspendLayout();
-            this.panel26.SuspendLayout();
             this.SuspendLayout();
             // 
             // tp_acc
@@ -207,6 +207,31 @@
             this.panel10.Size = new System.Drawing.Size(713, 430);
             this.panel10.TabIndex = 7;
             // 
+            // panel26
+            // 
+            this.panel26.Controls.Add(this.tb_pass);
+            this.panel26.Controls.Add(this.label18);
+            this.panel26.Location = new System.Drawing.Point(59, 181);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(562, 71);
+            this.panel26.TabIndex = 9;
+            // 
+            // tb_pass
+            // 
+            this.tb_pass.Location = new System.Drawing.Point(153, 25);
+            this.tb_pass.Name = "tb_pass";
+            this.tb_pass.Size = new System.Drawing.Size(339, 22);
+            this.tb_pass.TabIndex = 2;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(36, 33);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(65, 14);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "Mật khẩu";
+            // 
             // btn_restPass
             // 
             this.btn_restPass.Location = new System.Drawing.Point(534, 335);
@@ -228,9 +253,6 @@
             // cb_typeAcc
             // 
             this.cb_typeAcc.FormattingEnabled = true;
-            this.cb_typeAcc.Items.AddRange(new object[] {
-            "Staff",
-            "Admin"});
             this.cb_typeAcc.Location = new System.Drawing.Point(153, 25);
             this.cb_typeAcc.Name = "cb_typeAcc";
             this.cb_typeAcc.Size = new System.Drawing.Size(339, 22);
@@ -323,6 +345,7 @@
             this.btn_changeAcc.TabIndex = 9;
             this.btn_changeAcc.Text = "Sửa";
             this.btn_changeAcc.UseVisualStyleBackColor = true;
+            this.btn_changeAcc.Click += new System.EventHandler(this.btn_changeAcc_Click);
             // 
             // btn_delAcc
             // 
@@ -332,6 +355,7 @@
             this.btn_delAcc.TabIndex = 8;
             this.btn_delAcc.Text = "Xóa";
             this.btn_delAcc.UseVisualStyleBackColor = true;
+            this.btn_delAcc.Click += new System.EventHandler(this.btn_delAcc_Click);
             // 
             // btn_addAcc
             // 
@@ -1052,31 +1076,6 @@
             this.tc_admin.Size = new System.Drawing.Size(1440, 607);
             this.tc_admin.TabIndex = 0;
             // 
-            // panel26
-            // 
-            this.panel26.Controls.Add(this.tb_pass);
-            this.panel26.Controls.Add(this.label18);
-            this.panel26.Location = new System.Drawing.Point(59, 181);
-            this.panel26.Name = "panel26";
-            this.panel26.Size = new System.Drawing.Size(562, 71);
-            this.panel26.TabIndex = 9;
-            // 
-            // tb_pass
-            // 
-            this.tb_pass.Location = new System.Drawing.Point(153, 25);
-            this.tb_pass.Name = "tb_pass";
-            this.tb_pass.Size = new System.Drawing.Size(339, 22);
-            this.tb_pass.TabIndex = 2;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(36, 33);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(65, 14);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "Mật khẩu";
-            // 
             // frmAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -1092,6 +1091,8 @@
             this.panel9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_acc)).EndInit();
             this.panel10.ResumeLayout(false);
+            this.panel26.ResumeLayout(false);
+            this.panel26.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel12.ResumeLayout(false);
@@ -1141,8 +1142,6 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_bill)).EndInit();
             this.tc_admin.ResumeLayout(false);
-            this.panel26.ResumeLayout(false);
-            this.panel26.PerformLayout();
             this.ResumeLayout(false);
 
         }

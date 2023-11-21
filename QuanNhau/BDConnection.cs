@@ -10,7 +10,7 @@ namespace QuanNhau
 {
     class BDConnection
     {
-        private const string V = "Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
         private string strConnect = V;
         SqlConnection connect;
         public BDConnection()
@@ -55,5 +55,18 @@ namespace QuanNhau
             da.Fill(ds);
             return ds.Tables[0];
         }
+        public List<Table> LoadTableList()
+        {
+            List<Table> tableList = new List<Table>();
+            DataTable dt = getDataTable("USP_GetTableList");
+            foreach(DataRow item in dt.Rows)
+            {
+                Table table = new Table(item);
+                tableList.Add(table);
+            }
+            return tableList;
+        }
+        public static double TableWidth = 50;
+        public static double TableHeight = 50;
     }
 }

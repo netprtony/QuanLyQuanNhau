@@ -14,7 +14,7 @@ namespace QuanNhau
         private bool CheckPKCoincidence(string ck)
         {
             BDConnection db = new BDConnection();
-            string str = "Select Count(*) from Items where item_id ='"+ ck + "'";
+            string str = "Select Count(*) from Items where item_id ='" + ck + "'";
             int k = (int)db.getScalar(str);
             return k == 0 ? true : false;
         }
@@ -30,7 +30,11 @@ namespace QuanNhau
             cb_cateItem.DisplayMember = "category_name";
             cb_cateItem.ValueMember = "category_id";
         }
-        
+        private void Load_comboxTypeAccount()
+        {
+            cb_typeAcc.Items.Add("Admin");
+            cb_typeAcc.Items.Add("Staff");
+        }
         private void Load_DgvItems()
         {
             BDConnection db = new BDConnection();
@@ -78,7 +82,7 @@ namespace QuanNhau
         #region Events
         private void dtgv_dish_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-                
+
         }
 
         private void tp_dish_Click(object sender, EventArgs e)
@@ -109,19 +113,20 @@ namespace QuanNhau
         private void frmAdmin_Load(object sender, EventArgs e)
         {
             Load_comboxCategory();
+            Load_comboxTypeAccount();
             Load_DgvItems();
             Load_DgvCategory();
             Load_DgvTables();
             Load_DgvBills();
             Load_DgvAcc();
         }
-        
+
         private void btn_addDish_Click(object sender, EventArgs e)
         {
             if (CheckPKCoincidence(tb_idItem.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '"+cbo_unit.SelectedItem+"', '" + cb_cateItem.SelectedValue + "')";
+                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -130,7 +135,7 @@ namespace QuanNhau
                 }
                 else
                 {
-                    MessageBox.Show("Món "+tb_nameItem.Text+" thêm vào thực đơn không thành công!", "Lỗi");
+                    MessageBox.Show("Món " + tb_nameItem.Text + " thêm vào thực đơn không thành công!", "Lỗi");
                 }
             }
             else
@@ -174,7 +179,7 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idCate.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "insert into Categories values ('"+tb_idCate.Text+"', '"+tb_nameCate.Text+"')";
+                string strQuery = "insert into Categories values ('" + tb_idCate.Text + "', '" + tb_nameCate.Text + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -202,14 +207,14 @@ namespace QuanNhau
 
         private void dtgv_bill_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void btn_delCate_Click(object sender, EventArgs e)
         {
             BDConnection db = new BDConnection();
             DialogResult result = MessageBox.Show("Bạn có xóa danh mục " + tb_nameCate.Text + " không?", "Thông báo xóa danh mục!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 string strQuery = "delete from Categories where category_id = '" + tb_idCate.Text + "'";
                 int k = db.getNonQuery(strQuery);
@@ -339,7 +344,8 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_username.Text))
             {
                 BDConnection db = new BDConnection();
-                string strQuery = "insert into Account values ('" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + cb_typeAcc.Text + "')";
+                bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
+                string strQuery = "insert into Account values ('" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "')";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -367,7 +373,41 @@ namespace QuanNhau
             tb_pass.Text = r.Cells[2].Value.ToString();
             cb_typeAcc.Text = r.Cells[3].Value.ToString();
         }
+
+        private void btn_delAcc_Click(object sender, EventArgs e)
+        {
+            BDConnection db = new BDConnection();
+            DialogResult result = MessageBox.Show("Bạn có muốn xóa tài khoản " + tb_nameTable.Text + " không?", "Thông báo xóa tài khoản!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                string strQuery = "delete from Account where UserName = '" + tb_username.Text + "'";
+                int k = db.getNonQuery(strQuery);
+                if (k == 1)
+                {
+                    MessageBox.Show("Đã xóa tài khoản " + tb_username.Text + "", "Thông báo");
+                    Load_DgvAcc();
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi");
+                }
+            }
+        }
+
+        private void btn_changeAcc_Click(object sender, EventArgs e)
+        {
+            BDConnection db = new BDConnection();
+            bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
+            string strQuery = "update Account  set Display = N'" + tb_displayAcc.Text + "', PassWord = '" + tb_pass.Text + "', Type = '" + isAdmin + "' where UserName = '" + tb_username.Text + "'";
+            int k = db.getNonQuery(strQuery);
+            if (k == 1)
+            {
+                MessageBox.Show("Tài khoản " + tb_username.Text + " đã được sửa thành công  ", "Thông báo");
+            }
+            Load_DgvAcc();
+        }
+        #endregion
+
     }
-    #endregion
 }
 
