@@ -38,21 +38,21 @@ namespace QuanNhau
         private void Load_DgvItems()
         {
             DBConnection db = new DBConnection();
-            string strView = "select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả', item_unit as N'Đơn vị' from Items i, Categories c where c.category_id = i.category_id";
+            string strView = "exec USP_LoadDataItem";
             DataTable dt = db.getDataTable(strView);
             dtgv_Item.DataSource = dt;
         }
         private void Load_DgvCategory()
         {
             DBConnection db = new DBConnection();
-            string strView = "select category_id as 'ID', category_name as N'Tên danh mục' from Categories";
+            string strView = "exec USP_LoadDateCategory";
             DataTable dt = db.getDataTable(strView);
             dtgv_cate.DataSource = dt;
         }
         private void Load_DgvTables()
         {
             DBConnection db = new DBConnection();
-            string strView = "select table_id as 'ID', table_name as N'Tên bàn' from Tables ";
+            string strView = "exec USP_LoadDataTable";
             DataTable dt = db.getDataTable(strView);
             dtgv_table.DataSource = dt;
         }
@@ -60,7 +60,7 @@ namespace QuanNhau
         private void Load_DgvBills()
         {
             DBConnection db = new DBConnection();
-            string strView = "select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng', b.total_bill as N'Tổng hóa đơn' from Bills b, Tables t where b.table_id = t.table_id";
+            string strView = "exec USP_LoadDataBill";
             DataTable dt = db.getDataTable(strView);
             dtgv_bill.DataSource = dt;
         }
@@ -74,7 +74,7 @@ namespace QuanNhau
         private void Load_DgvAcc()
         {
             DBConnection db = new DBConnection();
-            string strView = "select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', PassWord as N'Mật khẩu' , CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò' from Account a";
+            string strView = "exec USP_LoadAccount";
             DataTable dt = db.getDataTable(strView);
             dtgv_acc.DataSource = dt;
         }
@@ -126,7 +126,7 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idItem.Text))
             {
                 DBConnection db = new DBConnection();
-                string strQuery = "Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) values ('" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "')";
+                string strQuery = "USP_InsertItem '" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -165,7 +165,7 @@ namespace QuanNhau
         private void btn_changeDish_Click(object sender, EventArgs e)
         {
             DBConnection db = new DBConnection();
-            string strQuery = "update Items set item_name = N'" + tb_nameItem.Text + "', item_price = " + decimal.Parse(tb_priceItem.Text) + ", item_description = N'" + tb_despItem.Text + "', category_id = '" + cb_cateItem.SelectedValue + "' where item_id = '" + tb_idItem.Text + "'";
+            string strQuery = "exec USP_UpdateItem '"+tb_idItem.Text+"', '"+tb_nameCate.Text+"', '"+tb_despItem.Text+"', '"+decimal.Parse(tb_priceItem.Text)+"', '"+cbo_unit.SelectedItem+"', '"+cb_cateItem.SelectedValue+"'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {

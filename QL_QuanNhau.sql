@@ -260,4 +260,38 @@ as
 begin
 	select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Orders o, Items i where i.item_id = o.item_id and bill_id = @ID_BILL
 end
-
+go
+create proc USP_LoadDataItem 
+as	
+	select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả', item_unit as N'Đơn vị' 
+	from Items i, Categories c 
+	where c.category_id = i.category_id
+go
+create proc USP_LoadDateCategory
+as	select category_id as 'ID', category_name as N'Tên danh mục' 
+	from Categories
+go
+create proc USP_LoadDataTable
+as	select table_id as 'ID', table_name as N'Tên bàn' 
+	from Tables
+go
+create proc USP_LoadDataBill
+as	select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng', b.total_bill as N'Tổng hóa đơn' 
+	from Bills b, Tables t 
+	where b.table_id = t.table_id
+go
+create proc USP_LoadAccount
+as	select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', PassWord as N'Mật khẩu' , CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò'
+	from Account a
+go
+create proc USP_InsertItem 
+@id varchar(10), @name nvarchar(50), @des nvarchar(max), @price decimal(18,0), @unit nvarchar(10), @cate varchar(10)
+as	
+	Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) 
+	values (@id, @name, @des, @price, @unit, @cate)
+go
+create proc USP_UpdateItem
+@id varchar(10), @name nvarchar(50), @des nvarchar(max), @price decimal(18,0), @unit nvarchar(10), @cate varchar(10)
+as 
+	update Items set item_name = @name, item_price = @price, item_unit = @unit, category_id = @cate where item_id = @id
+go
