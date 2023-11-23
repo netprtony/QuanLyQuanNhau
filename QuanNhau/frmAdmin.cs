@@ -67,7 +67,7 @@ namespace QuanNhau
         private void Load_DgvAllOrderOfBill(string idBill)
         {
             DBConnection db = new DBConnection();
-            string strView = "USP_GetAllOrderOfBill @ID_BILL = '"+ idBill + "'";
+            string strView = "exec USP_GetAllOrderOfBill '"+ idBill + "'";
             DataTable dt = db.getDataTable(strView);
             dtgv_AllorderOfbill.DataSource = dt;
         }
@@ -126,7 +126,7 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idItem.Text))
             {
                 DBConnection db = new DBConnection();
-                string strQuery = "USP_InsertItem '" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", '" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "'";
+                string strQuery = "USP_InsertItem '" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", N'" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -165,7 +165,7 @@ namespace QuanNhau
         private void btn_changeDish_Click(object sender, EventArgs e)
         {
             DBConnection db = new DBConnection();
-            string strQuery = "exec USP_UpdateItem '"+tb_idItem.Text+"', '"+tb_nameCate.Text+"', '"+tb_despItem.Text+"', '"+decimal.Parse(tb_priceItem.Text)+"', '"+cbo_unit.SelectedItem+"', '"+cb_cateItem.SelectedValue+"'";
+            string strQuery = "exec USP_UpdateItem '" + tb_idItem.Text+"', N'"+tb_nameItem.Text+"', N'"+tb_despItem.Text+"', '"+decimal.Parse(tb_priceItem.Text)+"', N'"+cbo_unit.SelectedItem+"', '"+cb_cateItem.SelectedValue+"'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {
@@ -179,7 +179,7 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idCate.Text))
             {
                 DBConnection db = new DBConnection();
-                string strQuery = "insert into Categories values ('" + tb_idCate.Text + "', '" + tb_nameCate.Text + "')";
+                string strQuery = "exec USP_InsertCategory '"+tb_idCate.Text+"', N'"+tb_nameCate.Text+"'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -216,7 +216,7 @@ namespace QuanNhau
             DialogResult result = MessageBox.Show("Bạn có xóa danh mục " + tb_nameCate.Text + " không?", "Thông báo xóa danh mục!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                string strQuery = "delete from Categories where category_id = '" + tb_idCate.Text + "'";
+                string strQuery = "exec USP_DeleteCategory '"+tb_idCate.Text+"'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -244,7 +244,7 @@ namespace QuanNhau
             DialogResult result = MessageBox.Show("Bạn có xóa mặt hàng " + tb_nameCate.Text + " không?", "Thông báo xóa mặt hàng!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                string strQuery = "delete from Items where item_id = '" + tb_idItem.Text + "'";
+                string strQuery = "exec USP_DeleteItem '"+tb_idItem.Text+"'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -276,7 +276,7 @@ namespace QuanNhau
             if (CheckPKCoincidence(tb_idTable.Text))
             {
                 DBConnection db = new DBConnection();
-                string strQuery = "insert into Tables (table_id, table_name) values ('" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "')";
+                string strQuery = "exec USP_insertTable '" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -298,7 +298,7 @@ namespace QuanNhau
         private void btn_changeTable_Click(object sender, EventArgs e)
         {
             DBConnection db = new DBConnection();
-            string strQuery = "update Tables set table_name = N'" + tb_nameTable.Text + "' where table_id = '" + tb_idTable.Text + "'";
+            string strQuery = "exec USP_UpdateTable '" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {
@@ -310,7 +310,7 @@ namespace QuanNhau
         private void btn_changeCate_Click(object sender, EventArgs e)
         {
             DBConnection db = new DBConnection();
-            string strQuery = "update Categories set category_name = N'" + tb_nameCate.Text + "' where category_id = '" + tb_idCate.Text + "'";
+            string strQuery = "exec USP_UpdateCategory '" + tb_idCate.Text + "', N'" + tb_nameCate.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {
@@ -325,11 +325,11 @@ namespace QuanNhau
             DialogResult result = MessageBox.Show("Bạn có xóa bàn " + tb_nameTable.Text + " không?", "Thông báo xóa bàn!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                string strQuery = "delete from Tables where table_id = '" + tb_idTable.Text + "'";
+                string strQuery = "exec USP_DeleteTable '" + tb_idTable.Text + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
-                    MessageBox.Show("Đã xóa " + tb_nameCate.Text + "", "Thông báo");
+                    MessageBox.Show("Đã xóa " + tb_nameTable.Text + "", "Thông báo");
                     Load_DgvTables();
                 }
                 else
@@ -345,7 +345,7 @@ namespace QuanNhau
             {
                 DBConnection db = new DBConnection();
                 bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
-                string strQuery = "insert into Account values ('" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "')";
+                string strQuery = "exec USP_InsertAccount N'" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -380,7 +380,7 @@ namespace QuanNhau
             DialogResult result = MessageBox.Show("Bạn có muốn xóa tài khoản " + tb_nameTable.Text + " không?", "Thông báo xóa tài khoản!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                string strQuery = "delete from Account where UserName = '" + tb_username.Text + "'";
+                string strQuery = "exec USP_DeleteAccount '" + tb_username.Text + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
                 {
@@ -398,7 +398,7 @@ namespace QuanNhau
         {
             DBConnection db = new DBConnection();
             bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
-            string strQuery = "update Account  set Display = N'" + tb_displayAcc.Text + "', PassWord = '" + tb_pass.Text + "', Type = '" + isAdmin + "' where UserName = '" + tb_username.Text + "'";
+            string strQuery = "exec USP_UpdateAccount N'" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
             {

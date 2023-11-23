@@ -245,8 +245,6 @@ go
 create proc USP_GetTableList
 as select * from Tables
 go
-exec USP_GetTableList
-go
 create proc USP_LoginAccount 
 @username varchar(50), @password varchar(50)
 as
@@ -294,4 +292,65 @@ create proc USP_UpdateItem
 @id varchar(10), @name nvarchar(50), @des nvarchar(max), @price decimal(18,0), @unit nvarchar(10), @cate varchar(10)
 as 
 	update Items set item_name = @name, item_price = @price, item_unit = @unit, category_id = @cate where item_id = @id
+go
+create proc USP_InsertCategory
+@id varchar(10), @name nvarchar(50)
+as
+	Insert into Categories
+	values (@id, @name)
+go
+create proc USP_DeleteCategory
+@id varchar(10)
+as
+	delete from Categories 
+	where category_id = @id
+go
+create proc USP_DeleteItem
+@id varchar(10)
+as
+	delete from Items
+	where item_id = @id
+go
+create proc USP_insertTable
+@id varchar(10), @name nvarchar(50)
+as
+	insert into Tables (table_id, table_name)
+	values (@id, @name)
+go
+create proc USP_UpdateTable
+@id varchar(10), @name nvarchar(50)
+as
+	update Tables set table_name = @name
+	where table_id = @id
+go
+create proc USP_UpdateCategory
+@id varchar(10), @name nvarchar(50)
+as
+	update Categories set category_name = @name
+	where category_id = @id
+go
+create proc USP_DeleteTable
+@id varchar(10)
+as
+	delete from Tables 
+	where table_id = @id
+go
+create proc USP_InsertAccount
+@display nvarchar(50), @user varchar(50), @pass varchar(50), @type bit
+as
+	insert into Account
+	values (@display, @user, @pass, @type)
+go
+create proc USP_DeleteAccount
+@user varchar(50)
+as
+	delete from Account
+	where UserName = @user
+go
+create proc USP_UpdateAccount
+@display nvarchar(50), @user varchar(50), @pass varchar(50), @type bit
+as
+	update Account 
+	set Display = @display, PassWord = @pass, Type = @type
+	where UserName = @user
 go
