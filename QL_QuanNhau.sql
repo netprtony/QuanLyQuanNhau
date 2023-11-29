@@ -11,75 +11,6 @@ create table Categories
 	category_name nvarchar(50) default N'Chưa đặt tên loại'
 )
 go 
-create table Tables(
-	table_id varchar(10) primary key,
-	table_name nvarchar(50) default N'Chưa đặt tên bàn',
-	status bit default 0
-)
-go
-create table Account 
-(
-	Display nvarchar(50) default N'Chưa đặt tên hiện thị',
-	UserName varchar(50) primary key,
-	PassWord varchar(50) default 'ngaosoochen',
-	Type bit default 0
-)
-go
-create table Items
-(
-	item_id varchar(10) primary key	,
-	item_name nvarchar(50) default N'Chưa đặt tên',
-	item_description nvarchar(max) default N'Chưa mô tả mặt hàng',
-	item_price decimal default 0,
-	item_unit nvarchar(10),
-	category_id varchar(10), 
-	constraint fk_itemCate foreign key (category_id) references Categories(category_id)
-)
-go 
-create table Bills(
-	bill_id varchar(10) primary key,
-	dateCheckin date default getdate(),
-	dateCheckout date,
-	status bit default 0,
-	cashier_id varchar(50),
-	table_id varchar(10),
-	total_bill decimal default 0,
-	constraint fk_tableBill FOREIGN KEY (table_id) REFERENCES Tables(table_id)
-)
-
-go
-create table Orders(
-	bill_id varchar(10),
-    item_id  varchar(10),
-    quantity INT default 1,
-	constraint pk_billOrder primary key (bill_id, item_id),
-    constraint fk_ordersBillId FOREIGN KEY (bill_id) REFERENCES Bills(bill_id),
-    constraint fk_orderItemsId FOREIGN KEY (item_id) REFERENCES Items(item_id)
-)
-
-go
-CREATE TRIGGER trg_OrderAdded
-ON Orders
-for INSERT, update
-AS
-BEGIN
-    update Bills
-	set total_bill += i.quantity * it.item_price
-	from inserted i, Items it
-	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
-END
-go
-create trigger tri_updateBill
-on Orders
-for delete, update
-as 
-begin
-    update Bills
-	set total_bill -= d.quantity * it.item_price
-	from deleted d, Items it
-	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
-end
-go
 insert into Categories values
 	('C001', N'Món Xào'),
 	('C002', N'Món Lẩu'),
@@ -96,6 +27,68 @@ insert into Categories values
 	('C013', N'Ốc'),
 	('C014', N'Cua-ghẹ')
 go
+create table Tables(
+	table_id varchar(10) primary key,
+	table_name nvarchar(50) default N'Chưa đặt tên bàn',
+	status bit default 0
+)
+go
+insert into Tables values 
+	('TB001', N'Bàn số 1', 0),
+	('TB002', N'Bàn số 2', 0),
+	('TB003', N'Bàn số 3', 0),
+	('TB004', N'Bàn số 4', 0),
+	('TB005', N'Bàn số 5', 0),
+	('TB006', N'Bàn số 6', 0),
+	('TB007', N'Bàn số 7', 0),
+	('TB008', N'Bàn số 8', 0),
+	('TB009', N'Bàn số 9', 0),
+	('TB010', N'Bàn số 10', 0),
+	('TB011', N'Bàn số 11', 0),
+	('TB012', N'Bàn số 12', 0),
+	('TB013', N'Bàn số 13', 0),
+	('TB014', N'Bàn số 14', 0),
+	('TB015', N'Bàn số 15', 0),
+	('TB016', N'Bàn số 16', 0),
+	('TB017', N'Bàn số 17', 0),
+	('TB018', N'Bàn số 18', 0),
+	('TB019', N'Bàn số 19', 0),
+	('TB020', N'Bàn số 20', 0),
+	('TB021', N'Bàn số 21', 0),
+	('TB022', N'Bàn số 22', 0),
+	('TB023', N'Bàn số 23', 0),
+	('TB024', N'Bàn số 24', 0),
+	('TB025', N'Bàn số 25', 0)
+go
+
+create table Account 
+(
+	Display nvarchar(50) default N'Chưa đặt tên hiện thị',
+	UserName varchar(50) primary key,
+	PassWord varchar(50) default 'ngaosoochen',
+	Type bit default 0
+)
+go
+insert into Account values
+	(N'Admin', 'admin', 'admin', 1),
+	(N'Huỳnh Vĩ Khang', 'vikhang2805', '123', 1),
+	(N'Đào Quí Mùi', 'muidao1506', '123', 0),
+	(N'Đỗ Hoàng La Giang', 'lagiang1508', '123', 0),
+	(N'Phạm Quỳnh Anh', 'quynhanh1810', '123', 1),
+	(N'Nguyễn Mạnh Phát', 'manhphat123', '123', 0),
+	(N'Ngô Thị Nhàn', 'thinhan123', '123', 0)
+go
+create table Items
+(
+	item_id varchar(10) primary key	,
+	item_name nvarchar(50) default N'Chưa đặt tên',
+	item_description nvarchar(max) default N'Chưa mô tả mặt hàng',
+	item_price decimal default 0,
+	item_unit nvarchar(10),
+	category_id varchar(10), 
+	constraint fk_itemCate foreign key (category_id) references Categories(category_id)
+)
+go 
 insert into Items values
 	('I001', N'Mì xào rau muống', null, 59000, N'Dĩa', 'C001'),
 	('I002', N'Mì xào tỏi', null, 64000, N'Dĩa', 'C001'),
@@ -128,55 +121,73 @@ insert into Items values
 	('I029', N'Bia Saigon Special - Sài Gòn lùn', N'Nồng độ cồn 4.9%', 18500, N'Chai','C009'),
 	('I030', N'Bia Sài Gòn Gold lon 330ml', N'Nồng độ cồn 5.0%', 22600, N'Lon','C009')
 go
-insert into Account values
-	(N'Admin', 'admin', 'admin', 1),
-	(N'Huỳnh Vĩ Khang', 'vikhang2805', '123', 1),
-	(N'Đào Quí Mùi', 'muidao1506', '123', 0),
-	(N'Đỗ Hoàng La Giang', 'lagiang1508', '123', 0),
-	(N'Phạm Quỳnh Anh', 'quynhanh1810', '123', 1),
-	(N'Nguyễn Mạnh Phát', 'manhphat123', '123', 0),
-	(N'Ngô Thị Nhàn', 'thinhan123', '123', 0)
+create table Customers
+(
+	cus_id varchar(10) primary key,
+	fullname nvarchar(50),
+	birth date,
+	phone varchar(10)
+)
 go
-insert into Tables values 
-	('TB001', N'Bàn số 1', 0),
-	('TB002', N'Bàn số 2', 0),
-	('TB003', N'Bàn số 3', 0),
-	('TB004', N'Bàn số 4', 0),
-	('TB005', N'Bàn số 5', 0),
-	('TB006', N'Bàn số 6', 0),
-	('TB007', N'Bàn số 7', 0),
-	('TB008', N'Bàn số 8', 0),
-	('TB009', N'Bàn số 9', 0),
-	('TB010', N'Bàn số 10', 0),
-	('TB011', N'Bàn số 11', 0),
-	('TB012', N'Bàn số 12', 0),
-	('TB013', N'Bàn số 13', 0),
-	('TB014', N'Bàn số 14', 0),
-	('TB015', N'Bàn số 15', 0),
-	('TB016', N'Bàn số 16', 0),
-	('TB017', N'Bàn số 17', 0),
-	('TB018', N'Bàn số 18', 0),
-	('TB019', N'Bàn số 19', 0),
-	('TB020', N'Bàn số 20', 0),
-	('TB021', N'Bàn số 21', 0),
-	('TB022', N'Bàn số 22', 0),
-	('TB023', N'Bàn số 23', 0),
-	('TB024', N'Bàn số 24', 0),
-	('TB025', N'Bàn số 25', 0)
+insert into Customers values 
+('CU001', N'Hồ Văn Nghĩa', '13/02/2001', '0947233942'),
+('CU002', N'Lê Thị Thu','14/02/1993', '0947283942'),
+('CU003', N'Phạm Văn Hải','15/02/1994', '0947283942'),
+('CU004', N'Nguyễn Văn Tú','13/10/2002', '0947283942'),
+('CU005', N'Lê Bích Thủy','13/05/2003', '0947283942'),
+('CU006', N'Trần Mỹ Huyền','13/06/1984', '0947283942'),
+('CU007', N'Lê Ly Trang Nhi','13/07/1982', '0947283942'),
+('CU008', N'Nguyễn Minh Hiếu','13/12/2003', '0947283942'),
+('CU009', N'Vũ Văn Anh','13/02/1991', '0947283942'),
+('CU010', N'Hồ Văn Đại', '17/01/2003', '0947283942'),
+('CU011', N'Huỳnh Tuấn Khang','07/04/2001', '0947283942'),
+('CU012', N'Đinh Tuyết Anh','20/11/1990', '0947283942'),
+('CU013', N'Nguyễn Lê Huyền Trang','14/03/1998', '0947283942'),
+('CU014', N'Huỳnh Thái Cường','21/06/2000', '0947283942')
 go
-set dateformat DMY
+select DATEDIFF(year,birth, getdate()), DATEPART(DAY, birth) from Customers
+create table Bills(
+	bill_id varchar(10) primary key,
+	dateCheckin date default getdate(),
+	dateCheckout date,
+	status bit default 0,
+	cashier_id varchar(50),
+	cus_id varchar(10) REFERENCES Customers(cus_id),
+	table_id varchar(10)  REFERENCES Tables(table_id),
+	total_bill decimal default 0
+)
 go
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
-	('BI001', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'muidao1506', 'TB001'),
-	('BI002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB002'),
-	('BI003', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB001'),
-	('BI004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB003'),
-	('BI005', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB005'),
-	('BI006', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'muidao1506', 'TB007'),
-	('BI007', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB010'),
-	('BI008', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'quynhanh1810', 'TB012'),
-	('BI009', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1,'manhphat123', 'TB015')
+	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 1, 'muidao1506', 'TB001'),
+	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 1, 'muidao1506', 'TB001'),
+	('BI002', '2023-10-1 9:23:03', '2023-10-1 11:23:03', 1,'muidao1506', 'TB002'),
+	('BI003', '2023-10-1 10:23:03','2023-10-1 12:23:03', 1,'quynhanh1810', 'TB001'),
+	('BI004', '2023-10-1 12:23:03', '2023-10-1 13:23:03', 1,'manhphat123', 'TB003'),
+	('BI005', '2023-10-1 15:23:03', '2023-10-1 14:23:03', 1,'muidao1506', 'TB005'),
+	('BI006', '2023-10-1 20:23:03', '2023-10-1 21:23:03', 1,'muidao1506', 'TB007'),
+	('BI007', '2023-10-1 22:23:03', '2023-10-1 23:23:03', 1,'manhphat123', 'TB010'),
+	('BI008', '2023-10-1 23:23:03', '2023-10-2 02:23:03', 1,'quynhanh1810', 'TB012'),
+	('BI009', '2023-10-1 23:59:03', '2023-10-2 01:23:03', 1,'manhphat123', 'TB015'),
+
+	('BI010', '2023-10-2 8:30:03', '2023-10-2 12:23:03', 1, 'muidao1506', 'TB003'),
+	('BI012', '2023-10-2 9:23:03', '2023-10-2 11:23:03', 1,'muidao1506', 'TB002'),
+	('BI013', '2023-10-2 10:23:03','2023-10-2 12:23:03', 1,'quynhanh1810', 'TB006'),
+	('BI014', '2023-10-2 12:23:03', '2023-10-2 13:23:03', 1,'muidao1506', 'TB013'),
+	('BI015', '2023-10-2 15:23:03', '2023-10-2 14:23:03', 1,'muidao1506', 'TB015'),
+	('BI016', '2023-10-2 20:23:03', '2023-10-2 21:23:03', 1,'muidao1506', 'TB017'),
+	('BI017', '2023-10-2 22:23:03', '2023-10-2 23:23:03', 1,'quynhanh1810', 'TB012'),
+	('BI018', '2023-10-2 23:23:03', '2023-10-3 02:23:03', 1,'quynhanh1810', 'TB013'),
+	('BI019', '2023-10-2 23:59:03', '2023-10-3 01:23:03', 1,'muidao1506', 'TB011')
 go
+select FORMAT(dateCheckin ,'hh') from Bills
+create table Orders(
+	bill_id varchar(10),
+    item_id  varchar(10),
+    quantity INT default 1,
+	constraint pk_billOrder primary key (bill_id, item_id),
+    constraint fk_ordersBillId FOREIGN KEY (bill_id) REFERENCES Bills(bill_id),
+    constraint fk_orderItemsId FOREIGN KEY (item_id) REFERENCES Items(item_id)
+)
 insert into Orders values 
 	('BI001', 'I004', 1),
 	('BI001', 'I024', 1),
@@ -228,6 +239,32 @@ insert into Orders values
 	('BI009', 'I024', 1),
 	('BI009', 'I025', 1)
 go
+
+CREATE TRIGGER trg_OrderAdded
+ON Orders
+for INSERT, update
+AS
+BEGIN
+    update Bills
+	set total_bill += i.quantity * it.item_price
+	from inserted i, Items it
+	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
+END
+go
+create trigger tri_updateBill
+on Orders
+for delete, update
+as 
+begin
+    update Bills
+	set total_bill -= d.quantity * it.item_price
+	from deleted d, Items it
+	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
+end
+go
+set dateformat DMY
+go
+go
 create trigger trig_upsale
 on Orders
 for insert, update
@@ -242,6 +279,7 @@ begin
 	end	
 end
 go
+
 create proc USP_GetTableList
 as select * from Tables
 go
