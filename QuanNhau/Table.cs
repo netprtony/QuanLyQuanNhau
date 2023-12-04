@@ -15,11 +15,11 @@ namespace QuanNhau
             this.Name = name;
             this.Status = status;
         }
-        public Table(DataRow row)
+        public Table(DataRow r)
         {
-            this.ID = row["table_id"].ToString();
-            this.Name = row["table_name"].ToString();
-            this.Status = (bool)row["status"];
+            this.ID = r["table_id"].ToString();
+            this.Name = r["table_name"].ToString();
+            this.Status = (bool)r["status"];
         }
         private string name;
         private bool status;

@@ -10,7 +10,7 @@ namespace QuanNhau
 {
     class DBConnection
     {
-        private const string V = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = "Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
         private string strConnect = V;
         SqlConnection connect;
         public DBConnection()
@@ -67,7 +67,35 @@ namespace QuanNhau
             }
             return tableList;
         }
-        public int TableWidth = 50;
-        public int TableHeight = 50;
+        public int TableWidth = 100;
+        public int TableHeight = 100;
+        /// <summary>
+        /// Success: bill_id
+        /// Failed: null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string getUnCheckBillByIdTable(string id)
+        {
+            DataTable dt = getDataTable("exec USP_GetUnCheckBillByIdTable '"+id+"'");
+            if(dt.Rows.Count > 0)
+            {
+                Bill bill = new Bill(dt.Rows[0]);
+                return bill.Id;
+            }
+            return null;
+        }
+        public List<Order> GetListAllOrder(string id)
+        {
+            List<Order> listOrder = new List<Order>();
+            DataTable dt = getDataTable("exec USP_GetListAllOrder '" + id + "'");
+
+            foreach (DataRow item in dt.Rows)
+            {
+                Order a_Order = new Order(item);
+                listOrder.Add(a_Order);
+            }
+            return listOrder;
+        }
     }
 }

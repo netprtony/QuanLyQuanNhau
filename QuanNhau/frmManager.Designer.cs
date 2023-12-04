@@ -46,6 +46,8 @@
             this.thôngTinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinCáNhânToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.flowLayoutTable.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_countdish)).BeginInit();
@@ -64,6 +66,7 @@
             // 
             // flpTable
             // 
+            this.flpTable.AutoScroll = true;
             this.flpTable.Location = new System.Drawing.Point(3, 3);
             this.flpTable.Name = "flpTable";
             this.flpTable.Size = new System.Drawing.Size(771, 580);
@@ -128,12 +131,17 @@
             // 
             // lstView_bill
             // 
+            this.lstView_bill.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lstView_bill.GridLines = true;
             this.lstView_bill.HideSelection = false;
             this.lstView_bill.Location = new System.Drawing.Point(3, 3);
             this.lstView_bill.Name = "lstView_bill";
             this.lstView_bill.Size = new System.Drawing.Size(424, 364);
             this.lstView_bill.TabIndex = 0;
             this.lstView_bill.UseCompatibleStateImageBehavior = false;
+            this.lstView_bill.View = System.Windows.Forms.View.Details;
             // 
             // panel3
             // 
@@ -215,6 +223,14 @@
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             this.đăngXuấtToolStripMenuItem.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem_Click);
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Mã món";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Số lượng";
+            // 
             // frmManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,6 +278,8 @@
         private System.Windows.Forms.ToolStripMenuItem thôngTinCáNhânToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flpTable;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 

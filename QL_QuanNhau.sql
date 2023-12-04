@@ -145,7 +145,7 @@ insert into Customers values
 ('CU013', N'Nguyễn Lê Huyền Trang','14/03/1998', '0947283942'),
 ('CU014', N'Huỳnh Thái Cường','21/06/2000', '0947283942')
 go
-select DATEDIFF(year,birth, getdate()), DATEPART(DAY, birth) from Customers
+
 create table Bills(
 	bill_id varchar(10) primary key,
 	dateCheckin date default getdate(),
@@ -158,28 +158,27 @@ create table Bills(
 )
 go
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
-	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 1, 'muidao1506', 'TB001'),
-	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 1, 'muidao1506', 'TB001'),
-	('BI002', '2023-10-1 9:23:03', '2023-10-1 11:23:03', 1,'muidao1506', 'TB002'),
-	('BI003', '2023-10-1 10:23:03','2023-10-1 12:23:03', 1,'quynhanh1810', 'TB001'),
-	('BI004', '2023-10-1 12:23:03', '2023-10-1 13:23:03', 1,'manhphat123', 'TB003'),
-	('BI005', '2023-10-1 15:23:03', '2023-10-1 14:23:03', 1,'muidao1506', 'TB005'),
-	('BI006', '2023-10-1 20:23:03', '2023-10-1 21:23:03', 1,'muidao1506', 'TB007'),
-	('BI007', '2023-10-1 22:23:03', '2023-10-1 23:23:03', 1,'manhphat123', 'TB010'),
-	('BI008', '2023-10-1 23:23:03', '2023-10-2 02:23:03', 1,'quynhanh1810', 'TB012'),
-	('BI009', '2023-10-1 23:59:03', '2023-10-2 01:23:03', 1,'manhphat123', 'TB015'),
+	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 0, 'muidao1506', 'TB001'),
+	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 0, 'muidao1506', 'TB001'),
+	('BI002', '2023-10-1 9:23:03', '2023-10-1 11:23:03', 0,'muidao1506', 'TB002'),
+	('BI003', '2023-10-1 10:23:03','2023-10-1 12:23:03', 0,'quynhanh1810', 'TB001'),
+	('BI004', '2023-10-1 12:23:03', '2023-10-1 13:23:03', 0,'manhphat123', 'TB003'),
+	('BI005', '2023-10-1 15:23:03', '2023-10-1 14:23:03', 0,'muidao1506', 'TB005'),
+	('BI006', '2023-10-1 20:23:03', '2023-10-1 21:23:03', 0,'muidao1506', 'TB007'),
+	('BI007', '2023-10-1 22:23:03', '2023-10-1 23:23:03', 0,'manhphat123', 'TB010'),
+	('BI008', '2023-10-1 23:23:03', '2023-10-2 02:23:03', 0,'quynhanh1810', 'TB012'),
+	('BI009', '2023-10-1 23:59:03', '2023-10-2 01:23:03', 0,'manhphat123', 'TB015'),
 
-	('BI010', '2023-10-2 8:30:03', '2023-10-2 12:23:03', 1, 'muidao1506', 'TB003'),
-	('BI012', '2023-10-2 9:23:03', '2023-10-2 11:23:03', 1,'muidao1506', 'TB002'),
-	('BI013', '2023-10-2 10:23:03','2023-10-2 12:23:03', 1,'quynhanh1810', 'TB006'),
-	('BI014', '2023-10-2 12:23:03', '2023-10-2 13:23:03', 1,'muidao1506', 'TB013'),
-	('BI015', '2023-10-2 15:23:03', '2023-10-2 14:23:03', 1,'muidao1506', 'TB015'),
-	('BI016', '2023-10-2 20:23:03', '2023-10-2 21:23:03', 1,'muidao1506', 'TB017'),
-	('BI017', '2023-10-2 22:23:03', '2023-10-2 23:23:03', 1,'quynhanh1810', 'TB012'),
-	('BI018', '2023-10-2 23:23:03', '2023-10-3 02:23:03', 1,'quynhanh1810', 'TB013'),
-	('BI019', '2023-10-2 23:59:03', '2023-10-3 01:23:03', 1,'muidao1506', 'TB011')
+	('BI010', '2023-10-2 8:30:03', '2023-10-2 12:23:03', 0, 'muidao1506', 'TB003'),
+	('BI012', '2023-10-2 9:23:03', '2023-10-2 11:23:03', 0,'muidao1506', 'TB002'),
+	('BI013', '2023-10-2 10:23:03','2023-10-2 12:23:03', 0,'quynhanh1810', 'TB006'),
+	('BI014', '2023-10-2 12:23:03', '2023-10-2 13:23:03', 0,'muidao1506', 'TB013'),
+	('BI015', '2023-10-2 15:23:03', '2023-10-2 14:23:03', 0,'muidao1506', 'TB015'),
+	('BI016', '2023-10-2 20:23:03', '2023-10-2 21:23:03', 0,'muidao1506', 'TB017'),
+	('BI017', '2023-10-2 22:23:03', '2023-10-2 23:23:03', 0,'quynhanh1810', 'TB012'),
+	('BI018', '2023-10-2 23:23:03', '2023-10-3 02:23:03', 0,'quynhanh1810', 'TB013'),
+	('BI019', '2023-10-2 23:59:03', '2023-10-3 01:23:03', 0,'muidao1506', 'TB011')
 go
-select FORMAT(dateCheckin ,'hh') from Bills
 create table Orders(
 	bill_id varchar(10),
     item_id  varchar(10),
@@ -188,6 +187,7 @@ create table Orders(
     constraint fk_ordersBillId FOREIGN KEY (bill_id) REFERENCES Bills(bill_id),
     constraint fk_orderItemsId FOREIGN KEY (item_id) REFERENCES Items(item_id)
 )
+go
 insert into Orders values 
 	('BI001', 'I004', 1),
 	('BI001', 'I024', 1),
@@ -391,4 +391,14 @@ as
 	update Account 
 	set Display = @display, PassWord = @pass, Type = @type
 	where UserName = @user
+go
+create proc USP_GetUnCheckBillByIdTable
+@id varchar(10)
+as
+	select bill_id from Bills where table_id = @id and status = 0
+go
+create proc USP_GetListAllOrder
+@id varchar(10)
+as
+	select * from Orders where bill_id = @id
 go

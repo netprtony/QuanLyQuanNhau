@@ -15,21 +15,54 @@ namespace QuanNhau
         public frmManager()
         {
             InitializeComponent();
-            //LoadTable();
+            LoadTable();
         }
         #region Method
         void LoadTable()
         {
             DBConnection db = new DBConnection();
             List<Table> tableList = db.LoadTableList();
+            string st;
             foreach(Table item in tableList)
             {
                 Button btn = new Button() { Width = db.TableWidth, Height = db.TableHeight};
+                if (item.Status == true) st = "Có người";
+                else st = "Trống";
+                btn.Text = item.Name + Environment.NewLine + st;
+                btn.Click += btn_Cilk;
+                btn.Tag = item;
+                switch (st)
+                {
+                    case "Trống":
+                        btn.BackColor = Color.Aquamarine;
+                        break;
+                    default:
+                        btn.BackColor = Color.LightSteelBlue;
+                        break;
+                }
                 flpTable.Controls.Add(btn);
             }
         }
+        private void ShowBill(string id)
+        {
+            lstView_bill.Items.Clear();
+            DBConnection db = new DBConnection();
+            List<Order> listOrder = db.GetListAllOrder(db.getUnCheckBillByIdTable(id));
+            foreach(Order item in listOrder)
+            {
+                ListViewItem lsvItem = new ListViewItem(item.Id);
+                lsvItem.SubItems.Add(item.Quantity.ToString());
+                lstView_bill.Items.Add(lsvItem);
+            }
+        }
+
         #endregion
         #region Events
+        private void btn_Cilk(object sender, EventArgs e)
+        {
+            string idTable = ((sender as Button).Tag as Table).ID;
+            ShowBill(idTable);
+        }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
