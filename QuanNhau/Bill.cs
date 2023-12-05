@@ -24,9 +24,11 @@ namespace QuanNhau
         public Bill(DataRow r)
         {
             this.Id = (string)r["bill_id"];
+
             var dateCheckinTemp = r["dateCheckin"];
-            if(dateCheckinTemp.ToString() != "")
+            if (dateCheckinTemp.ToString() != "")
                 this.DateCheckin = (DateTime?)dateCheckinTemp;
+
             var dateCheckoutTemp = r["dateCheckout"];
             if (dateCheckoutTemp.ToString() != "")
                 this.DateCheckout = (DateTime?)dateCheckoutTemp;

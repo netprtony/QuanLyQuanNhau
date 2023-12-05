@@ -35,24 +35,24 @@ create table Tables(
 go
 insert into Tables values 
 	('TB001', N'Bàn số 1', 0),
-	('TB002', N'Bàn số 2', 0),
-	('TB003', N'Bàn số 3', 0),
+	('TB002', N'Bàn số 2', 1),
+	('TB003', N'Bàn số 3', 1),
 	('TB004', N'Bàn số 4', 0),
 	('TB005', N'Bàn số 5', 0),
-	('TB006', N'Bàn số 6', 0),
+	('TB006', N'Bàn số 6', 1),
 	('TB007', N'Bàn số 7', 0),
 	('TB008', N'Bàn số 8', 0),
 	('TB009', N'Bàn số 9', 0),
 	('TB010', N'Bàn số 10', 0),
-	('TB011', N'Bàn số 11', 0),
-	('TB012', N'Bàn số 12', 0),
-	('TB013', N'Bàn số 13', 0),
+	('TB011', N'Bàn số 11', 1),
+	('TB012', N'Bàn số 12', 1),
+	('TB013', N'Bàn số 13', 1),
 	('TB014', N'Bàn số 14', 0),
-	('TB015', N'Bàn số 15', 0),
+	('TB015', N'Bàn số 15', 1),
 	('TB016', N'Bàn số 16', 0),
-	('TB017', N'Bàn số 17', 0),
+	('TB017', N'Bàn số 17', 1),
 	('TB018', N'Bàn số 18', 0),
-	('TB019', N'Bàn số 19', 0),
+	('TB019', N'Bàn số 19', 1),	
 	('TB020', N'Bàn số 20', 0),
 	('TB021', N'Bàn số 21', 0),
 	('TB022', N'Bàn số 22', 0),
@@ -120,30 +120,7 @@ insert into Items values
 	('I028', N'Bia 333', N'Nồng độ cồn 5.3%', 19000, N'Lon','C009'),
 	('I029', N'Bia Saigon Special - Sài Gòn lùn', N'Nồng độ cồn 4.9%', 18500, N'Chai','C009'),
 	('I030', N'Bia Sài Gòn Gold lon 330ml', N'Nồng độ cồn 5.0%', 22600, N'Lon','C009')
-go
-create table Customers
-(
-	cus_id varchar(10) primary key,
-	fullname nvarchar(50),
-	birth date,
-	phone varchar(10)
-)
-go
-insert into Customers values 
-('CU001', N'Hồ Văn Nghĩa', '13/02/2001', '0947233942'),
-('CU002', N'Lê Thị Thu','14/02/1993', '0947283942'),
-('CU003', N'Phạm Văn Hải','15/02/1994', '0947283942'),
-('CU004', N'Nguyễn Văn Tú','13/10/2002', '0947283942'),
-('CU005', N'Lê Bích Thủy','13/05/2003', '0947283942'),
-('CU006', N'Trần Mỹ Huyền','13/06/1984', '0947283942'),
-('CU007', N'Lê Ly Trang Nhi','13/07/1982', '0947283942'),
-('CU008', N'Nguyễn Minh Hiếu','13/12/2003', '0947283942'),
-('CU009', N'Vũ Văn Anh','13/02/1991', '0947283942'),
-('CU010', N'Hồ Văn Đại', '17/01/2003', '0947283942'),
-('CU011', N'Huỳnh Tuấn Khang','07/04/2001', '0947283942'),
-('CU012', N'Đinh Tuyết Anh','20/11/1990', '0947283942'),
-('CU013', N'Nguyễn Lê Huyền Trang','14/03/1998', '0947283942'),
-('CU014', N'Huỳnh Thái Cường','21/06/2000', '0947283942')
+
 go
 
 create table Bills(
@@ -159,25 +136,25 @@ create table Bills(
 go
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
 	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 0, 'muidao1506', 'TB001'),
-	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 0, 'muidao1506', 'TB001'),
-	('BI002', '2023-10-1 9:23:03', '2023-10-1 11:23:03', 0,'muidao1506', 'TB002'),
-	('BI003', '2023-10-1 10:23:03','2023-10-1 12:23:03', 0,'quynhanh1810', 'TB001'),
-	('BI004', '2023-10-1 12:23:03', '2023-10-1 13:23:03', 0,'manhphat123', 'TB003'),
-	('BI005', '2023-10-1 15:23:03', '2023-10-1 14:23:03', 0,'muidao1506', 'TB005'),
-	('BI006', '2023-10-1 20:23:03', '2023-10-1 21:23:03', 0,'muidao1506', 'TB007'),
-	('BI007', '2023-10-1 22:23:03', '2023-10-1 23:23:03', 0,'manhphat123', 'TB010'),
-	('BI008', '2023-10-1 23:23:03', '2023-10-2 02:23:03', 0,'quynhanh1810', 'TB012'),
-	('BI009', '2023-10-1 23:59:03', '2023-10-2 01:23:03', 0,'manhphat123', 'TB015'),
+	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 1, 'muidao1506', 'TB001'),
+	('BI002', '2023-10-1 9:23:03', '2023-10-1 11:23:03', 1,'muidao1506', 'TB002'),
+	('BI003', '2023-10-1 10:23:03','2023-10-1 12:23:03', 1,'quynhanh1810', 'TB001'),
+	('BI004', '2023-10-1 12:23:03', '2023-10-1 13:23:03', 1,'manhphat123', 'TB003'),
+	('BI005', '2023-10-1 15:23:03', '2023-10-1 14:23:03', 1,'muidao1506', 'TB005'),
+	('BI006', '2023-10-1 20:23:03', '2023-10-1 21:23:03', 1,'muidao1506', 'TB007'),
+	('BI007', '2023-10-1 22:23:03', '2023-10-1 23:23:03', 1,'manhphat123', 'TB010'),
+	('BI008', '2023-10-1 23:23:03', '2023-10-2 02:23:03', 1,'quynhanh1810', 'TB012'),
+	('BI009', '2023-10-1 23:59:03', '2023-10-2 01:23:03', 1,'manhphat123', 'TB015'),
 
-	('BI010', '2023-10-2 8:30:03', '2023-10-2 12:23:03', 0, 'muidao1506', 'TB003'),
-	('BI012', '2023-10-2 9:23:03', '2023-10-2 11:23:03', 0,'muidao1506', 'TB002'),
-	('BI013', '2023-10-2 10:23:03','2023-10-2 12:23:03', 0,'quynhanh1810', 'TB006'),
-	('BI014', '2023-10-2 12:23:03', '2023-10-2 13:23:03', 0,'muidao1506', 'TB013'),
-	('BI015', '2023-10-2 15:23:03', '2023-10-2 14:23:03', 0,'muidao1506', 'TB015'),
-	('BI016', '2023-10-2 20:23:03', '2023-10-2 21:23:03', 0,'muidao1506', 'TB017'),
-	('BI017', '2023-10-2 22:23:03', '2023-10-2 23:23:03', 0,'quynhanh1810', 'TB012'),
-	('BI018', '2023-10-2 23:23:03', '2023-10-3 02:23:03', 0,'quynhanh1810', 'TB013'),
-	('BI019', '2023-10-2 23:59:03', '2023-10-3 01:23:03', 0,'muidao1506', 'TB011')
+	('BI010', '2023-10-2 8:30:03', null, 0, 'muidao1506', 'TB003'),
+	('BI012', '2023-10-2 9:23:03', null, 0,'muidao1506', 'TB002'),
+	('BI013', '2023-10-2 10:23:03',null, 0,'quynhanh1810', 'TB006'),
+	('BI014', '2023-10-2 12:23:03', null, 0,'muidao1506', 'TB013'),
+	('BI015', '2023-10-2 15:23:03', null, 0,'muidao1506', 'TB015'),
+	('BI016', '2023-10-2 20:23:03', null, 0,'muidao1506', 'TB017'),
+	('BI017', '2023-10-2 22:23:03', null, 0,'quynhanh1810', 'TB012'),
+	('BI018', '2023-10-2 23:23:03', null, 0,'quynhanh1810', 'TB019'),
+	('BI019', '2023-10-2 23:59:03', null, 0,'muidao1506', 'TB011')
 go
 create table Orders(
 	bill_id varchar(10),
@@ -237,7 +214,32 @@ insert into Orders values
 	('BI009', 'I022', 1),
 	('BI009', 'I023', 1),
 	('BI009', 'I024', 1),
-	('BI009', 'I025', 1)
+	('BI009', 'I025', 1),
+	('BI010', 'I014', 1),
+	('BI010', 'I024', 1),
+	('BI010', 'I021', 1),
+	('BI010', 'I001', 1),
+	('BI010', 'I006', 2),
+	('BI012', 'I026', 48),
+	('BI012', 'I021', 3),
+	('BI012', 'I013', 1),
+	('BI012', 'I012', 2),
+	('BI012', 'I016', 4),
+	('BI012', 'I009', 1),
+	('BI013', 'I002', 1),
+	('BI013', 'I003', 2),
+	('BI013', 'I015', 1),
+	('BI013', 'I016', 1),
+	('BI013', 'I028', 24),
+	('BI014', 'I012', 1),
+	('BI014', 'I011', 1),
+	('BI014', 'I016', 1),
+	('BI014', 'I026', 24),
+	('BI015', 'I016', 1),
+	('BI015', 'I004', 1),
+	('BI015', 'I012', 1),
+	('BI015', 'I026', 14)
+
 go
 
 CREATE TRIGGER trg_OrderAdded
@@ -402,3 +404,22 @@ create proc USP_GetListAllOrder
 as
 	select * from Orders where bill_id = @id
 go
+create proc USP_GetListMenuByTable
+@idTable varchar(10)
+as
+	select i.item_name as N'Món', o.quantity as N'Số lượng', i.item_price as N'Giá', i.item_price*o.quantity as N'Tổng' from Orders as o, Items as i, Bills as b where o.bill_id = b.bill_id and o.item_id = i.item_id and b.status = 0 and b.table_id =  @idTable
+go
+create proc USP_GetItemByCategoryId
+@id varchar(10)	
+as
+	select * from Items where category_id = @id
+go
+create proc USP_InsertBill
+@idBill varchar(10), @idTable varchar(10)
+as
+	insert into Bills (bill_id, dateCheckin, dateCheckout, table_id) values (@idBill, getdate(), null, @idTable)
+go
+create proc USP_InsertOrders
+@idBill varchar(10), @idItem varchar(10), @sl int
+as
+	insert into Orders values (@idBill, @idItem, @sl)

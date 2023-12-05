@@ -35,7 +35,6 @@
             this.panel26 = new System.Windows.Forms.Panel();
             this.tb_pass = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.btn_restPass = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.cb_typeAcc = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -198,7 +197,6 @@
             // panel10
             // 
             this.panel10.Controls.Add(this.panel26);
-            this.panel10.Controls.Add(this.btn_restPass);
             this.panel10.Controls.Add(this.panel11);
             this.panel10.Controls.Add(this.panel12);
             this.panel10.Controls.Add(this.panel13);
@@ -231,15 +229,6 @@
             this.label18.Size = new System.Drawing.Size(65, 14);
             this.label18.TabIndex = 0;
             this.label18.Text = "Mật khẩu";
-            // 
-            // btn_restPass
-            // 
-            this.btn_restPass.Location = new System.Drawing.Point(534, 335);
-            this.btn_restPass.Name = "btn_restPass";
-            this.btn_restPass.Size = new System.Drawing.Size(87, 68);
-            this.btn_restPass.TabIndex = 11;
-            this.btn_restPass.Text = "Đặt lại tài khoản";
-            this.btn_restPass.UseVisualStyleBackColor = true;
             // 
             // panel11
             // 
@@ -1206,7 +1195,6 @@
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.DataGridView dtgv_acc;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Button btn_restPass;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.ComboBox cb_typeAcc;
         private System.Windows.Forms.Label label5;

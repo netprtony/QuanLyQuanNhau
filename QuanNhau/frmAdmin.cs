@@ -10,17 +10,18 @@ namespace QuanNhau
         {
             InitializeComponent();
         }
+        DBConnection db = new DBConnection();
         #region Method
         private bool CheckPKCoincidence(string ck)
         {
-            DBConnection db = new DBConnection();
+            
             string str = "Select Count(*) from Items where item_id ='" + ck + "'";
             int k = (int)db.getScalar(str);
             return k == 0 ? true : false;
         }
         private void Load_comboxCategory()
         {
-            DBConnection db = new DBConnection();
+            
             string strQuery = "select * from Categories";
             DataTable dt = db.getDataTable(strQuery);
             DataRow dr = dt.NewRow();
@@ -37,21 +38,21 @@ namespace QuanNhau
         }
         private void Load_DgvItems()
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_LoadDataItem";
             DataTable dt = db.getDataTable(strView);
             dtgv_Item.DataSource = dt;
         }
         private void Load_DgvCategory()
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_LoadDateCategory";
             DataTable dt = db.getDataTable(strView);
             dtgv_cate.DataSource = dt;
         }
         private void Load_DgvTables()
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_LoadDataTable";
             DataTable dt = db.getDataTable(strView);
             dtgv_table.DataSource = dt;
@@ -59,21 +60,21 @@ namespace QuanNhau
 
         private void Load_DgvBills()
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_LoadDataBill";
             DataTable dt = db.getDataTable(strView);
             dtgv_bill.DataSource = dt;
         }
         private void Load_DgvAllOrderOfBill(string idBill)
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_GetAllOrderOfBill '"+ idBill + "'";
             DataTable dt = db.getDataTable(strView);
             dtgv_AllorderOfbill.DataSource = dt;
         }
         private void Load_DgvAcc()
         {
-            DBConnection db = new DBConnection();
+            
             string strView = "exec USP_LoadAccount";
             DataTable dt = db.getDataTable(strView);
             dtgv_acc.DataSource = dt;
@@ -125,7 +126,7 @@ namespace QuanNhau
         {
             if (CheckPKCoincidence(tb_idItem.Text))
             {
-                DBConnection db = new DBConnection();
+                
                 string strQuery = "USP_InsertItem '" + tb_idItem.Text + "', N'" + tb_nameItem.Text + "', N'" + tb_despItem.Text + "', " + decimal.Parse(tb_priceItem.Text) + ", N'" + cbo_unit.SelectedItem + "', '" + cb_cateItem.SelectedValue + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
@@ -164,7 +165,7 @@ namespace QuanNhau
 
         private void btn_changeDish_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             string strQuery = "exec USP_UpdateItem '" + tb_idItem.Text+"', N'"+tb_nameItem.Text+"', N'"+tb_despItem.Text+"', '"+decimal.Parse(tb_priceItem.Text)+"', N'"+cbo_unit.SelectedItem+"', '"+cb_cateItem.SelectedValue+"'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
@@ -178,7 +179,7 @@ namespace QuanNhau
         {
             if (CheckPKCoincidence(tb_idCate.Text))
             {
-                DBConnection db = new DBConnection();
+                
                 string strQuery = "exec USP_InsertCategory '"+tb_idCate.Text+"', N'"+tb_nameCate.Text+"'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
@@ -212,7 +213,7 @@ namespace QuanNhau
 
         private void btn_delCate_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             DialogResult result = MessageBox.Show("Bạn có xóa danh mục " + tb_nameCate.Text + " không?", "Thông báo xóa danh mục!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
@@ -240,7 +241,7 @@ namespace QuanNhau
 
         private void btn_delItem_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             DialogResult result = MessageBox.Show("Bạn có xóa mặt hàng " + tb_nameCate.Text + " không?", "Thông báo xóa mặt hàng!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
@@ -275,7 +276,7 @@ namespace QuanNhau
         {
             if (CheckPKCoincidence(tb_idTable.Text))
             {
-                DBConnection db = new DBConnection();
+                
                 string strQuery = "exec USP_insertTable '" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "'";
                 int k = db.getNonQuery(strQuery);
                 if (k == 1)
@@ -297,7 +298,7 @@ namespace QuanNhau
 
         private void btn_changeTable_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             string strQuery = "exec USP_UpdateTable '" + tb_idTable.Text + "', N'" + tb_nameTable.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
@@ -309,7 +310,7 @@ namespace QuanNhau
 
         private void btn_changeCate_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             string strQuery = "exec USP_UpdateCategory '" + tb_idCate.Text + "', N'" + tb_nameCate.Text + "'";
             int k = db.getNonQuery(strQuery);
             if (k == 1)
@@ -321,7 +322,7 @@ namespace QuanNhau
 
         private void btn_delTable_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             DialogResult result = MessageBox.Show("Bạn có xóa bàn " + tb_nameTable.Text + " không?", "Thông báo xóa bàn!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
@@ -343,7 +344,7 @@ namespace QuanNhau
         {
             if (CheckPKCoincidence(tb_username.Text))
             {
-                DBConnection db = new DBConnection();
+                
                 bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
                 string strQuery = "exec USP_InsertAccount N'" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "'";
                 int k = db.getNonQuery(strQuery);
@@ -376,7 +377,7 @@ namespace QuanNhau
 
         private void btn_delAcc_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             DialogResult result = MessageBox.Show("Bạn có muốn xóa tài khoản " + tb_nameTable.Text + " không?", "Thông báo xóa tài khoản!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
@@ -396,7 +397,7 @@ namespace QuanNhau
 
         private void btn_changeAcc_Click(object sender, EventArgs e)
         {
-            DBConnection db = new DBConnection();
+            
             bool isAdmin = true ? cb_typeAcc.Text == "Admin" : false;
             string strQuery = "exec USP_UpdateAccount N'" + tb_displayAcc.Text + "', '" + tb_username.Text + "', '" + tb_pass.Text + "', '" + isAdmin + "'";
             int k = db.getNonQuery(strQuery);

@@ -12,6 +12,7 @@ namespace QuanNhau
 {
     public partial class frmLogin : Form
     {
+        DBConnection db = new DBConnection();
         public frmLogin()
         {
             InitializeComponent();
@@ -59,7 +60,6 @@ namespace QuanNhau
         #region Method
         private bool Login(string username, string password)
         {
-            DBConnection db = new DBConnection();
             string strQuery = "exec USP_LoginAccount @username = '" + username + "' , @password = '" + password + "'";
             DataTable res = db.getDataTable(strQuery);
             return res.Rows.Count > 0;

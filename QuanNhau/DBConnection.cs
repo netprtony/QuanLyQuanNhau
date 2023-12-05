@@ -89,7 +89,6 @@ namespace QuanNhau
         {
             List<Order> listOrder = new List<Order>();
             DataTable dt = getDataTable("exec USP_GetListAllOrder '" + id + "'");
-
             foreach (DataRow item in dt.Rows)
             {
                 Order a_Order = new Order(item);
@@ -97,5 +96,42 @@ namespace QuanNhau
             }
             return listOrder;
         }
+        public List<Menu> GetListMenuByTable(string id)
+        {
+            List<Menu> listMenu = new List<Menu>();
+            string que = "exec USP_GetListMenuByTable  '" + id + "'";
+            DataTable dt = getDataTable(que); 
+            foreach(DataRow item in dt.Rows)
+            {
+                Menu menu = new Menu(item);
+                listMenu.Add(menu);
+            }
+            return listMenu;
+        }
+        public List<Category> GetAllCategory()
+        {
+            List<Category> list = new List<Category>();
+            string que = "select * from Categories";
+            DataTable dt = getDataTable(que);
+            foreach (DataRow item in dt.Rows)
+            {
+                Category cate = new Category(item);
+                list.Add(cate);
+            }
+            return list;
+        }
+        public List<Item> GetItemByCategoryId(string id)
+        {
+            List<Item> list = new List<Item>();
+            string que = "select * from Items where category_id = '" + id + "'";
+            DataTable dt = getDataTable(que);
+            foreach (DataRow item in dt.Rows)
+            {
+                Item it = new Item(item);
+                list.Add(it);
+            }
+            return list;
+        }
+
     }
 }
