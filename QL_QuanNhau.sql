@@ -4,6 +4,7 @@ drop database QL_QuanNhau
 use master
 create database QL_QuanNhau
 use QL_QuanNhau
+set dateformat DMY
 go
 create table Categories
 (
@@ -264,7 +265,7 @@ begin
 	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
 end
 go
-set dateformat DMY
+
 go
 go
 create trigger trig_upsale
@@ -281,6 +282,15 @@ begin
 	end	
 end
 go
+create trigger trig_AddBillTableCover
+on Bills
+for insert
+as
+begin
+	update Tables 
+	set status = 1
+	from inserted i where Tables.table_id = i.table_id
+end
 
 create proc USP_GetTableList
 as select * from Tables
@@ -421,5 +431,21 @@ as
 go
 create proc USP_InsertOrders
 @idBill varchar(10), @idItem varchar(10), @sl int
-as
-	insert into Orders values (@idBill, @idItem, @sl)
+as	
+begin
+
+	declare @itemAmount  int = 1
+
+
+
+	if exists (select * from Orders 
+	where bill_id = @idBill and item_id = @idItem)
+	begin
+		declare @newCount int = @itemAmount
+		update Orders set quantity = @itemAmount + @sl
+	end
+	else
+	begin
+		insert into Orders values (@idBill, @idItem, @sl)
+	end
+end

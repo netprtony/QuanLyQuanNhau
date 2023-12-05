@@ -23,7 +23,7 @@ namespace QuanNhau
         #region Method
         string CreateIDBill()
         {
-            string mhd = "BI";
+            string mhd = "B";
             mhd = mhd + string.Format("{0:ddMMyyyy}", DateTime.Now);
             string chuoitruyvan = "select * from Bills where bill_id LIKE '" + mhd + "%' order by bill_id desc";
             DataTable dt = db.getDataTable(chuoitruyvan);
@@ -161,8 +161,16 @@ namespace QuanNhau
             string idBill = db.getUnCheckBillByIdTable(table.ID);
             if(idBill == null)
             {
-                int k = db.getNonQuery("exec USP_InsertBill '" + CreateIDBill() + "', '" + table.ID + "'");
+                string idBillNew = CreateIDBill();
+                int k = db.getNonQuery("exec USP_InsertBill '" + idBillNew + "', '" + table.ID + "'");
                 if (k == 1) MessageBox.Show("Bill đã được tạo", "Thông báo");
+                k = db.getNonQuery("exec USP_InsertOrders '"+ idBillNew + "', '"+ cb_ItemOfCate.SelectedValue + "', '"+ (int)nud_countdish.Value + "'");
+                if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBillNew);
+            }
+            else
+            {
+                int k = db.getNonQuery("exec USP_InsertOrders '" + idBill + "', '" + cb_ItemOfCate.SelectedValue + "', '" + (int)nud_countdish.Value + "'");
+                if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBill);
             }
         }
         #endregion
