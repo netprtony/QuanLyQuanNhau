@@ -130,7 +130,6 @@ create table Bills(
 	dateCheckout date,
 	status bit default 0,
 	cashier_id varchar(50),
-	cus_id varchar(10) REFERENCES Customers(cus_id),
 	table_id varchar(10)  REFERENCES Tables(table_id),
 	total_bill decimal default 0
 )
@@ -388,8 +387,28 @@ go
 create proc USP_InsertAccount
 @display nvarchar(50), @user varchar(50), @pass varchar(50), @type bit
 as
-	insert into Account
-	values (@display, @user, @pass, @type)
+	begin transaction
+		begin try
+			if exists (select * 
+			from Account
+			where UserName = @user)
+			begin
+				print N'User đã tồn tại'
+				rollback transaction
+				return
+			end
+			if @type != 1 or @type != 0
+				set @type = 0
+			insert into Account
+			values (@display, @user, @pass, @type)
+		end try
+		begin catch
+			print N'Lỗi thêm tài khoản'
+				rollback transaction
+			return 0
+		end catch
+	commit transaction
+	return 1
 go
 create proc USP_DeleteAccount
 @user varchar(50)
@@ -429,10 +448,11 @@ create proc USP_InsertBill
 as
 	insert into Bills (bill_id, dateCheckin, dateCheckout, table_id) values (@idBill, getdate(), null, @idTable)
 go
+--Thêm các order kiểm trả bill được thêm vào nếu có order đó rồi thì tăng số lượng ngược lại thêm một order mới
 create proc USP_InsertOrders
 @idBill varchar(10), @idItem varchar(10), @sl int
 as	
-begin
+begin	
 
 	declare @itemAmount  int = 1
 
@@ -448,4 +468,44 @@ begin
 	begin
 		insert into Orders values (@idBill, @idItem, @sl)
 	end
+end
+--chuyển bàn thay đổi trạng thái bàn cũ về trống
+go
+create proc USP_swapTable
+@idTableNew varchar(10), @idBill varchar(10)
+as
+begin
+	if exists (select * from Tables where table_id = @idTableNew and status = 0)
+	begin
+		declare @idTableOld varchar(10)
+		select @idTableOld = table_id from Bills where bill_id = @idBill
+
+		update Tables
+		set status = 0
+		where table_id = @idTableOld
+
+		update Bills
+		set table_id = @idTableNew
+		where bill_id = @idBill
+
+		update Tables
+		set status = 1
+		where table_id = @idTableNew
+		
+	end
+	else
+	begin 
+		rollback transaction
+	end
+end
+go
+create function FUNC_BillPay
+(@idBill varchar(10))
+returns decimal 
+as 
+begin
+	declare @totalBill decimal
+	declare @idTableCurrent varchar(10)
+	select * from Bills
+	return @totalBill
 end
