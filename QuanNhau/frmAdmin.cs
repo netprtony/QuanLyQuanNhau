@@ -21,7 +21,6 @@ namespace QuanNhau
         }
         private void Load_comboxCategory()
         {
-            
             string strQuery = "select * from Categories";
             DataTable dt = db.getDataTable(strQuery);
             DataRow dr = dt.NewRow();
@@ -36,10 +35,10 @@ namespace QuanNhau
             cb_typeAcc.Items.Add("Admin");
             cb_typeAcc.Items.Add("Staff");
         }
-        private void Load_DgvItems()
+        private void Load_DgvItems(string searchInput = null)
         {
             
-            string strView = "exec USP_LoadDataItem";
+            string strView = "exec USP_LoadDataItem N'%"+ searchInput + "%'";
             DataTable dt = db.getDataTable(strView);
             dtgv_Item.DataSource = dt;
         }
@@ -407,8 +406,13 @@ namespace QuanNhau
             }
             Load_DgvAcc();
         }
-        #endregion
+        
 
+        private void btn_findItem_Click(object sender, EventArgs e)
+        {
+            Load_DgvItems(tb_findItem.Text);
+        }
+        #endregion
     }
 }
 

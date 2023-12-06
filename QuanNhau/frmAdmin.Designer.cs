@@ -776,6 +776,7 @@
             this.btn_findItem.TabIndex = 11;
             this.btn_findItem.Text = "Tìm kiếm";
             this.btn_findItem.UseVisualStyleBackColor = true;
+            this.btn_findItem.Click += new System.EventHandler(this.btn_findItem_Click);
             // 
             // panel7
             // 

@@ -67,6 +67,17 @@ namespace QuanNhau
             }
             return tableList;
         }
+        public List<Table> GetTableAvailable()
+        {
+            List<Table> tableList = new List<Table>();
+            DataTable dt = getDataTable("USP_GetTableAvailable");
+            foreach (DataRow item in dt.Rows)
+            {
+                Table table = new Table(item);
+                tableList.Add(table);
+            }
+            return tableList;
+        }
         public int TableWidth = 100;
         public int TableHeight = 100;
         /// <summary>

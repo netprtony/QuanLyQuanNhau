@@ -19,12 +19,13 @@ namespace QuanNhau
             InitializeComponent();
             LoadTable();
             LoadCboCate();
+            LoadCbTable();
         }
         #region Method
         string CreateIDBill()
         {
-            string mhd = "B";
-            mhd = mhd + string.Format("{0:ddMMyyyy}", DateTime.Now);
+            string mhd = "BI";
+            //mhd = mhd + string.Format("{0:ddMMyyyy}", DateTime.Now);
             string chuoitruyvan = "select * from Bills where bill_id LIKE '" + mhd + "%' order by bill_id desc";
             DataTable dt = db.getDataTable(chuoitruyvan);
             if (dt.Rows.Count == 0)
@@ -34,7 +35,7 @@ namespace QuanNhau
             else
             {
                 string mdhbandau = dt.Rows[0]["bill_id"].ToString();
-                string stt = mdhbandau.Substring(10, 3);
+                string stt = mdhbandau.Substring(2);
                 int so = int.Parse(stt) + 1;
 
                 if (so < 10)
@@ -52,8 +53,15 @@ namespace QuanNhau
             }
             return mhd;
         }
+        private void LoadCbTable()
+        {
+            List<Table> lst = db.GetTableAvailable();
+            cb_switchTable.DataSource = lst;
+            cb_switchTable.DisplayMember = "name";
+        }
         void LoadTable()
         {
+            flpTable.Controls.Clear();
             List<Table> tableList = db.LoadTableList();
             string st;
             foreach (Table item in tableList)
@@ -67,10 +75,10 @@ namespace QuanNhau
                 switch (st)
                 {
                     case "Trống":
-                        btn.BackColor = Color.Aquamarine;
+                        btn.BackColor = Color.DarkKhaki;
                         break;
                     default:
-                        btn.BackColor = Color.LightSteelBlue;
+                        btn.BackColor = Color.Beige;
                         break;
                 }
                 flpTable.Controls.Add(btn);
@@ -81,17 +89,21 @@ namespace QuanNhau
             lstView_bill.Items.Clear();
             List<Menu> listOrder = db.GetListMenuByTable(id);
             decimal total = 0;
+            decimal readTotal = 0;
+            decimal discount = decimal.Parse(lb_discount.Text);
             foreach (Menu item in listOrder)
             {
-                ListViewItem lsvItem = new ListViewItem(item.NameItem.ToString());
-                lsvItem.SubItems.Add(item.Quantity.ToString());
-                lsvItem.SubItems.Add(item.Price.ToString());
-                lsvItem.SubItems.Add(item.Total.ToString());
+                ListViewItem lsvItem = new ListViewItem(item.NameItem. ToString());
+                lsvItem.SubItems.Add(item.Quantity.ToString()); 
+                lsvItem.SubItems.Add(string.Format("{0:0,0}", item.Price));
+                lsvItem.SubItems.Add(string.Format("{0:0,0}", item.Total));
                 total += item.Total;
                 lstView_bill.Items.Add(lsvItem);
             }
             CultureInfo cl = new CultureInfo("vi_VN");
             lb_totalBill.Text = total.ToString("c", cl);
+            readTotal = total - (total/100)*discount;
+            lb_actPaid.Text = readTotal.ToString();
         }
         private void LoadCboCate()
         {
@@ -131,7 +143,7 @@ namespace QuanNhau
 
         private void frmManager_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void cb_addBeverage_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,11 +159,10 @@ namespace QuanNhau
 
         private void cb_lstCate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string id = "";
             ComboBox cb = sender as ComboBox;
             if (cb.SelectedItem == null) return;
             Category sel = cb.SelectedItem as Category;
-            id = sel.Id;
+            string id = sel.Id;
             LoadItemOfCate(id);
         }
 
@@ -159,20 +170,75 @@ namespace QuanNhau
         {
             Table table = lstView_bill.Tag as Table;
             string idBill = db.getUnCheckBillByIdTable(table.ID);
-            if(idBill == null)
+            string idItem = (cb_ItemOfCate.SelectedItem as Item).Id;
+            decimal discount = decimal.Parse(lb_discount.Text);
+            int amount = (int)nud_countdish.Value;
+            if (amount == 0)
+            {
+                MessageBox.Show("Số lượng không được bằng 0!", "Thông báo");
+                return;
+            }
+            if (idBill == null)
             {
                 string idBillNew = CreateIDBill();
                 int k = db.getNonQuery("exec USP_InsertBill '" + idBillNew + "', '" + table.ID + "'");
                 if (k == 1) MessageBox.Show("Bill đã được tạo", "Thông báo");
-                k = db.getNonQuery("exec USP_InsertOrders '"+ idBillNew + "', '"+ cb_ItemOfCate.SelectedValue + "', '"+ (int)nud_countdish.Value + "'");
+                k = db.getNonQuery("exec USP_InsertOrders '"+ idBillNew + "', '"+ idItem + "', '"+ amount + "'");
                 if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBillNew);
             }
             else
             {
-                int k = db.getNonQuery("exec USP_InsertOrders '" + idBill + "', '" + cb_ItemOfCate.SelectedValue + "', '" + (int)nud_countdish.Value + "'");
+                int k = db.getNonQuery("exec USP_InsertOrders '" + idBill + "', '" + idItem + "', '" + amount + "'");
                 if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBill);
             }
+            ShowBill(table.ID);
+            LoadTable();
+            LoadCbTable();
         }
         #endregion
+
+        private void btn_pay_Click(object sender, EventArgs e)
+        {
+            Table table = lstView_bill.Tag as Table;
+            ReadMoney rm = new ReadMoney();
+            string idBill = db.getUnCheckBillByIdTable(table.ID);
+            decimal acttuallyTotal = decimal.Parse(lb_actPaid.Text.ToString());
+            if (idBill != null)
+            {
+                if (MessageBox.Show("Bạn có chắc hóa đơn cho bàn " + table.Name, "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                {
+                    int k = db.getNonQuery("exec USP_CheckOutBill '" + idBill + "', '" + decimal.Parse(lb_discount.Text.ToString()) + "', '" + acttuallyTotal + "', '" + table. ID + "'");
+                    if (k == 1) MessageBox.Show("Thanh toán hóa đơn " + idBill + " thành công\nTổng tiền:"+ decimal.Parse(lb_actPaid.Text.ToString()) + "\nThành chữ: "+rm.docSoThanhChu((long)acttuallyTotal), "Thông báo thanh toán");
+                    LoadTable();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chưa có hóa đơn để thanh toán", "Thông báo");
+            }
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btn_switchTable_Click(object sender, EventArgs e)
+        {
+            Table table = lstView_bill.Tag as Table;
+            string tableNew = (cb_switchTable.SelectedItem as Table).ID;
+            string idBill = db.getUnCheckBillByIdTable(table.ID);
+            if(idBill != null)
+            {
+                if (MessageBox.Show("Bạn có chắc chuyển bàn" + table.Name + " sang bàn "+ cb_switchTable.Text , "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                {
+                    int k = db.getNonQuery("exec USP_swapTable '"+ tableNew + "', '"+ idBill + "'");
+                    if (k == 1) MessageBox.Show("Đã chuyển bàn" + table.Name + " sang bàn " + cb_switchTable.Text, "Thông báo chuyển bàn");
+                    LoadCbTable();
+                    LoadTable();
+                }
+            }
+            
+        }
     }
 }

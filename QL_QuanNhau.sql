@@ -36,30 +36,35 @@ create table Tables(
 go
 insert into Tables values 
 	('TB001', N'Bàn số 1', 0),
-	('TB002', N'Bàn số 2', 1),
-	('TB003', N'Bàn số 3', 1),
+	('TB002', N'Bàn số 2', 0),
+	('TB003', N'Bàn số 3', 0),
 	('TB004', N'Bàn số 4', 0),
 	('TB005', N'Bàn số 5', 0),
-	('TB006', N'Bàn số 6', 1),
+	('TB006', N'Bàn số 6', 0),
 	('TB007', N'Bàn số 7', 0),
 	('TB008', N'Bàn số 8', 0),
 	('TB009', N'Bàn số 9', 0),
 	('TB010', N'Bàn số 10', 0),
-	('TB011', N'Bàn số 11', 1),
-	('TB012', N'Bàn số 12', 1),
-	('TB013', N'Bàn số 13', 1),
+	('TB011', N'Bàn số 11', 0),
+	('TB012', N'Bàn số 12', 0),
+	('TB013', N'Bàn số 13', 0),
 	('TB014', N'Bàn số 14', 0),
-	('TB015', N'Bàn số 15', 1),
+	('TB015', N'Bàn số 15', 0),
 	('TB016', N'Bàn số 16', 0),
-	('TB017', N'Bàn số 17', 1),
+	('TB017', N'Bàn số 17', 0),
 	('TB018', N'Bàn số 18', 0),
-	('TB019', N'Bàn số 19', 1),	
+	('TB019', N'Bàn số 19', 0),	
 	('TB020', N'Bàn số 20', 0),
 	('TB021', N'Bàn số 21', 0),
 	('TB022', N'Bàn số 22', 0),
 	('TB023', N'Bàn số 23', 0),
 	('TB024', N'Bàn số 24', 0),
-	('TB025', N'Bàn số 25', 0)
+	('TB025', N'Bàn số 25', 0),
+	('TB026', N'Bàn số 26', 0),
+	('TB027', N'Bàn số 27', 0),
+	('TB028', N'Bàn số 28', 0),
+	('TB029', N'Bàn số 29', 0),
+	('TB030', N'Bàn số 30', 0)
 go
 
 create table Account 
@@ -131,8 +136,10 @@ create table Bills(
 	status bit default 0,
 	cashier_id varchar(50),
 	table_id varchar(10)  REFERENCES Tables(table_id),
-	total_bill decimal default 0
+	total_bill decimal default 0,
+	discount decimal default 0
 )
+
 go
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
 	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 0, 'muidao1506', 'TB001'),
@@ -253,6 +260,7 @@ BEGIN
 	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
 END
 go
+
 create trigger tri_updateBill
 on Orders
 for delete, update
@@ -267,6 +275,7 @@ go
 
 go
 go
+
 create trigger trig_upsale
 on Orders
 for insert, update
@@ -281,6 +290,7 @@ begin
 	end	
 end
 go
+
 create trigger trig_AddBillTableCover
 on Bills
 for insert
@@ -290,7 +300,9 @@ begin
 	set status = 1
 	from inserted i where Tables.table_id = i.table_id
 end
+go
 
+go
 create proc USP_GetTableList
 as select * from Tables
 go
@@ -446,23 +458,18 @@ go
 create proc USP_InsertBill
 @idBill varchar(10), @idTable varchar(10)
 as
-	insert into Bills (bill_id, dateCheckin, dateCheckout, table_id) values (@idBill, getdate(), null, @idTable)
+	insert into Bills (bill_id, dateCheckin, dateCheckout, table_id, discount) values (@idBill, CURRENT_TIMESTAMP, null, @idTable, 0)
 go
 --Thêm các order kiểm trả bill được thêm vào nếu có order đó rồi thì tăng số lượng ngược lại thêm một order mới
-create proc USP_InsertOrders
+alter proc USP_InsertOrders
 @idBill varchar(10), @idItem varchar(10), @sl int
 as	
 begin	
-
-	declare @itemAmount  int = 1
-
-
-
 	if exists (select * from Orders 
 	where bill_id = @idBill and item_id = @idItem)
 	begin
-		declare @newCount int = @itemAmount
-		update Orders set quantity = @itemAmount + @sl
+		update Orders set quantity += @sl
+		where bill_id = @idBill and item_id = @idItem
 	end
 	else
 	begin
@@ -491,21 +498,36 @@ begin
 		update Tables
 		set status = 1
 		where table_id = @idTableNew
-		
-	end
-	else
-	begin 
-		rollback transaction
 	end
 end
 go
-create function FUNC_BillPay
-(@idBill varchar(10))
-returns decimal 
+create function FUNC_GetIdBill_OccupiedTable
+(@idTable varchar(10))
+returns varchar(10)
+as	
+begin
+	declare @idBill varchar(10)
+	select @idBill = bill_id from Bills where table_id = @idTable and status = 0
+	return @idBill
+end
+go
+create proc USP_CheckOutBill
+@idBill varchar(10), @discount decimal, @total decimal, @idTable varchar(10)
 as 
 begin
-	declare @totalBill decimal
-	declare @idTableCurrent varchar(10)
-	select * from Bills
-	return @totalBill
+	update Bills set status = 1,
+	discount = @discount, 
+	dateCheckout = CURRENT_TIMESTAMP, 
+	total_bill = @total
+	where bill_id = @idBill
+	
+	update Tables set status = 0 where table_id = @idTable 
 end
+go
+create proc USP_GetTableAvailable
+as
+	select * from Tables where status = 0
+go
+declare @idTableOld varchar(10)
+select @idTableOld = table_id from Bills where bill_id = 'BI001'
+print @idTableOld
