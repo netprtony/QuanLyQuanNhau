@@ -241,7 +241,6 @@ namespace QuanNhau
             }
             
         }
-
         private void thanhToánToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btn_pay_Click(this, new EventArgs());
@@ -259,13 +258,11 @@ namespace QuanNhau
 
         private void frmManager_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (MessageBox.Show("Bạn có muốn thoát ra không?", "Thông báo thoát!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
-            //{
-            //    e.Cancel = true;
-            //    frmLogin l = new frmLogin();
-            //    l.ShowDialog();
-            //    l.Show();
-            //}
+            frmLogin l = new frmLogin();
+            this.Hide();
+            //l.ShowDialog();
+            //l.Show();
+
         }
     }
 }
