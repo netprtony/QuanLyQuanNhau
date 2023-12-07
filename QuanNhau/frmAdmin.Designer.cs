@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdmin));
             this.tp_acc = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.dtgv_acc = new System.Windows.Forms.DataGridView();
@@ -108,6 +109,11 @@
             this.tb_idItem = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tp_bill = new System.Windows.Forms.TabPage();
+            this.tb_numPage = new System.Windows.Forms.TextBox();
+            this.btn_nextPage = new System.Windows.Forms.Button();
+            this.btn_lastPage = new System.Windows.Forms.Button();
+            this.btn_prePage = new System.Windows.Forms.Button();
+            this.btn_firstPage = new System.Windows.Forms.Button();
             this.dtgv_AllorderOfbill = new System.Windows.Forms.DataGridView();
             this.panel15 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -661,14 +667,14 @@
             this.panel21.Location = new System.Drawing.Point(6, 6);
             this.panel21.Name = "panel21";
             this.panel21.Size = new System.Drawing.Size(713, 132);
-            this.panel21.TabIndex = 7;
+            this.panel21.TabIndex = 0;
             // 
             // btn_viewItem
             // 
             this.btn_viewItem.Location = new System.Drawing.Point(566, 32);
             this.btn_viewItem.Name = "btn_viewItem";
             this.btn_viewItem.Size = new System.Drawing.Size(87, 68);
-            this.btn_viewItem.TabIndex = 9;
+            this.btn_viewItem.TabIndex = 3;
             this.btn_viewItem.Text = "Xem";
             this.btn_viewItem.UseVisualStyleBackColor = true;
             // 
@@ -677,7 +683,7 @@
             this.btn_changeItem.Location = new System.Drawing.Point(393, 32);
             this.btn_changeItem.Name = "btn_changeItem";
             this.btn_changeItem.Size = new System.Drawing.Size(87, 68);
-            this.btn_changeItem.TabIndex = 8;
+            this.btn_changeItem.TabIndex = 2;
             this.btn_changeItem.Text = "Sửa";
             this.btn_changeItem.UseVisualStyleBackColor = true;
             this.btn_changeItem.Click += new System.EventHandler(this.btn_changeDish_Click);
@@ -687,7 +693,7 @@
             this.btn_delItem.Location = new System.Drawing.Point(215, 32);
             this.btn_delItem.Name = "btn_delItem";
             this.btn_delItem.Size = new System.Drawing.Size(87, 68);
-            this.btn_delItem.TabIndex = 7;
+            this.btn_delItem.TabIndex = 1;
             this.btn_delItem.Text = "Xóa";
             this.btn_delItem.UseVisualStyleBackColor = true;
             this.btn_delItem.Click += new System.EventHandler(this.btn_delItem_Click);
@@ -697,7 +703,7 @@
             this.btn_addItem.Location = new System.Drawing.Point(59, 32);
             this.btn_addItem.Name = "btn_addItem";
             this.btn_addItem.Size = new System.Drawing.Size(87, 68);
-            this.btn_addItem.TabIndex = 16;
+            this.btn_addItem.TabIndex = 0;
             this.btn_addItem.Text = "Thêm";
             this.btn_addItem.UseVisualStyleBackColor = true;
             this.btn_addItem.Click += new System.EventHandler(this.btn_addDish_Click);
@@ -785,14 +791,14 @@
             this.panel7.Location = new System.Drawing.Point(59, 253);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(243, 71);
-            this.panel7.TabIndex = 3;
+            this.panel7.TabIndex = 2;
             // 
             // tb_priceItem
             // 
             this.tb_priceItem.Location = new System.Drawing.Point(50, 30);
             this.tb_priceItem.Name = "tb_priceItem";
             this.tb_priceItem.Size = new System.Drawing.Size(156, 22);
-            this.tb_priceItem.TabIndex = 4;
+            this.tb_priceItem.TabIndex = 0;
             // 
             // label3
             // 
@@ -810,14 +816,14 @@
             this.panel6.Location = new System.Drawing.Point(59, 98);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(562, 71);
-            this.panel6.TabIndex = 2;
+            this.panel6.TabIndex = 1;
             // 
             // tb_nameItem
             // 
             this.tb_nameItem.Location = new System.Drawing.Point(103, 30);
             this.tb_nameItem.Name = "tb_nameItem";
             this.tb_nameItem.Size = new System.Drawing.Size(339, 22);
-            this.tb_nameItem.TabIndex = 2;
+            this.tb_nameItem.TabIndex = 0;
             // 
             // label2
             // 
@@ -837,7 +843,7 @@
             this.panel8.Location = new System.Drawing.Point(59, 175);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(562, 71);
-            this.panel8.TabIndex = 4;
+            this.panel8.TabIndex = 0;
             // 
             // cbo_unit
             // 
@@ -859,7 +865,7 @@
             this.cbo_unit.Location = new System.Drawing.Point(334, 20);
             this.cbo_unit.Name = "cbo_unit";
             this.cbo_unit.Size = new System.Drawing.Size(140, 22);
-            this.cbo_unit.TabIndex = 4;
+            this.cbo_unit.TabIndex = 2;
             // 
             // label13
             // 
@@ -876,7 +882,7 @@
             this.cb_cateItem.Location = new System.Drawing.Point(103, 20);
             this.cb_cateItem.Name = "cb_cateItem";
             this.cb_cateItem.Size = new System.Drawing.Size(140, 22);
-            this.cb_cateItem.TabIndex = 3;
+            this.cb_cateItem.TabIndex = 1;
             // 
             // label4
             // 
@@ -894,7 +900,7 @@
             this.panel5.Location = new System.Drawing.Point(59, 20);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(562, 71);
-            this.panel5.TabIndex = 2;
+            this.panel5.TabIndex = 0;
             // 
             // tb_idItem
             // 
@@ -914,6 +920,11 @@
             // 
             // tp_bill
             // 
+            this.tp_bill.Controls.Add(this.tb_numPage);
+            this.tp_bill.Controls.Add(this.btn_nextPage);
+            this.tp_bill.Controls.Add(this.btn_lastPage);
+            this.tp_bill.Controls.Add(this.btn_prePage);
+            this.tp_bill.Controls.Add(this.btn_firstPage);
             this.tp_bill.Controls.Add(this.dtgv_AllorderOfbill);
             this.tp_bill.Controls.Add(this.panel15);
             this.tp_bill.Controls.Add(this.dtgv_bill);
@@ -925,6 +936,56 @@
             this.tp_bill.Text = "Doanh thu";
             this.tp_bill.UseVisualStyleBackColor = true;
             this.tp_bill.Click += new System.EventHandler(this.tp_bill_Click);
+            // 
+            // tb_numPage
+            // 
+            this.tb_numPage.Location = new System.Drawing.Point(403, 541);
+            this.tb_numPage.Name = "tb_numPage";
+            this.tb_numPage.Size = new System.Drawing.Size(62, 22);
+            this.tb_numPage.TabIndex = 8;
+            this.tb_numPage.Text = "1";
+            this.tb_numPage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tb_numPage.TextChanged += new System.EventHandler(this.tb_numPage_TextChanged);
+            // 
+            // btn_nextPage
+            // 
+            this.btn_nextPage.Location = new System.Drawing.Point(544, 532);
+            this.btn_nextPage.Name = "btn_nextPage";
+            this.btn_nextPage.Size = new System.Drawing.Size(154, 39);
+            this.btn_nextPage.TabIndex = 7;
+            this.btn_nextPage.Text = "Sau";
+            this.btn_nextPage.UseVisualStyleBackColor = true;
+            this.btn_nextPage.Click += new System.EventHandler(this.btn_nextPage_Click);
+            // 
+            // btn_lastPage
+            // 
+            this.btn_lastPage.Location = new System.Drawing.Point(704, 532);
+            this.btn_lastPage.Name = "btn_lastPage";
+            this.btn_lastPage.Size = new System.Drawing.Size(154, 39);
+            this.btn_lastPage.TabIndex = 6;
+            this.btn_lastPage.Text = "Trang cuối";
+            this.btn_lastPage.UseVisualStyleBackColor = true;
+            this.btn_lastPage.Click += new System.EventHandler(this.btn_lastPage_Click);
+            // 
+            // btn_prePage
+            // 
+            this.btn_prePage.Location = new System.Drawing.Point(166, 532);
+            this.btn_prePage.Name = "btn_prePage";
+            this.btn_prePage.Size = new System.Drawing.Size(154, 39);
+            this.btn_prePage.TabIndex = 5;
+            this.btn_prePage.Text = "Trước";
+            this.btn_prePage.UseVisualStyleBackColor = true;
+            this.btn_prePage.Click += new System.EventHandler(this.btn_prePage_Click);
+            // 
+            // btn_firstPage
+            // 
+            this.btn_firstPage.Location = new System.Drawing.Point(6, 532);
+            this.btn_firstPage.Name = "btn_firstPage";
+            this.btn_firstPage.Size = new System.Drawing.Size(154, 39);
+            this.btn_firstPage.TabIndex = 4;
+            this.btn_firstPage.Text = "Trang đầu";
+            this.btn_firstPage.UseVisualStyleBackColor = true;
+            this.btn_firstPage.Click += new System.EventHandler(this.btn_firstPage_Click);
             // 
             // dtgv_AllorderOfbill
             // 
@@ -1004,9 +1065,10 @@
             this.btn_statistic.Location = new System.Drawing.Point(101, 117);
             this.btn_statistic.Name = "btn_statistic";
             this.btn_statistic.Size = new System.Drawing.Size(154, 39);
-            this.btn_statistic.TabIndex = 3;
+            this.btn_statistic.TabIndex = 2;
             this.btn_statistic.Text = "Thống kê";
             this.btn_statistic.UseVisualStyleBackColor = true;
+            this.btn_statistic.Click += new System.EventHandler(this.btn_statistic_Click);
             // 
             // label14
             // 
@@ -1028,19 +1090,18 @@
             // 
             // dtp_dateEnd
             // 
-            this.dtp_dateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_dateEnd.Location = new System.Drawing.Point(82, 76);
             this.dtp_dateEnd.Name = "dtp_dateEnd";
             this.dtp_dateEnd.Size = new System.Drawing.Size(200, 22);
-            this.dtp_dateEnd.TabIndex = 2;
+            this.dtp_dateEnd.TabIndex = 1;
             // 
             // dtp_dateStart
             // 
-            this.dtp_dateStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_dateStart.Location = new System.Drawing.Point(82, 26);
+            this.dtp_dateStart.Checked = false;
+            this.dtp_dateStart.Location = new System.Drawing.Point(83, 26);
             this.dtp_dateStart.Name = "dtp_dateStart";
             this.dtp_dateStart.Size = new System.Drawing.Size(200, 22);
-            this.dtp_dateStart.TabIndex = 1;
+            this.dtp_dateStart.TabIndex = 0;
             // 
             // dtgv_bill
             // 
@@ -1048,8 +1109,8 @@
             this.dtgv_bill.Location = new System.Drawing.Point(6, 7);
             this.dtgv_bill.Name = "dtgv_bill";
             this.dtgv_bill.RowHeadersWidth = 51;
-            this.dtgv_bill.Size = new System.Drawing.Size(852, 564);
-            this.dtgv_bill.TabIndex = 0;
+            this.dtgv_bill.Size = new System.Drawing.Size(852, 513);
+            this.dtgv_bill.TabIndex = 1;
             this.dtgv_bill.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_bill_CellClick);
             this.dtgv_bill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_bill_CellContentClick);
             // 
@@ -1073,6 +1134,7 @@
             this.ClientSize = new System.Drawing.Size(1468, 633);
             this.Controls.Add(this.tc_admin);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quán nhậu Ngao Sò Ốc Hến";
@@ -1125,6 +1187,7 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.tp_bill.ResumeLayout(false);
+            this.tp_bill.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_AllorderOfbill)).EndInit();
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
@@ -1232,5 +1295,10 @@
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.TextBox tb_pass;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox tb_numPage;
+        private System.Windows.Forms.Button btn_nextPage;
+        private System.Windows.Forms.Button btn_lastPage;
+        private System.Windows.Forms.Button btn_prePage;
+        private System.Windows.Forms.Button btn_firstPage;
     }
 }

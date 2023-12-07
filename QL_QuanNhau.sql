@@ -71,7 +71,7 @@ create table Account
 (
 	Display nvarchar(50) default N'Chưa đặt tên hiện thị',
 	UserName varchar(50) primary key,
-	PassWord varchar(50) default 'ngaosoochen',
+	PassWord varchar(50) default '33354741122871651676713774147412831195',
 	Type bit default 0
 )
 go
@@ -257,7 +257,8 @@ BEGIN
     update Bills
 	set total_bill += i.quantity * it.item_price
 	from inserted i, Items it
-	where i.item_id= it.item_id and Bills.bill_id = i.bill_id
+	where i.item_id= it.item_id 
+	and Bills.bill_id = i.bill_id
 END
 go
 
@@ -269,7 +270,8 @@ begin
     update Bills
 	set total_bill -= d.quantity * it.item_price
 	from deleted d, Items it
-	where d.item_id= it.item_id and Bills.bill_id = d.bill_id
+	where d.item_id= it.item_id 
+	and Bills.bill_id = d.bill_id
 end
 go
 
@@ -286,7 +288,8 @@ begin
 		update Bills
 		set total_bill -= i.quantity * it.item_price * 0.2
 		from inserted i, Items it
-		where i.item_id= it.item_id and Bills.bill_id = i.bill_id
+		where i.item_id= it.item_id 
+		and Bills.bill_id = i.bill_id
 	end	
 end
 go
@@ -298,7 +301,8 @@ as
 begin
 	update Tables 
 	set status = 1
-	from inserted i where Tables.table_id = i.table_id
+	from inserted i 
+	where Tables.table_id = i.table_id
 end
 go
 
@@ -307,52 +311,165 @@ create proc USP_GetTableList
 as select * from Tables
 go
 create proc USP_LoginAccount 
-@username varchar(50), @password varchar(50)
+@username varchar(50),
+@password varchar(50)
 as
 begin	
-	select * from Account where UserName = @username and PassWord = @password
+	select * from Account 
+	where UserName = @username
+	and PassWord = @password
 end
 go
 create proc USP_GetAllOrderOfBill
 @ID_BILL varchar(10)
 as 
 begin
-	select i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT', i.item_price as N'Giá', o.quantity as N'Số lượng', (i.item_price * o.quantity) as N'Thành tiền' from Orders o, Items i where i.item_id = o.item_id and bill_id = @ID_BILL
+	select i.item_name as N'Mặt hàng',
+	i.item_unit as N'ĐVT',
+	i.item_price as N'Giá',
+	o.quantity as N'Số lượng',
+	(i.item_price * o.quantity) as N'Thành tiền' 
+	from Orders o, Items i 
+	where i.item_id = o.item_id 
+	and bill_id = @ID_BILL
 end
 go
 create proc USP_LoadDataItem 
+@searchInput nvarchar(50)
 as	
-	select i.item_id as 'ID', i.item_name as N'Mặt hàng', i.item_unit as N'ĐVT' , i.item_price as N'Giá', c.category_name as N'Danh mục', i.item_description as N'Mô tả', item_unit as N'Đơn vị' 
+	select i.item_id as 'ID',
+	i.item_name as N'Mặt hàng',
+	i.item_unit as N'ĐVT' ,
+	i.item_price as N'Giá', 
+	c.category_name as N'Danh mục',
+	i.item_description as N'Mô tả',
+	item_unit as N'Đơn vị' 
 	from Items i, Categories c 
 	where c.category_id = i.category_id
+	and category_name like @searchInput
 go
 create proc USP_LoadDateCategory
-as	select category_id as 'ID', category_name as N'Tên danh mục' 
+as	select category_id as 'ID',
+	category_name as N'Tên danh mục' 
 	from Categories
 go
 create proc USP_LoadDataTable
-as	select table_id as 'ID', table_name as N'Tên bàn' 
+as	select table_id as 'ID',
+	table_name as N'Tên bàn' 
 	from Tables
 go
 create proc USP_LoadDataBill
-as	select b.bill_id as N'Mã hóa đơn', t.table_name as N'Bàn khách ngồi', b.cashier_id as N'Thu ngân', FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào', FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra', FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày', CASE WHEN b.status = 1 THEN 'Đã thanh toán' ELSE 'Chưa thanh toán' END AS N'Tình trạng', b.total_bill as N'Tổng hóa đơn' 
+as	
+	select b.bill_id as N'Mã hóa đơn',
+	t.table_name as N'Bàn khách ngồi',
+	b.cashier_id as N'Thu ngân',
+	FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào',
+	FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra',
+	FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày',
+	CASE WHEN b.status = 1 
+	THEN 'Đã thanh toán'
+	ELSE 'Chưa thanh toán' 
+	END AS N'Tình trạng', 
+	b.total_bill as N'Tổng hóa đơn' 
 	from Bills b, Tables t 
 	where b.table_id = t.table_id
+	and b.status = 1
+go
+create proc USP_LoadDataBillByDate
+@dateFrom date, @dateTo date
+as	
+	select b.bill_id as N'Mã hóa đơn',
+	t.table_name as N'Bàn khách ngồi',
+	b.cashier_id as N'Thu ngân',
+	FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào',
+	FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra',
+	FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày',
+	CASE WHEN b.status = 1 
+	THEN 'Đã thanh toán'
+	ELSE 'Chưa thanh toán' 
+	END AS N'Tình trạng', 
+	b.total_bill as N'Tổng hóa đơn' 
+	from Bills b, Tables t 
+	where b.table_id = t.table_id
+	and b.status = 1
+	and dateCheckin >= @dateFrom
+	and dateCheckout <= @dateTo
+go
+create proc USP_LoadDataBillByDateAndPage
+@date1 date, @date2 date, @page int
+as
+	begin
+		declare @pageRows int = 10
+		declare @selectRows int = @pageRows - @page
+		declare @excepRows int = (@page - 1)* @pageRows
+		;with BillShowByPage as (select b.bill_id as N'Mã hóa đơn',
+		t.table_name as N'Bàn khách ngồi',
+		b.cashier_id as N'Thu ngân',
+		FORMAT(b.dateCheckin, 'HH:mm:ss') as N'Giờ vào',
+		FORMAT(b.dateCheckout, 'HH:mm:ss') as N'Giờ ra',
+		FORMAT(b.dateCheckout, 'dd/MM/yyyy') as N'Ngày',
+		CASE WHEN b.status = 1 
+		THEN 'Đã thanh toán'
+		ELSE 'Chưa thanh toán' 
+		END AS N'Tình trạng', 
+		b.total_bill as N'Tổng hóa đơn' 
+		from Bills b, Tables t 
+		where b.table_id = t.table_id
+		and dateCheckin >= @date1
+		and dateCheckin <= @date2
+		and b.status = 1)
+		select top(@selectRows) * from BillShowByPage
+		except
+		select top(@excepRows) * from BillShowByPage
+	end
+go
+create proc USP_GetNumBillByDate
+@dateFrom date, @dateTo date
+as	
+	select COUNT(*)
+	from Bills b, Tables t 
+	where b.table_id = t.table_id
+	and b.status = 1
+	and dateCheckin >= @dateFrom
+	and dateCheckin <= @dateTo
+go
 go
 create proc USP_LoadAccount
-as	select Display as N'Tên hiện thị', UserName as N'Tên tài khoản', PassWord as N'Mật khẩu' , CASE WHEN a.Type = 1 THEN N'Admin' ELSE 'Staff' END AS N'Vai trò'
+as	select Display as N'Tên hiện thị',
+	UserName as N'Tên tài khoản',
+	PassWord as N'Mật khẩu' ,
+	CASE WHEN a.Type = 1 
+	THEN N'Admin' 
+	ELSE 'Staff' 
+	END AS N'Vai trò'
 	from Account a
 go
 create proc USP_InsertItem 
-@id varchar(10), @name nvarchar(50), @des nvarchar(max), @price decimal(18,0), @unit nvarchar(10), @cate varchar(10)
+@id varchar(10),
+@name nvarchar(50),
+@des nvarchar(max),
+@price decimal(18,0),
+@unit nvarchar(10),
+@cate varchar(10)
 as	
-	Insert into Items (item_id, item_name, item_description, item_price, item_unit, category_id) 
+	Insert into Items 
+	(item_id, item_name, item_description, item_price, item_unit, category_id) 
 	values (@id, @name, @des, @price, @unit, @cate)
 go
 create proc USP_UpdateItem
-@id varchar(10), @name nvarchar(50), @des nvarchar(max), @price decimal(18,0), @unit nvarchar(10), @cate varchar(10)
+@id varchar(10),
+@name nvarchar(50),
+@des nvarchar(max),
+@price decimal(18,0),
+@unit nvarchar(10),
+@cate varchar(10)
 as 
-	update Items set item_name = @name, item_price = @price, item_unit = @unit, category_id = @cate where item_id = @id
+	update Items 
+	set item_name = @name,
+	item_price = @price,
+	item_unit = @unit, 
+	category_id = @cate 
+	where item_id = @id
 go
 create proc USP_InsertCategory
 @id varchar(10), @name nvarchar(50)
@@ -375,19 +492,22 @@ go
 create proc USP_insertTable
 @id varchar(10), @name nvarchar(50)
 as
-	insert into Tables (table_id, table_name)
+	insert into Tables 
+	(table_id, table_name)
 	values (@id, @name)
 go
 create proc USP_UpdateTable
 @id varchar(10), @name nvarchar(50)
 as
-	update Tables set table_name = @name
+	update Tables 
+	set table_name = @name
 	where table_id = @id
 go
 create proc USP_UpdateCategory
 @id varchar(10), @name nvarchar(50)
 as
-	update Categories set category_name = @name
+	update Categories 
+	set category_name = @name
 	where category_id = @id
 go
 create proc USP_DeleteTable
@@ -429,10 +549,15 @@ as
 	where UserName = @user
 go
 create proc USP_UpdateAccount
-@display nvarchar(50), @user varchar(50), @pass varchar(50), @type bit
+@display nvarchar(50),
+@user varchar(50),
+@pass varchar(50), 
+@type bit
 as
 	update Account 
-	set Display = @display, PassWord = @pass, Type = @type
+	set Display = @display,
+	PassWord = @pass,
+	Type = @type
 	where UserName = @user
 go
 create proc USP_GetUnCheckBillByIdTable
@@ -448,17 +573,30 @@ go
 create proc USP_GetListMenuByTable
 @idTable varchar(10)
 as
-	select i.item_name as N'Món', o.quantity as N'Số lượng', i.item_price as N'Giá', i.item_price*o.quantity as N'Tổng' from Orders as o, Items as i, Bills as b where o.bill_id = b.bill_id and o.item_id = i.item_id and b.status = 0 and b.table_id =  @idTable
+	select i.item_name as N'Món',
+	o.quantity as N'Số lượng',
+	i.item_price as N'Giá',
+	i.item_price*o.quantity as N'Tổng' 
+	from Orders as o,
+	Items as i,
+	Bills as b
+	where o.bill_id = b.bill_id
+	and o.item_id = i.item_id
+	and b.status = 0 
+	and b.table_id =  @idTable
 go
 create proc USP_GetItemByCategoryId
 @id varchar(10)	
 as
-	select * from Items where category_id = @id
+	select * from Items 
+	where category_id = @id
 go
 create proc USP_InsertBill
 @idBill varchar(10), @idTable varchar(10)
 as
-	insert into Bills (bill_id, dateCheckin, dateCheckout, table_id, discount) values (@idBill, CURRENT_TIMESTAMP, null, @idTable, 0)
+	insert into Bills 
+	(bill_id, dateCheckin, dateCheckout, table_id, discount) values 
+	(@idBill, CURRENT_TIMESTAMP, null, @idTable, 0)
 go
 --Thêm các order kiểm trả bill được thêm vào nếu có order đó rồi thì tăng số lượng ngược lại thêm một order mới
 alter proc USP_InsertOrders
@@ -466,10 +604,12 @@ alter proc USP_InsertOrders
 as	
 begin	
 	if exists (select * from Orders 
-	where bill_id = @idBill and item_id = @idItem)
+				where bill_id = @idBill 
+				and item_id = @idItem)
 	begin
 		update Orders set quantity += @sl
-		where bill_id = @idBill and item_id = @idItem
+		where bill_id = @idBill 
+		and item_id = @idItem
 	end
 	else
 	begin
@@ -482,10 +622,14 @@ create proc USP_swapTable
 @idTableNew varchar(10), @idBill varchar(10)
 as
 begin
-	if exists (select * from Tables where table_id = @idTableNew and status = 0)
+	if exists (	select * from Tables 
+				where table_id = @idTableNew
+				and status = 0)
 	begin
 		declare @idTableOld varchar(10)
-		select @idTableOld = table_id from Bills where bill_id = @idBill
+		select @idTableOld = table_id 
+		from Bills
+		where bill_id = @idBill
 
 		update Tables
 		set status = 0
@@ -507,12 +651,17 @@ returns varchar(10)
 as	
 begin
 	declare @idBill varchar(10)
-	select @idBill = bill_id from Bills where table_id = @idTable and status = 0
+	select @idBill = bill_id 
+	from Bills 
+	where table_id = @idTable 
+	and status = 0
 	return @idBill
 end
 go
 create proc USP_CheckOutBill
-@idBill varchar(10), @discount decimal, @total decimal, @idTable varchar(10)
+@idBill varchar(10),
+@discount decimal, 
+@total decimal, @idTable varchar(10)
 as 
 begin
 	update Bills set status = 1,
@@ -526,8 +675,6 @@ end
 go
 create proc USP_GetTableAvailable
 as
-	select * from Tables where status = 0
+	select * from Tables 
+	where status = 0
 go
-declare @idTableOld varchar(10)
-select @idTableOld = table_id from Bills where bill_id = 'BI001'
-print @idTableOld

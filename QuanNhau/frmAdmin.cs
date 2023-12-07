@@ -12,6 +12,18 @@ namespace QuanNhau
         }
         DBConnection db = new DBConnection();
         #region Method
+        private DataTable GetBillListByDateAndPage(DateTime dateStart, DateTime  dateEnd, int page)
+        {
+            return db.getDataTable("exec USP_LoadDataBillByDateAndPage '" + dateStart + "', '" + dateEnd + "', '" + page + "'");
+        }
+        private int GetNumBillByDate(DateTime dateStart, DateTime dateEnd)
+        {
+            return (int)db.getScalar("exec USP_GetNumBillByDate '" + dateStart + "', '" + dateEnd + "'");
+        }
+        private DataTable LoadDataBillByDate(DateTime dateStart, DateTime dateEnd)
+        {
+            return db.getDataTable("exec USP_LoadDataBillByDate  '" + dtp_dateStart.Value + "', '" + dtp_dateEnd.Value + "'");
+        }
         private bool CheckPKCoincidence(string ck)
         {
             
@@ -413,6 +425,45 @@ namespace QuanNhau
             Load_DgvItems(tb_findItem.Text);
         }
         #endregion
+
+        private void btn_statistic_Click(object sender, EventArgs e)
+        {
+            dtgv_bill.DataSource = LoadDataBillByDate(dtp_dateStart.Value, dtp_dateEnd.Value);
+        }
+
+        private void btn_firstPage_Click(object sender, EventArgs e)
+        {
+            tb_numPage.Text = "1";
+        }
+
+        private void btn_lastPage_Click(object sender, EventArgs e)
+        {
+            int sum = GetNumBillByDate(dtp_dateStart.Value, dtp_dateEnd.Value);
+            int lastPage = sum / 10;
+            if (sum % 10 != 0) lastPage++;
+            tb_numPage.Text = lastPage.ToString();
+        }
+
+        private void tb_numPage_TextChanged(object sender, EventArgs e)
+        {
+            dtgv_bill.DataSource = GetBillListByDateAndPage(dtp_dateStart.Value, dtp_dateEnd.Value, int.Parse(tb_numPage.Text));
+        }
+
+        private void btn_nextPage_Click(object sender, EventArgs e)
+        {
+            int page = int.Parse(tb_numPage.Text);
+            int sum = GetNumBillByDate(dtp_dateStart.Value, dtp_dateEnd.Value);
+            if (page < sum) page++;
+            tb_numPage.Text = page.ToString();
+
+        }
+        private void btn_prePage_Click(object sender, EventArgs e)
+        {
+            
+            int page = int.Parse(tb_numPage.Text);
+            if (page > 1) page--;
+            tb_numPage.Text = page.ToString();
+        }
     }
 }
 

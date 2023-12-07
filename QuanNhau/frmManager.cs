@@ -133,6 +133,7 @@ namespace QuanNhau
         private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+            
         }
 
         private void adminToolStripMenuItem_Click(object sender, EventArgs e)
@@ -239,6 +240,32 @@ namespace QuanNhau
                 }
             }
             
+        }
+
+        private void thanhToánToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btn_pay_Click(this, new EventArgs());
+        }
+
+        private void thêmMónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btn_addDish_Click(this, new EventArgs());
+        }
+
+        private void chuyểnBànToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btn_switchTable_Click(this, new EventArgs());
+        }
+
+        private void frmManager_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //if (MessageBox.Show("Bạn có muốn thoát ra không?", "Thông báo thoát!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
+            //{
+            //    e.Cancel = true;
+            //    frmLogin l = new frmLogin();
+            //    l.ShowDialog();
+            //    l.Show();
+            //}
         }
     }
 }
