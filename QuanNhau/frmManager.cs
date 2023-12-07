@@ -208,8 +208,7 @@ namespace QuanNhau
             {
                 if (MessageBox.Show("Bạn có chắc hóa đơn cho bàn " + table.Name, "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    int k = db.getNonQuery("exec USP_CheckOutBill '" + idBill + "', '" + decimal.Parse(lb_discount.Text.ToString()) + "', '" + acttuallyTotal + "', '" + table. ID + "'");
-                    if (k == 1) MessageBox.Show("Thanh toán hóa đơn " + idBill + " thành công\nTổng tiền:"+ decimal.Parse(lb_actPaid.Text.ToString()) + "\nThành chữ: "+rm.docSoThanhChu((long)acttuallyTotal), "Thông báo thanh toán");
+                    db.getNonQuery("exec USP_CheckOutBill '" + idBill + "', '" + decimal.Parse(lb_discount.Text.ToString()) + "', '" + acttuallyTotal + "', '" + table. ID + "'");
                     LoadTable();
                 }
             }

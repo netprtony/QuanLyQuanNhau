@@ -209,12 +209,14 @@ namespace QuanNhau
             }
             Load_DgvCategory();
         }
+        ReadMoney rm = new ReadMoney();
         private void dtgv_bill_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
             DataGridViewRow r = dtgv_bill.Rows[e.RowIndex];
             Load_DgvAllOrderOfBill(r.Cells[0].Value.ToString());
             lb_biliId.Text = r.Cells[0].Value.ToString();
+            lb_totalBill.Text = rm.ReadAmountInWords(decimal.Parse(r.Cells[7].Value.ToString()));
         }
 
         private void dtgv_bill_CellContentClick(object sender, DataGridViewCellEventArgs e)

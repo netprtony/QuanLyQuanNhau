@@ -3,156 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace QuanNhau
 {
     public class ReadMoney
     {
-        int number;
-        string doc(int a)
+        public string ReadAmountInWords(decimal amount)
         {
-            string s = "";
-            switch (a)
+            if (amount == 0)
             {
-                case 1:
-                    s = " một";
-                    break;
-                case 2:
-                    s = " hai";
-                    break;
-                case 3:
-                    s = " ba";
-                    break;
-                case 4:
-                    s = " bốn";
-                    break;
-                case 5:
-                    s = " năm";
-                    break;
-                case 6:
-                    s = " sáu";
-                    break;
-                case 7:
-                    s = " bảy";
-                    break;
-                case 8:
-                    s = " tám";
-                    break;
-                case 9:
-                    s = " chín";
-                    break;
-
-
+                return "Không đồng";
             }
-            return s;
+
+            string[] units = { "", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ", "tỷ tỷ" };
+
+            int digitGroup = 0;
+            string result = "";
+
+            while (amount > 0)
+            {
+                int threeDigits = (int)(amount % 1000);
+                if (threeDigits > 0)
+                {
+                    result = ReadThreeDigits(threeDigits) + " " + units[digitGroup] + " " + result;
+                }
+
+                amount /= 1000;
+                digitGroup++;
+            }
+
+            return result.Trim();
         }
 
-        public string docHang(int hang)
+        static string ReadThreeDigits(int threeDigits)
         {
-            switch (hang)
+            string[] ones = { "", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
+            string result = "";
+
+            int hundreds = threeDigits / 100;
+            int tens = threeDigits % 100 / 10;
+            int onesDigit = threeDigits % 10;
+
+            if (hundreds > 0)
             {
-                case 1: return "";
-                case 2: return "nghìn";
-                case 3: return "triệu";
-                case 4: return "tỷ";
-                default: return "";
+                result += ones[hundreds] + " trăm ";
             }
 
+            if (tens > 1)
+            {
+                result += ones[tens] + " mươi ";
+            }
+            else if (tens == 1)
+            {
+                result += "mười ";
+            }
 
+            if (onesDigit > 1)
+            {
+                result += ones[onesDigit];
+            }
+            else if (onesDigit == 1)
+            {
+                result += "một";
+            }
+
+            return result.Trim();
         }
-        public string docBaChuSo(int so)
-        {
-            string s = null;
-            int n = number;
-            int donvi = so % 10;
-            int chuc = so / 10 % 10;
-            int tram = so / 100 % 10;
 
-            if (tram != 0)
-            {
-                s += doc(tram) + " trăm";
-                if (chuc != 0)
-                {
-                    if (chuc == 1)
-                    {
-                        s += " mười";
-                        //if (donvi == 1)
-                        //    s += doc(donvi);
-                    }
-                    else
-                    {
-                        //if (donvi == 1)
-                        //    s += "mốt";
-                        s += " " + doc(chuc) + " mươi";
-                    }
-
-
-                    if (donvi == 5)
-                    {
-                        s += " lăm ";
-                    }
-                    else if (chuc != 1 && donvi == 1)
-                    {
-                        s += " mốt";
-                    }
-                    else s += doc(donvi);
-
-
-
-                }
-
-                else if (donvi != 0)
-                {
-                    s += " lẻ " + doc(donvi);
-                }
-
-
-            }
-            else if (chuc != 0)
-            {
-                if (chuc == 1)
-                {
-                    s += " mười ";
-                }
-                else
-                    s += doc(chuc) + " mươi ";
-                if (donvi == 5)
-                {
-                    s += " lăm";
-                }
-                if (chuc != 1)
-                {
-                    if (donvi == 1)
-                        s += "mốt";
-                }
-                else s += doc(donvi);
-
-            }
-            else if (donvi != 0)
-            {
-                s += doc(donvi);
-            }
-            return s;
-        }
-        public string docSoThanhChu(long so)
-        {
-
-            if (so == 0) { return "không"; }
-            int hang = 1;
-
-            StringBuilder result = new StringBuilder();
-            while (so > 0)
-            {
-                int nho = (int)(so % 1000);
-                if (nho > 0)
-                {
-                    result.Insert(0, docHang(hang) + " ");
-                }
-                result.Insert(0, docBaChuSo(nho) + " ");
-                so /= 1000;
-                hang++;
-            }
-            return result.ToString().Trim();
-        }
     }
 }

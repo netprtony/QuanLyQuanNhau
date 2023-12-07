@@ -177,7 +177,7 @@
             this.tp_acc.Location = new System.Drawing.Point(4, 23);
             this.tp_acc.Name = "tp_acc";
             this.tp_acc.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_acc.Size = new System.Drawing.Size(1432, 580);
+            this.tp_acc.Size = new System.Drawing.Size(1518, 580);
             this.tp_acc.TabIndex = 4;
             this.tp_acc.Text = "Tài khoản";
             this.tp_acc.UseVisualStyleBackColor = true;
@@ -931,7 +931,7 @@
             this.tp_bill.Location = new System.Drawing.Point(4, 23);
             this.tp_bill.Name = "tp_bill";
             this.tp_bill.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_bill.Size = new System.Drawing.Size(1432, 580);
+            this.tp_bill.Size = new System.Drawing.Size(1518, 580);
             this.tp_bill.TabIndex = 0;
             this.tp_bill.Text = "Doanh thu";
             this.tp_bill.UseVisualStyleBackColor = true;
@@ -993,7 +993,7 @@
             this.dtgv_AllorderOfbill.Location = new System.Drawing.Point(864, 209);
             this.dtgv_AllorderOfbill.Name = "dtgv_AllorderOfbill";
             this.dtgv_AllorderOfbill.RowHeadersWidth = 51;
-            this.dtgv_AllorderOfbill.Size = new System.Drawing.Size(562, 362);
+            this.dtgv_AllorderOfbill.Size = new System.Drawing.Size(648, 362);
             this.dtgv_AllorderOfbill.TabIndex = 2;
             // 
             // panel15
@@ -1006,7 +1006,7 @@
             this.panel15.Controls.Add(this.dtp_dateStart);
             this.panel15.Location = new System.Drawing.Point(864, 7);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(562, 196);
+            this.panel15.Size = new System.Drawing.Size(648, 196);
             this.panel15.TabIndex = 1;
             // 
             // groupBox1
@@ -1015,9 +1015,9 @@
             this.groupBox1.Controls.Add(this.lb_biliId);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Location = new System.Drawing.Point(300, 29);
+            this.groupBox1.Location = new System.Drawing.Point(289, 26);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(235, 143);
+            this.groupBox1.Size = new System.Drawing.Size(345, 143);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin hóa đơn";
@@ -1026,7 +1026,7 @@
             // 
             this.lb_totalBill.AutoSize = true;
             this.lb_totalBill.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_totalBill.Location = new System.Drawing.Point(114, 88);
+            this.lb_totalBill.Location = new System.Drawing.Point(82, 88);
             this.lb_totalBill.Name = "lb_totalBill";
             this.lb_totalBill.Size = new System.Drawing.Size(62, 14);
             this.lb_totalBill.TabIndex = 6;
@@ -1036,7 +1036,7 @@
             // 
             this.lb_biliId.AutoSize = true;
             this.lb_biliId.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_biliId.Location = new System.Drawing.Point(114, 47);
+            this.lb_biliId.Location = new System.Drawing.Point(82, 47);
             this.lb_biliId.Name = "lb_biliId";
             this.lb_biliId.Size = new System.Drawing.Size(62, 14);
             this.lb_biliId.TabIndex = 5;
@@ -1090,6 +1090,7 @@
             // 
             // dtp_dateEnd
             // 
+            this.dtp_dateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_dateEnd.Location = new System.Drawing.Point(82, 76);
             this.dtp_dateEnd.Name = "dtp_dateEnd";
             this.dtp_dateEnd.Size = new System.Drawing.Size(200, 22);
@@ -1098,7 +1099,8 @@
             // dtp_dateStart
             // 
             this.dtp_dateStart.Checked = false;
-            this.dtp_dateStart.Location = new System.Drawing.Point(83, 26);
+            this.dtp_dateStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_dateStart.Location = new System.Drawing.Point(82, 26);
             this.dtp_dateStart.Name = "dtp_dateStart";
             this.dtp_dateStart.Size = new System.Drawing.Size(200, 22);
             this.dtp_dateStart.TabIndex = 0;
@@ -1124,14 +1126,14 @@
             this.tc_admin.Location = new System.Drawing.Point(14, 13);
             this.tc_admin.Name = "tc_admin";
             this.tc_admin.SelectedIndex = 0;
-            this.tc_admin.Size = new System.Drawing.Size(1440, 607);
+            this.tc_admin.Size = new System.Drawing.Size(1526, 607);
             this.tc_admin.TabIndex = 0;
             // 
             // frmAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1468, 633);
+            this.ClientSize = new System.Drawing.Size(1542, 633);
             this.Controls.Add(this.tc_admin);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

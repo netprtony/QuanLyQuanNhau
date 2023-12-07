@@ -1,9 +1,14 @@
 ﻿
 use master
+go
 drop database QL_QuanNhau
+go
 use master
+go
 create database QL_QuanNhau
+go
 use QL_QuanNhau
+go
 set dateformat DMY
 go
 create table Categories
@@ -599,7 +604,7 @@ as
 	(@idBill, CURRENT_TIMESTAMP, null, @idTable, 0)
 go
 --Thêm các order kiểm trả bill được thêm vào nếu có order đó rồi thì tăng số lượng ngược lại thêm một order mới
-alter proc USP_InsertOrders
+create proc USP_InsertOrders
 @idBill varchar(10), @idItem varchar(10), @sl int
 as	
 begin	
