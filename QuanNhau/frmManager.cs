@@ -14,12 +14,14 @@ namespace QuanNhau
     public partial class frmManager : Form
     {
         DBConnection db = new DBConnection();
+        Account acc = new Account();
         public frmManager()
         {
             InitializeComponent();
             LoadTable();
             LoadCboCate();
             LoadCbTable();
+           //if (db.GetRoleByUser(acc.Username) == false) adminToolStripMenuItem.Enabled = false;
         }
         #region Method
         string CreateIDBill()
@@ -155,7 +157,8 @@ namespace QuanNhau
 
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmInfoProfile f = new frmInfoProfile();
+            f.ShowDialog();
         }
 
         private void cb_lstCate_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,7 +264,6 @@ namespace QuanNhau
             this.Hide();
             //l.ShowDialog();
             //l.Show();
-
         }
     }
 }

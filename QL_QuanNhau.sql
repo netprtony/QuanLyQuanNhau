@@ -684,10 +684,25 @@ as
 	select * from Tables 
 	where status = 0
 go
-create function FUNC_CheckOldPass(@passOld varchar(50), @user varchar(50))
+create proc FUNC_CheckPassOld
+    @username NVARCHAR(50),
+    @passwordOld NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @isValid BIT = 0;
+
+    IF EXISTS (SELECT 1 FROM Account WHERE Username = @username AND Password = @passwordOld)
+    BEGIN
+        SET @isValid = 1;
+    END
+
+    RETURN @isValid;
+END
+go
+create function FUNC_GetRoleByUser 
+( @user varchar(50))	
 returns bit
 as
-	begin 
-	if exists(select UserName = @user, PassWord = @passOld from Account
-	return 1
+	begin
+	return (select Type from Account where UserName = @user)
 	end

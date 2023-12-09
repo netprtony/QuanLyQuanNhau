@@ -14,9 +14,11 @@ namespace QuanNhau
     public partial class frmLogin : Form
     {
         DBConnection db = new DBConnection();
+        Account acc = new Account();
         public frmLogin()
         {
             InitializeComponent();
+            acc.Username = tb_lgUser.Text;
         }
         #region Events
         private void btn_exit_Click(object sender, EventArgs e)
@@ -40,6 +42,7 @@ namespace QuanNhau
                 this.Hide();
                 f.ShowDialog();
                 this.Show();
+                
             }
             else
             {

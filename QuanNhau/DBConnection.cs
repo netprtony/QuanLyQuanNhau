@@ -10,7 +10,7 @@ namespace QuanNhau
 {
     class DBConnection
     {
-        private const string V = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = @"Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
         private string strConnect = V;
         SqlConnection connect;
         public DBConnection()
@@ -39,7 +39,7 @@ namespace QuanNhau
             Close();
             return res;
         }
-        public Object getScalar(string strQuery)
+        public Object getScalar(string strQuery )
         {
             Open();
             SqlCommand cmd = new SqlCommand(strQuery, connect);
@@ -55,7 +55,6 @@ namespace QuanNhau
             da.Fill(ds);
             return ds.Tables[0];
         }
-
         public List<Table> LoadTableList()
         {
             List<Table> tableList = new List<Table>();
@@ -143,6 +142,6 @@ namespace QuanNhau
             }
             return list;
         }
-
+        
     }
 }
