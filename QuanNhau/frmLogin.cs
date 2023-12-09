@@ -61,14 +61,8 @@ namespace QuanNhau
         #region Method
         private bool Login(string username, string password)
         {
-            byte[] temp = ASCIIEncoding.ASCII.GetBytes(password);
-            byte[] hasData = new MD5CryptoServiceProvider().ComputeHash(temp);
-            string hasPass = "";
-            foreach(byte item in hasData)
-            {
-                hasPass += item;
-            }
-            string strQuery = "exec USP_LoginAccount @username = '" + username + "' , @password = '" + hasPass + "'";
+            
+            string strQuery = "exec USP_LoginAccount @username = '" + username + "' , @password = '" + password + "'";
             DataTable res = db.getDataTable(strQuery);
             return res.Rows.Count > 0;
         }

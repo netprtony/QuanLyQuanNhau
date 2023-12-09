@@ -14,7 +14,7 @@ namespace QuanNhau
                 return "Không đồng";
             }
 
-            string[] units = { "", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ", "tỷ tỷ" };
+            string[] units = { "", "Nghìn", "Triệu", "Tỷ", "Nghìn tỷ", "Triệu tỷ", "Tỷ tỷ" };
 
             int digitGroup = 0;
             string result = "";
@@ -36,7 +36,7 @@ namespace QuanNhau
 
         static string ReadThreeDigits(int threeDigits)
         {
-            string[] ones = { "", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
+            string[] ones = { "", "Nột", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín" };
             string result = "";
 
             int hundreds = threeDigits / 100;
@@ -45,16 +45,16 @@ namespace QuanNhau
 
             if (hundreds > 0)
             {
-                result += ones[hundreds] + " trăm ";
+                result += ones[hundreds] + " Trăm ";
             }
 
             if (tens > 1)
             {
-                result += ones[tens] + " mươi ";
+                result += ones[tens] + " Mươi ";
             }
             else if (tens == 1)
             {
-                result += "mười ";
+                result += "Mười ";
             }
 
             if (onesDigit > 1)
@@ -63,7 +63,7 @@ namespace QuanNhau
             }
             else if (onesDigit == 1)
             {
-                result += "một";
+                result += "Một";
             }
 
             return result.Trim();

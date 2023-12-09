@@ -146,6 +146,7 @@ create table Bills(
 )
 
 go
+
 insert into Bills (bill_id, dateCheckin, dateCheckout, status, cashier_id, table_id) values
 	('BI021', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP , 0, 'muidao1506', 'TB001'),
 	('BI001', '2023-10-1 8:30:03', '2023-10-1 12:23:03', 1, 'muidao1506', 'TB001'),
@@ -683,3 +684,10 @@ as
 	select * from Tables 
 	where status = 0
 go
+create function FUNC_CheckOldPass(@passOld varchar(50), @user varchar(50))
+returns bit
+as
+	begin 
+	if exists(select UserName = @user, PassWord = @passOld from Account
+	return 1
+	end
