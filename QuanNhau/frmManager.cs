@@ -21,7 +21,6 @@ namespace QuanNhau
             LoadTable();
             LoadCboCate();
             LoadCbTable();
-           //if (db.GetRoleByUser(acc.Username) == false) adminToolStripMenuItem.Enabled = false;
         }
         #region Method
         string CreateIDBill()
@@ -262,8 +261,7 @@ namespace QuanNhau
         {
             frmLogin l = new frmLogin();
             this.Hide();
-            //l.ShowDialog();
-            //l.Show();
+            
         }
     }
 }

@@ -46,7 +46,6 @@
             this.tb_username = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.btn_viewAcc = new System.Windows.Forms.Button();
             this.btn_changeAcc = new System.Windows.Forms.Button();
             this.btn_delAcc = new System.Windows.Forms.Button();
             this.btn_addAcc = new System.Windows.Forms.Button();
@@ -61,7 +60,6 @@
             this.tb_idTable = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
-            this.btn_viewTable = new System.Windows.Forms.Button();
             this.btn_changeTable = new System.Windows.Forms.Button();
             this.btn_delTable = new System.Windows.Forms.Button();
             this.btn_addTable = new System.Windows.Forms.Button();
@@ -76,13 +74,11 @@
             this.tb_idCate = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.btn_viewCate = new System.Windows.Forms.Button();
             this.btn_changeCate = new System.Windows.Forms.Button();
             this.btn_delCate = new System.Windows.Forms.Button();
             this.btn_addCate = new System.Windows.Forms.Button();
             this.tp_dish = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
-            this.btn_viewItem = new System.Windows.Forms.Button();
             this.btn_changeItem = new System.Windows.Forms.Button();
             this.btn_delItem = new System.Windows.Forms.Button();
             this.btn_addItem = new System.Windows.Forms.Button();
@@ -187,7 +183,7 @@
             this.panel9.Controls.Add(this.dtgv_acc);
             this.panel9.Location = new System.Drawing.Point(725, 6);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(701, 568);
+            this.panel9.Size = new System.Drawing.Size(790, 568);
             this.panel9.TabIndex = 8;
             // 
             // dtgv_acc
@@ -196,7 +192,7 @@
             this.dtgv_acc.Location = new System.Drawing.Point(3, 3);
             this.dtgv_acc.Name = "dtgv_acc";
             this.dtgv_acc.RowHeadersWidth = 51;
-            this.dtgv_acc.Size = new System.Drawing.Size(693, 562);
+            this.dtgv_acc.Size = new System.Drawing.Size(787, 562);
             this.dtgv_acc.TabIndex = 1;
             this.dtgv_acc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_acc_CellClick);
             // 
@@ -314,7 +310,6 @@
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.btn_viewAcc);
             this.panel14.Controls.Add(this.btn_changeAcc);
             this.panel14.Controls.Add(this.btn_delAcc);
             this.panel14.Controls.Add(this.btn_addAcc);
@@ -323,18 +318,9 @@
             this.panel14.Size = new System.Drawing.Size(713, 132);
             this.panel14.TabIndex = 6;
             // 
-            // btn_viewAcc
-            // 
-            this.btn_viewAcc.Location = new System.Drawing.Point(566, 32);
-            this.btn_viewAcc.Name = "btn_viewAcc";
-            this.btn_viewAcc.Size = new System.Drawing.Size(87, 68);
-            this.btn_viewAcc.TabIndex = 10;
-            this.btn_viewAcc.Text = "Xem";
-            this.btn_viewAcc.UseVisualStyleBackColor = true;
-            // 
             // btn_changeAcc
             // 
-            this.btn_changeAcc.Location = new System.Drawing.Point(393, 32);
+            this.btn_changeAcc.Location = new System.Drawing.Point(477, 35);
             this.btn_changeAcc.Name = "btn_changeAcc";
             this.btn_changeAcc.Size = new System.Drawing.Size(87, 68);
             this.btn_changeAcc.TabIndex = 9;
@@ -344,7 +330,7 @@
             // 
             // btn_delAcc
             // 
-            this.btn_delAcc.Location = new System.Drawing.Point(215, 32);
+            this.btn_delAcc.Location = new System.Drawing.Point(299, 35);
             this.btn_delAcc.Name = "btn_delAcc";
             this.btn_delAcc.Size = new System.Drawing.Size(87, 68);
             this.btn_delAcc.TabIndex = 8;
@@ -354,7 +340,7 @@
             // 
             // btn_addAcc
             // 
-            this.btn_addAcc.Location = new System.Drawing.Point(59, 32);
+            this.btn_addAcc.Location = new System.Drawing.Point(143, 35);
             this.btn_addAcc.Name = "btn_addAcc";
             this.btn_addAcc.Size = new System.Drawing.Size(87, 68);
             this.btn_addAcc.TabIndex = 7;
@@ -370,7 +356,7 @@
             this.tp_table.Location = new System.Drawing.Point(4, 23);
             this.tp_table.Name = "tp_table";
             this.tp_table.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_table.Size = new System.Drawing.Size(1432, 580);
+            this.tp_table.Size = new System.Drawing.Size(1518, 580);
             this.tp_table.TabIndex = 3;
             this.tp_table.Text = "Bàn ";
             this.tp_table.UseVisualStyleBackColor = true;
@@ -381,7 +367,7 @@
             this.panel3.Controls.Add(this.dtgv_table);
             this.panel3.Location = new System.Drawing.Point(725, 6);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(701, 568);
+            this.panel3.Size = new System.Drawing.Size(787, 568);
             this.panel3.TabIndex = 5;
             // 
             // dtgv_table
@@ -390,7 +376,7 @@
             this.dtgv_table.Location = new System.Drawing.Point(3, 3);
             this.dtgv_table.Name = "dtgv_table";
             this.dtgv_table.RowHeadersWidth = 51;
-            this.dtgv_table.Size = new System.Drawing.Size(693, 562);
+            this.dtgv_table.Size = new System.Drawing.Size(781, 562);
             this.dtgv_table.TabIndex = 1;
             this.dtgv_table.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_table_CellClick);
             this.dtgv_table.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_table_CellContentClick);
@@ -456,7 +442,6 @@
             // 
             // panel25
             // 
-            this.panel25.Controls.Add(this.btn_viewTable);
             this.panel25.Controls.Add(this.btn_changeTable);
             this.panel25.Controls.Add(this.btn_delTable);
             this.panel25.Controls.Add(this.btn_addTable);
@@ -465,18 +450,9 @@
             this.panel25.Size = new System.Drawing.Size(713, 132);
             this.panel25.TabIndex = 3;
             // 
-            // btn_viewTable
-            // 
-            this.btn_viewTable.Location = new System.Drawing.Point(566, 32);
-            this.btn_viewTable.Name = "btn_viewTable";
-            this.btn_viewTable.Size = new System.Drawing.Size(87, 68);
-            this.btn_viewTable.TabIndex = 10;
-            this.btn_viewTable.Text = "Xem";
-            this.btn_viewTable.UseVisualStyleBackColor = true;
-            // 
             // btn_changeTable
             // 
-            this.btn_changeTable.Location = new System.Drawing.Point(393, 32);
+            this.btn_changeTable.Location = new System.Drawing.Point(484, 34);
             this.btn_changeTable.Name = "btn_changeTable";
             this.btn_changeTable.Size = new System.Drawing.Size(87, 68);
             this.btn_changeTable.TabIndex = 9;
@@ -486,7 +462,7 @@
             // 
             // btn_delTable
             // 
-            this.btn_delTable.Location = new System.Drawing.Point(215, 32);
+            this.btn_delTable.Location = new System.Drawing.Point(306, 34);
             this.btn_delTable.Name = "btn_delTable";
             this.btn_delTable.Size = new System.Drawing.Size(87, 68);
             this.btn_delTable.TabIndex = 8;
@@ -496,7 +472,7 @@
             // 
             // btn_addTable
             // 
-            this.btn_addTable.Location = new System.Drawing.Point(59, 32);
+            this.btn_addTable.Location = new System.Drawing.Point(150, 34);
             this.btn_addTable.Name = "btn_addTable";
             this.btn_addTable.Size = new System.Drawing.Size(87, 68);
             this.btn_addTable.TabIndex = 7;
@@ -512,7 +488,7 @@
             this.tp_dishCate.Location = new System.Drawing.Point(4, 23);
             this.tp_dishCate.Name = "tp_dishCate";
             this.tp_dishCate.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_dishCate.Size = new System.Drawing.Size(1432, 580);
+            this.tp_dishCate.Size = new System.Drawing.Size(1518, 580);
             this.tp_dishCate.TabIndex = 2;
             this.tp_dishCate.Text = "Danh mục";
             this.tp_dishCate.UseVisualStyleBackColor = true;
@@ -522,7 +498,7 @@
             this.panel20.Controls.Add(this.dtgv_cate);
             this.panel20.Location = new System.Drawing.Point(725, 6);
             this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(701, 568);
+            this.panel20.Size = new System.Drawing.Size(793, 568);
             this.panel20.TabIndex = 2;
             // 
             // dtgv_cate
@@ -531,7 +507,7 @@
             this.dtgv_cate.Location = new System.Drawing.Point(3, 3);
             this.dtgv_cate.Name = "dtgv_cate";
             this.dtgv_cate.RowHeadersWidth = 51;
-            this.dtgv_cate.Size = new System.Drawing.Size(693, 562);
+            this.dtgv_cate.Size = new System.Drawing.Size(784, 562);
             this.dtgv_cate.TabIndex = 1;
             this.dtgv_cate.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_cate_CellClick);
             // 
@@ -596,7 +572,6 @@
             // 
             // panel17
             // 
-            this.panel17.Controls.Add(this.btn_viewCate);
             this.panel17.Controls.Add(this.btn_changeCate);
             this.panel17.Controls.Add(this.btn_delCate);
             this.panel17.Controls.Add(this.btn_addCate);
@@ -605,18 +580,9 @@
             this.panel17.Size = new System.Drawing.Size(713, 132);
             this.panel17.TabIndex = 0;
             // 
-            // btn_viewCate
-            // 
-            this.btn_viewCate.Location = new System.Drawing.Point(566, 32);
-            this.btn_viewCate.Name = "btn_viewCate";
-            this.btn_viewCate.Size = new System.Drawing.Size(87, 68);
-            this.btn_viewCate.TabIndex = 10;
-            this.btn_viewCate.Text = "Xem";
-            this.btn_viewCate.UseVisualStyleBackColor = true;
-            // 
             // btn_changeCate
             // 
-            this.btn_changeCate.Location = new System.Drawing.Point(393, 32);
+            this.btn_changeCate.Location = new System.Drawing.Point(482, 39);
             this.btn_changeCate.Name = "btn_changeCate";
             this.btn_changeCate.Size = new System.Drawing.Size(87, 68);
             this.btn_changeCate.TabIndex = 9;
@@ -626,7 +592,7 @@
             // 
             // btn_delCate
             // 
-            this.btn_delCate.Location = new System.Drawing.Point(215, 32);
+            this.btn_delCate.Location = new System.Drawing.Point(304, 39);
             this.btn_delCate.Name = "btn_delCate";
             this.btn_delCate.Size = new System.Drawing.Size(87, 68);
             this.btn_delCate.TabIndex = 8;
@@ -636,7 +602,7 @@
             // 
             // btn_addCate
             // 
-            this.btn_addCate.Location = new System.Drawing.Point(59, 32);
+            this.btn_addCate.Location = new System.Drawing.Point(148, 39);
             this.btn_addCate.Name = "btn_addCate";
             this.btn_addCate.Size = new System.Drawing.Size(87, 68);
             this.btn_addCate.TabIndex = 7;
@@ -652,7 +618,7 @@
             this.tp_dish.Location = new System.Drawing.Point(4, 23);
             this.tp_dish.Name = "tp_dish";
             this.tp_dish.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_dish.Size = new System.Drawing.Size(1432, 580);
+            this.tp_dish.Size = new System.Drawing.Size(1518, 580);
             this.tp_dish.TabIndex = 1;
             this.tp_dish.Text = "Mặt hàng";
             this.tp_dish.UseVisualStyleBackColor = true;
@@ -660,7 +626,6 @@
             // 
             // panel21
             // 
-            this.panel21.Controls.Add(this.btn_viewItem);
             this.panel21.Controls.Add(this.btn_changeItem);
             this.panel21.Controls.Add(this.btn_delItem);
             this.panel21.Controls.Add(this.btn_addItem);
@@ -669,18 +634,9 @@
             this.panel21.Size = new System.Drawing.Size(713, 132);
             this.panel21.TabIndex = 0;
             // 
-            // btn_viewItem
-            // 
-            this.btn_viewItem.Location = new System.Drawing.Point(566, 32);
-            this.btn_viewItem.Name = "btn_viewItem";
-            this.btn_viewItem.Size = new System.Drawing.Size(87, 68);
-            this.btn_viewItem.TabIndex = 3;
-            this.btn_viewItem.Text = "Xem";
-            this.btn_viewItem.UseVisualStyleBackColor = true;
-            // 
             // btn_changeItem
             // 
-            this.btn_changeItem.Location = new System.Drawing.Point(393, 32);
+            this.btn_changeItem.Location = new System.Drawing.Point(512, 35);
             this.btn_changeItem.Name = "btn_changeItem";
             this.btn_changeItem.Size = new System.Drawing.Size(87, 68);
             this.btn_changeItem.TabIndex = 2;
@@ -690,7 +646,7 @@
             // 
             // btn_delItem
             // 
-            this.btn_delItem.Location = new System.Drawing.Point(215, 32);
+            this.btn_delItem.Location = new System.Drawing.Point(334, 35);
             this.btn_delItem.Name = "btn_delItem";
             this.btn_delItem.Size = new System.Drawing.Size(87, 68);
             this.btn_delItem.TabIndex = 1;
@@ -700,7 +656,7 @@
             // 
             // btn_addItem
             // 
-            this.btn_addItem.Location = new System.Drawing.Point(59, 32);
+            this.btn_addItem.Location = new System.Drawing.Point(178, 35);
             this.btn_addItem.Name = "btn_addItem";
             this.btn_addItem.Size = new System.Drawing.Size(87, 68);
             this.btn_addItem.TabIndex = 0;
@@ -713,7 +669,7 @@
             this.panel1.Controls.Add(this.dtgv_Item);
             this.panel1.Location = new System.Drawing.Point(731, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(701, 553);
+            this.panel1.Size = new System.Drawing.Size(784, 553);
             this.panel1.TabIndex = 0;
             // 
             // dtgv_Item
@@ -722,7 +678,7 @@
             this.dtgv_Item.Location = new System.Drawing.Point(3, 2);
             this.dtgv_Item.Name = "dtgv_Item";
             this.dtgv_Item.RowHeadersWidth = 51;
-            this.dtgv_Item.Size = new System.Drawing.Size(693, 548);
+            this.dtgv_Item.Size = new System.Drawing.Size(778, 548);
             this.dtgv_Item.TabIndex = 0;
             this.dtgv_Item.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_dish_CellClick);
             this.dtgv_Item.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_dish_CellContentClick);
@@ -1215,7 +1171,6 @@
         private System.Windows.Forms.TextBox tb_idTable;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel25;
-        private System.Windows.Forms.Button btn_viewTable;
         private System.Windows.Forms.Button btn_changeTable;
         private System.Windows.Forms.Button btn_delTable;
         private System.Windows.Forms.Button btn_addTable;
@@ -1230,13 +1185,11 @@
         private System.Windows.Forms.TextBox tb_idCate;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.Button btn_viewCate;
         private System.Windows.Forms.Button btn_changeCate;
         private System.Windows.Forms.Button btn_delCate;
         private System.Windows.Forms.Button btn_addCate;
         private System.Windows.Forms.TabPage tp_dish;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.Button btn_viewItem;
         private System.Windows.Forms.Button btn_changeItem;
         private System.Windows.Forms.Button btn_delItem;
         private System.Windows.Forms.Button btn_addItem;
@@ -1271,7 +1224,6 @@
         private System.Windows.Forms.TextBox tb_username;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Button btn_viewAcc;
         private System.Windows.Forms.Button btn_changeAcc;
         private System.Windows.Forms.Button btn_delAcc;
         private System.Windows.Forms.Button btn_addAcc;

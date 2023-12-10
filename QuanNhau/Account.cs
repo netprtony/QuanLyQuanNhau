@@ -12,6 +12,7 @@ namespace QuanNhau
         {
 
         }
+       
         public Account(string display, string user, string pass, bool role)
         {
             this.Display = display;
