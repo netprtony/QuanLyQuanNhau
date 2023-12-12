@@ -14,19 +14,19 @@ namespace QuanNhau
     public partial class frmManager : Form
     {
         DBConnection db = new DBConnection();
-        Account acc = new Account();
         public frmManager()
         {
             InitializeComponent();
             LoadTable();
             LoadCboCate();
             LoadCbTable();
+            refeshForm();
+
         }
         #region Method
         string CreateIDBill()
         {
             string mhd = "BI";
-            //mhd = mhd + string.Format("{0:ddMMyyyy}", DateTime.Now);
             string chuoitruyvan = "select * from Bills where bill_id LIKE '" + mhd + "%' order by bill_id desc";
             DataTable dt = db.getDataTable(chuoitruyvan);
             if (dt.Rows.Count == 0)
@@ -145,7 +145,7 @@ namespace QuanNhau
 
         private void frmManager_Load(object sender, EventArgs e)
         {
-           
+            
         }
 
         private void cb_addBeverage_SelectedIndexChanged(object sender, EventArgs e)
@@ -262,6 +262,18 @@ namespace QuanNhau
             frmLogin l = new frmLogin();
             this.Hide();
             
+        }
+        private void refeshForm()
+        {
+           db.getNonQuery("exec USP_CheckAllTableNotBill");
+        }
+        private void tb_refesh_Click(object sender, EventArgs e)
+        {
+            LoadTable();
+            LoadCboCate();
+            LoadCbTable();
+            refeshForm();
+
         }
     }
 }

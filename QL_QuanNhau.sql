@@ -699,10 +699,30 @@ BEGIN
     RETURN @isValid;
 END
 go
-create function FUNC_GetRoleByUser 
-( @user varchar(50))	
-returns bit
+alter proc USP_CheckAllTableNotBill
 as
 	begin
-	return (select Type from Account where UserName = @user)
+		declare tableCursor cursor for select table_id, status from Tables
+		open tableCursor 
+		declare @id varchar(10)
+		declare @status bit
+		fetch next from tableCursor into @id, @status
+		while @@FETCH_STATUS = 0
+		begin
+			if  @status = 1 
+			and (exists (select * from Bills where table_id = @id and status = 1)
+			or not exists (select * from Bills where table_id = @id))
+				update Tables 
+				set status = 0 
+				where table_id = @id
+			else
+			if @status = 0 
+			and exists (select * from Bills where table_id = @id and status = 0)
+				update Tables 
+				set status = 1 
+				where table_id = @id
+			fetch next from tableCursor into @id, @status
+		end
+		close tableCursor
+		deallocate tableCursor
 	end

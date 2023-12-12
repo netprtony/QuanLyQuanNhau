@@ -61,6 +61,7 @@
             this.thanhToánToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thêmMónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chuyểnBànToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_refesh = new System.Windows.Forms.Button();
             this.flowLayoutTable.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_countdish)).BeginInit();
@@ -191,6 +192,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.tb_refesh);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.lb_actPaid);
             this.panel3.Controls.Add(this.label1);
@@ -378,6 +380,16 @@
             this.chuyểnBànToolStripMenuItem.Text = "Chuyển bàn";
             this.chuyểnBànToolStripMenuItem.Click += new System.EventHandler(this.chuyểnBànToolStripMenuItem_Click);
             // 
+            // tb_refesh
+            // 
+            this.tb_refesh.Location = new System.Drawing.Point(3, 3);
+            this.tb_refesh.Name = "tb_refesh";
+            this.tb_refesh.Size = new System.Drawing.Size(81, 37);
+            this.tb_refesh.TabIndex = 12;
+            this.tb_refesh.Text = "Làm mới ";
+            this.tb_refesh.UseVisualStyleBackColor = true;
+            this.tb_refesh.Click += new System.EventHandler(this.tb_refesh_Click);
+            // 
             // frmManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,6 +454,7 @@
         private System.Windows.Forms.ToolStripMenuItem thanhToánToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thêmMónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chuyểnBànToolStripMenuItem;
+        private System.Windows.Forms.Button tb_refesh;
     }
 }
 
