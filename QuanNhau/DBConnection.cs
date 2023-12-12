@@ -10,7 +10,7 @@ namespace QuanNhau
 {
     class DBConnection
     {
-        private const string V = @"Data Source=MONKURO;Initial Catalog=QL_QuanNhau;Integrated Security=True";
+        private const string V = @"Data Source=LAPTOP-85REN94E\SQLEXPRESS;Initial Catalog=QL_QuanNhau;Integrated Security=True";
         private string strConnect = V;
         SqlConnection connect;
         public DBConnection()

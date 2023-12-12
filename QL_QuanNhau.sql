@@ -11,6 +11,20 @@ use QL_QuanNhau
 go
 set dateformat DMY
 go
+CREATE LOGIN vikhang WITH PASSWORD = 'admin'
+CREATE LOGIN muidao WITH PASSWORD = 'admin'
+CREATE ROLE EmployeeRole
+CREATE ROLE AdminRole
+ALTER SERVER ROLE AdminRole ADD MEMBER vikhang
+ALTER SERVER ROLE EmployeeRole ADD MEMBER muidao
+GRANT SELECT, INSERT, UPDATE, DELETE ON Bills TO EmployeeRole
+GRANT SELECT, INSERT, UPDATE, DELETE ON Orders TO EmployeeRole
+GRANT SELECT ON Tables TO EmployeeRole
+GRANT SELECT ON Categories TO EmployeeRole
+GRANT SELECT ON Items TO EmployeeRole
+USE QL_QuanNhau
+GRANT CONTROL ON QL_QuanNhau TO vikhang
+go
 create table Categories
 (
 	category_id varchar(10) primary key,
@@ -76,7 +90,7 @@ create table Account
 (
 	Display nvarchar(50) default N'Chưa đặt tên hiện thị',
 	UserName varchar(50) primary key,
-	PassWord varchar(50) default '33354741122871651676713774147412831195',
+	PassWord varchar(50) default '123',
 	Type bit default 0
 )
 go
@@ -710,17 +724,23 @@ as
 		while @@FETCH_STATUS = 0
 		begin
 			if  @status = 1 
-			and (exists (select * from Bills where table_id = @id and status = 1)
-			or not exists (select * from Bills where table_id = @id))
-				update Tables 
-				set status = 0 
-				where table_id = @id
-			else
-			if @status = 0 
-			and exists (select * from Bills where table_id = @id and status = 0)
-				update Tables 
-				set status = 1 
-				where table_id = @id
+				if exists	(select * from 
+						Bills 
+						where table_id = @id 
+						and status = 1)
+						or not exists	(select * from 
+										Bills 
+										where table_id = @id)
+					update Tables 
+					set status = 0 
+					where table_id = @id
+			
+			else if exists (select * from Bills 
+							where table_id = @id 
+							and status = 0)
+					update Tables 
+					set status = 1 
+					where table_id = @id
 			fetch next from tableCursor into @id, @status
 		end
 		close tableCursor
