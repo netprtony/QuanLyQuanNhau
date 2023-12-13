@@ -269,51 +269,6 @@ insert into Orders values
 
 go
 
-CREATE TRIGGER trg_OrderAdded
-ON Orders
-for INSERT, update
-AS
-BEGIN
-    update Bills
-	set total_bill += i.quantity * it.item_price
-	from inserted i, Items it
-	where i.item_id= it.item_id 
-	and Bills.bill_id = i.bill_id
-END
-go
-
-create trigger tri_updateBill
-on Orders
-for delete, update
-as 
-begin
-    update Bills
-	set total_bill -= d.quantity * it.item_price
-	from deleted d, Items it
-	where d.item_id= it.item_id 
-	and Bills.bill_id = d.bill_id
-end
-go
-
-go
-go
-
-create trigger trig_upsale
-on Orders
-for insert, update
-as
-begin
-	if((select count(*) from Orders)>2)
-	begin
-		update Bills
-		set total_bill -= i.quantity * it.item_price * 0.2
-		from inserted i, Items it
-		where i.item_id= it.item_id 
-		and Bills.bill_id = i.bill_id
-	end	
-end
-go
-
 create trigger trig_AddBillTableCover
 on Bills
 for insert
@@ -733,13 +688,6 @@ as
 										where table_id = @id)
 					update Tables 
 					set status = 0 
-					where table_id = @id
-			
-			else if exists (select * from Bills 
-							where table_id = @id 
-							and status = 0)
-					update Tables 
-					set status = 1 
 					where table_id = @id
 			fetch next from tableCursor into @id, @status
 		end
