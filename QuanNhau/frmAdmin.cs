@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+
 namespace QuanNhau
 {
     public partial class frmAdmin : Form
@@ -465,6 +467,48 @@ namespace QuanNhau
             int page = int.Parse(tb_numPage.Text);
             if (page > 1) page--;
             tb_numPage.Text = page.ToString();
+        }
+
+        private void dtgv_bill_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_bill.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
+        }
+
+        private void dtgv_AllorderOfbill_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_AllorderOfbill.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
+        }
+
+        private void dtgv_Item_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_Item.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
+        }
+
+        private void dtgv_cate_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_cate.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
+        }
+
+        private void dtgv_table_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_table.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
+        }
+
+        private void dtgv_acc_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rowColor = (e.RowIndex % 2 == 0) ? Color.White : Color.LightGray;
+
+            dtgv_acc.Rows[e.RowIndex].DefaultCellStyle.BackColor = rowColor;
         }
     }
 }

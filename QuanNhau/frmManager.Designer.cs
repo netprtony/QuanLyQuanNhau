@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManager));
             this.flowLayoutTable = new System.Windows.Forms.FlowLayoutPanel();
-            this.flpTable = new System.Windows.Forms.FlowLayoutPanel();
+            this.dtgv_loadTable = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.nud_countdish = new System.Windows.Forms.NumericUpDown();
             this.btn_addDish = new System.Windows.Forms.Button();
@@ -43,11 +43,11 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.tb_discount = new System.Windows.Forms.TextBox();
             this.tb_refesh = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lb_actPaid = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lb_discount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lb_totalBill = new System.Windows.Forms.Label();
             this.cb_switchTable = new System.Windows.Forms.ComboBox();
@@ -63,6 +63,7 @@
             this.thêmMónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chuyểnBànToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgv_loadTable)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_countdish)).BeginInit();
             this.panel2.SuspendLayout();
@@ -72,21 +73,26 @@
             // 
             // flowLayoutTable
             // 
-            this.flowLayoutTable.Controls.Add(this.flpTable);
+            this.flowLayoutTable.Controls.Add(this.dtgv_loadTable);
             this.flowLayoutTable.Location = new System.Drawing.Point(16, 33);
-            this.flowLayoutTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutTable.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutTable.Name = "flowLayoutTable";
             this.flowLayoutTable.Size = new System.Drawing.Size(1013, 768);
             this.flowLayoutTable.TabIndex = 0;
             // 
-            // flpTable
+            // dtgv_loadTable
             // 
-            this.flpTable.AutoScroll = true;
-            this.flpTable.Location = new System.Drawing.Point(4, 4);
-            this.flpTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.flpTable.Name = "flpTable";
-            this.flpTable.Size = new System.Drawing.Size(1004, 764);
-            this.flpTable.TabIndex = 0;
+            this.dtgv_loadTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgv_loadTable.GridColor = System.Drawing.SystemColors.Control;
+            this.dtgv_loadTable.Location = new System.Drawing.Point(3, 3);
+            this.dtgv_loadTable.Name = "dtgv_loadTable";
+            this.dtgv_loadTable.RowHeadersWidth = 51;
+            this.dtgv_loadTable.RowTemplate.Height = 24;
+            this.dtgv_loadTable.Size = new System.Drawing.Size(1006, 764);
+            this.dtgv_loadTable.TabIndex = 0;
+            this.dtgv_loadTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgv_loadTable_CellClick);
+            this.dtgv_loadTable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dtgv_loadTable_CellFormatting);
+            this.dtgv_loadTable.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dtgv_loadTable_RowPrePaint);
             // 
             // panel1
             // 
@@ -95,7 +101,7 @@
             this.panel1.Controls.Add(this.cb_ItemOfCate);
             this.panel1.Controls.Add(this.cb_lstCate);
             this.panel1.Location = new System.Drawing.Point(1032, 33);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(605, 124);
             this.panel1.TabIndex = 1;
@@ -103,7 +109,7 @@
             // nud_countdish
             // 
             this.nud_countdish.Location = new System.Drawing.Point(503, 53);
-            this.nud_countdish.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nud_countdish.Margin = new System.Windows.Forms.Padding(4);
             this.nud_countdish.Minimum = new decimal(new int[] {
             100,
             0,
@@ -122,7 +128,7 @@
             // btn_addDish
             // 
             this.btn_addDish.Location = new System.Drawing.Point(393, 21);
-            this.btn_addDish.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_addDish.Margin = new System.Windows.Forms.Padding(4);
             this.btn_addDish.Name = "btn_addDish";
             this.btn_addDish.Size = new System.Drawing.Size(100, 78);
             this.btn_addDish.TabIndex = 2;
@@ -134,7 +140,7 @@
             // 
             this.cb_ItemOfCate.FormattingEnabled = true;
             this.cb_ItemOfCate.Location = new System.Drawing.Point(4, 73);
-            this.cb_ItemOfCate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_ItemOfCate.Margin = new System.Windows.Forms.Padding(4);
             this.cb_ItemOfCate.Name = "cb_ItemOfCate";
             this.cb_ItemOfCate.Size = new System.Drawing.Size(367, 24);
             this.cb_ItemOfCate.TabIndex = 1;
@@ -144,7 +150,7 @@
             // 
             this.cb_lstCate.FormattingEnabled = true;
             this.cb_lstCate.Location = new System.Drawing.Point(4, 21);
-            this.cb_lstCate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_lstCate.Margin = new System.Windows.Forms.Padding(4);
             this.cb_lstCate.Name = "cb_lstCate";
             this.cb_lstCate.Size = new System.Drawing.Size(367, 24);
             this.cb_lstCate.TabIndex = 0;
@@ -154,7 +160,7 @@
             // 
             this.panel2.Controls.Add(this.lstView_bill);
             this.panel2.Location = new System.Drawing.Point(1037, 165);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(600, 455);
             this.panel2.TabIndex = 2;
@@ -169,7 +175,7 @@
             this.lstView_bill.GridLines = true;
             this.lstView_bill.HideSelection = false;
             this.lstView_bill.Location = new System.Drawing.Point(4, 4);
-            this.lstView_bill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstView_bill.Margin = new System.Windows.Forms.Padding(4);
             this.lstView_bill.Name = "lstView_bill";
             this.lstView_bill.Size = new System.Drawing.Size(595, 447);
             this.lstView_bill.TabIndex = 0;
@@ -201,27 +207,37 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.tb_discount);
             this.panel3.Controls.Add(this.tb_refesh);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.lb_actPaid);
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.lb_discount);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.lb_totalBill);
             this.panel3.Controls.Add(this.cb_switchTable);
             this.panel3.Controls.Add(this.btn_switchTable);
             this.panel3.Controls.Add(this.btn_pay);
             this.panel3.Location = new System.Drawing.Point(1037, 628);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(592, 174);
             this.panel3.TabIndex = 2;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
+            // tb_discount
+            // 
+            this.tb_discount.Location = new System.Drawing.Point(275, 23);
+            this.tb_discount.Name = "tb_discount";
+            this.tb_discount.Size = new System.Drawing.Size(100, 22);
+            this.tb_discount.TabIndex = 13;
+            this.tb_discount.Text = "0";
+            this.tb_discount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tb_discount.TextChanged += new System.EventHandler(this.tb_discount_TextChanged);
+            // 
             // tb_refesh
             // 
             this.tb_refesh.Location = new System.Drawing.Point(4, 4);
-            this.tb_refesh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tb_refesh.Margin = new System.Windows.Forms.Padding(4);
             this.tb_refesh.Name = "tb_refesh";
             this.tb_refesh.Size = new System.Drawing.Size(108, 46);
             this.tb_refesh.TabIndex = 12;
@@ -263,18 +279,6 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Giảm Giá: ";
             // 
-            // lb_discount
-            // 
-            this.lb_discount.AutoSize = true;
-            this.lb_discount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_discount.Location = new System.Drawing.Point(283, 23);
-            this.lb_discount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lb_discount.Name = "lb_discount";
-            this.lb_discount.Size = new System.Drawing.Size(24, 25);
-            this.lb_discount.TabIndex = 8;
-            this.lb_discount.Text = "0";
-            this.lb_discount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -302,7 +306,7 @@
             // 
             this.cb_switchTable.FormattingEnabled = true;
             this.cb_switchTable.Location = new System.Drawing.Point(4, 75);
-            this.cb_switchTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_switchTable.Margin = new System.Windows.Forms.Padding(4);
             this.cb_switchTable.Name = "cb_switchTable";
             this.cb_switchTable.Size = new System.Drawing.Size(107, 24);
             this.cb_switchTable.TabIndex = 4;
@@ -310,7 +314,7 @@
             // btn_switchTable
             // 
             this.btn_switchTable.Location = new System.Drawing.Point(4, 108);
-            this.btn_switchTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_switchTable.Margin = new System.Windows.Forms.Padding(4);
             this.btn_switchTable.Name = "btn_switchTable";
             this.btn_switchTable.Size = new System.Drawing.Size(108, 64);
             this.btn_switchTable.TabIndex = 5;
@@ -321,7 +325,7 @@
             // btn_pay
             // 
             this.btn_pay.Location = new System.Drawing.Point(488, 59);
-            this.btn_pay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_pay.Margin = new System.Windows.Forms.Padding(4);
             this.btn_pay.Name = "btn_pay";
             this.btn_pay.Size = new System.Drawing.Size(100, 78);
             this.btn_pay.TabIndex = 4;
@@ -422,13 +426,14 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý quán nhậu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmManager_FormClosing);
             this.Load += new System.EventHandler(this.frmManager_Load);
             this.flowLayoutTable.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dtgv_loadTable)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nud_countdish)).EndInit();
             this.panel2.ResumeLayout(false);
@@ -459,7 +464,6 @@
         private System.Windows.Forms.ToolStripMenuItem thôngTinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thôngTinCáNhânToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
-        private System.Windows.Forms.FlowLayoutPanel flpTable;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
@@ -470,12 +474,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lb_actPaid;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lb_discount;
         private System.Windows.Forms.ToolStripMenuItem chứcNăngToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thanhToánToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thêmMónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chuyểnBànToolStripMenuItem;
         private System.Windows.Forms.Button tb_refesh;
+        private System.Windows.Forms.DataGridView dtgv_loadTable;
+        private System.Windows.Forms.TextBox tb_discount;
     }
 }
 

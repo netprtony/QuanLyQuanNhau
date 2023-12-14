@@ -14,6 +14,7 @@ namespace QuanNhau
     public partial class frmManager : Form
     {
         DBConnection db = new DBConnection();
+        static string idBillCurrent = "";
         public frmManager()
         {
             InitializeComponent();
@@ -24,6 +25,76 @@ namespace QuanNhau
 
         }
         #region Method
+        public List<Table> LoadTableList()
+        {
+            List<Table> tableList = new List<Table>();
+            DataTable dt = db.getDataTable("USP_GetTableList");
+            foreach (DataRow item in dt.Rows)
+            {
+                Table table = new Table(item);
+                tableList.Add(table);
+            }
+            return tableList;
+        }
+
+
+        public string getUnCheckBillByIdTable(string id)
+        {
+            DataTable dt = db.getDataTable("exec USP_GetUnCheckBillByIdTable '" + id + "'");
+            if (dt.Rows.Count > 0)
+            {
+                Bill bill = new Bill(dt.Rows[0]);
+                return bill.Id;
+            }
+            return null;
+        }
+        public List<Order> GetListAllOrder(string id)
+        {
+            List<Order> listOrder = new List<Order>();
+            DataTable dt = db.getDataTable("exec USP_GetListAllOrder '" + id + "'");
+            foreach (DataRow item in dt.Rows)
+            {
+                Order a_Order = new Order(item);
+                listOrder.Add(a_Order);
+            }
+            return listOrder;
+        }
+        public List<Menu> GetListMenuByTable(string id)
+        {
+            List<Menu> listMenu = new List<Menu>();
+            string que = "exec USP_GetListMenuByTable  '" + id + "'";
+            DataTable dt = db.getDataTable(que);
+            foreach (DataRow item in dt.Rows)
+            {
+                Menu menu = new Menu(item);
+                listMenu.Add(menu);
+            }
+            return listMenu;
+        }
+        public List<Category> GetAllCategory()
+        {
+            List<Category> list = new List<Category>();
+            string que = "select * from Categories";
+            DataTable dt = db.getDataTable(que);
+            foreach (DataRow item in dt.Rows)
+            {
+                Category cate = new Category(item);
+                list.Add(cate);
+            }
+            return list;
+        }
+        public List<Item> GetItemByCategoryId(string id)
+        {
+            List<Item> list = new List<Item>();
+            string que = "select * from Items where category_id = '" + id + "'";
+            DataTable dt = db.getDataTable(que);
+            foreach (DataRow item in dt.Rows)
+            {
+                Item it = new Item(item);
+                list.Add(it);
+            }
+            return list;
+        }
         string CreateIDBill()
         {
             string mhd = "BI";
@@ -56,42 +127,24 @@ namespace QuanNhau
         }
         private void LoadCbTable()
         {
-            List<Table> lst = db.GetTableAvailable();
-            cb_switchTable.DataSource = lst;
-            cb_switchTable.DisplayMember = "name";
+            DataTable dt = db.getDataTable("exec USP_GetTableAvailable");
+
+            cb_switchTable.DataSource = dt;
+            cb_switchTable.DisplayMember = "table_name";
+            cb_switchTable.ValueMember = "table_id";
         }
         void LoadTable()
         {
-            flpTable.Controls.Clear();
-            List<Table> tableList = db.LoadTableList();
-            string st;
-            foreach (Table item in tableList)
-            {
-                Button btn = new Button() { Width = db.TableWidth, Height = db.TableHeight };
-                if (item.Status == true) st = "Có người";
-                else st = "Trống";
-                btn.Text = item.Name + Environment.NewLine + st;
-                btn.Click += btn_Cilk;
-                btn.Tag = item;
-                switch (st)
-                {
-                    case "Trống":
-                        btn.BackColor = Color.DarkKhaki;
-                        break;
-                    default:
-                        btn.BackColor = Color.Beige;
-                        break;
-                }
-                flpTable.Controls.Add(btn);
-            }
+            dtgv_loadTable.DataSource = db.getDataTable("exec USP_LoadAllTable");
+           
         }
         private void ShowBill(string id)
         {
             lstView_bill.Items.Clear();
-            List<Menu> listOrder = db.GetListMenuByTable(id);
+            List<Menu> listOrder = GetListMenuByTable(id);
             decimal total = 0;
             decimal readTotal = 0;
-            decimal discount = decimal.Parse(lb_discount.Text);
+            decimal discount = decimal.Parse(tb_discount.Text);
             foreach (Menu item in listOrder)
             {
                 ListViewItem lsvItem = new ListViewItem(item.NameItem. ToString());
@@ -108,24 +161,19 @@ namespace QuanNhau
         }
         private void LoadCboCate()
         {
-            List<Category> lst = db.GetAllCategory();
+            List<Category> lst = GetAllCategory();
             cb_lstCate.DataSource = lst;
             cb_lstCate.DisplayMember = "name";
         }
         private void LoadItemOfCate(string id)
         {
-            List<Item> lst = db.GetItemByCategoryId(id);
+            List<Item> lst = GetItemByCategoryId(id);
             cb_ItemOfCate.DataSource = lst;
             cb_ItemOfCate.DisplayMember = "name";
         }
         #endregion
         #region Events
-        private void btn_Cilk(object sender, EventArgs e)
-        {
-            string idTable = ((sender as Button).Tag as Table).ID;
-            lstView_bill.Tag = (sender as Button).Tag;
-            ShowBill(idTable);
-        }
+       
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
@@ -171,10 +219,15 @@ namespace QuanNhau
 
         private void btn_addDish_Click(object sender, EventArgs e)
         {
-            Table table = lstView_bill.Tag as Table;
-            string idBill = db.getUnCheckBillByIdTable(table.ID);
+            if (idBillCurrent == "")
+            {
+                MessageBox.Show("Vui lòng chon bàn để thêm món", "Thông báo");
+                return;
+            }
+               
+            string idBill = getUnCheckBillByIdTable(idBillCurrent);
             string idItem = (cb_ItemOfCate.SelectedItem as Item).Id;
-            decimal discount = decimal.Parse(lb_discount.Text);
+            decimal discount = decimal.Parse(tb_discount.Text);
             int amount = (int)nud_countdish.Value;
             if (amount == 0)
             {
@@ -184,7 +237,7 @@ namespace QuanNhau
             if (idBill == null)
             {
                 string idBillNew = CreateIDBill();
-                int k = db.getNonQuery("exec USP_InsertBill '" + idBillNew + "', '" + table.ID + "'");
+                int k = db.getNonQuery("exec USP_InsertBill '" + idBillNew + "', '" + idBillCurrent + "'");
                 if (k == 1) MessageBox.Show("Bill đã được tạo", "Thông báo");
                 k = db.getNonQuery("exec USP_InsertOrders '"+ idBillNew + "', '"+ idItem + "', '"+ amount + "'");
                 if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBillNew);
@@ -194,7 +247,7 @@ namespace QuanNhau
                 int k = db.getNonQuery("exec USP_InsertOrders '" + idBill + "', '" + idItem + "', '" + amount + "'");
                 if (k == 1) MessageBox.Show("Đã thêm món " + cb_ItemOfCate.Text + " vào hóa đơn " + idBill);
             }
-            ShowBill(table.ID);
+            ShowBill(idBillCurrent);
             LoadTable();
             LoadCbTable();
         }
@@ -202,15 +255,19 @@ namespace QuanNhau
 
         private void btn_pay_Click(object sender, EventArgs e)
         {
-            Table table = lstView_bill.Tag as Table;
+            if (idBillCurrent == "")
+            {
+                MessageBox.Show("Vui lòng chon bàn để thêm món", "Thông báo");
+                return;
+            }
             ReadMoney rm = new ReadMoney();
-            string idBill = db.getUnCheckBillByIdTable(table.ID);
+            string idBill = getUnCheckBillByIdTable(idBillCurrent);
             decimal acttuallyTotal = decimal.Parse(lb_actPaid.Text.ToString());
             if (idBill != null)
             {
-                if (MessageBox.Show("Bạn có chắc hóa đơn cho bàn " + table.Name, "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show("Bạn có chắc thanh toán hóa đơn cho bàn này ", "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    db.getNonQuery("exec USP_CheckOutBill '" + idBill + "', '" + decimal.Parse(lb_discount.Text.ToString()) + "', '" + acttuallyTotal + "', '" + table. ID + "'");
+                    db.getNonQuery("exec USP_CheckOutBill '" + idBill + "', '" + decimal.Parse(tb_discount.Text.ToString()) + "', '" + acttuallyTotal + "', '" + idBillCurrent + "'");
                     LoadTable();
                 }
             }
@@ -218,6 +275,7 @@ namespace QuanNhau
             {
                 MessageBox.Show("Chưa có hóa đơn để thanh toán", "Thông báo");
             }
+            idBillCurrent = "";
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
@@ -227,15 +285,18 @@ namespace QuanNhau
 
         private void btn_switchTable_Click(object sender, EventArgs e)
         {
-            Table table = lstView_bill.Tag as Table;
-            string tableNew = (cb_switchTable.SelectedItem as Table).ID;
-            string idBill = db.getUnCheckBillByIdTable(table.ID);
+            if (idBillCurrent == "")
+            {
+                MessageBox.Show("Vui lòng chon bàn để thêm món", "Thông báo");
+                return;
+            }
+            string idBill = getUnCheckBillByIdTable(idBillCurrent);
             if(idBill != null)
             {
-                if (MessageBox.Show("Bạn có chắc chuyển bàn" + table.Name + " sang bàn "+ cb_switchTable.Text , "Thông báo thanh toán", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show("Bạn có chắc chuyển bàn"+ cb_switchTable.Text , "Thông báo chuyển bàn", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    int k = db.getNonQuery("exec USP_swapTable '"+ tableNew + "', '"+ idBill + "'");
-                    if (k == 1) MessageBox.Show("Đã chuyển bàn" + table.Name + " sang bàn " + cb_switchTable.Text, "Thông báo chuyển bàn");
+                    int k = db.getNonQuery("exec USP_swapTable '"+ cb_switchTable.SelectedValue.ToString() + "', '"+ idBill + "'");
+                    if (k == 1) MessageBox.Show("Đã chuyển tới" + cb_switchTable.Text, "Thông báo chuyển bàn");
                     LoadCbTable();
                     LoadTable();
                 }
@@ -265,7 +326,7 @@ namespace QuanNhau
         }
         private void refeshForm()
         {
-           db.getNonQuery("exec USP_CheckAllTableNotBill");
+          db.getNonQuery("exec USP_CheckAllTableNotBill");
         }
         private void tb_refesh_Click(object sender, EventArgs e)
         {
@@ -273,7 +334,42 @@ namespace QuanNhau
             LoadCboCate();
             LoadCbTable();
             refeshForm();
+        }
 
+        private void dtgv_loadTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+            DataGridViewRow r = dtgv_loadTable.Rows[e.RowIndex];
+            ShowBill(r.Cells[0].Value.ToString());
+            idBillCurrent = r.Cells[0].Value.ToString();
+        }
+
+        private void dtgv_loadTable_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+           
+        }
+
+        private void dtgv_loadTable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dtgv_loadTable.Columns["Tình trạng"].Index)
+            {
+                var cellValue = dtgv_loadTable.Rows[e.RowIndex].Cells["Tình trạng"].Value;
+
+                if (cellValue != null)
+                {
+                    if (cellValue.ToString() == "Có người")
+                    {
+                        e.CellStyle.BackColor = Color.GreenYellow;
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+                }
+            }
+
+        }
+
+        private void tb_discount_TextChanged(object sender, EventArgs e)
+        {
+            ShowBill(idBillCurrent);
         }
     }
 }

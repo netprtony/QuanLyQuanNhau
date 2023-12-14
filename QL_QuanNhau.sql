@@ -535,6 +535,20 @@ as
 	Type = @type
 	where UserName = @user
 go
+create proc USP_LoadAllTable
+as
+	select t.table_id as N'Mã',
+	t.table_name as N'Tên bàn',
+	CASE WHEN t.status = 1 
+	THEN N'Có người'
+	ELSE N'Trống' 
+	END AS N'Tình trạng', 
+	b.bill_id as N'Hóa đơn',
+	b.dateCheckin as N'Giờ vào'
+	from Tables t left join Bills b
+	on t.table_id = b.table_id
+	and b.status = 0
+go
 create proc USP_GetUnCheckBillByIdTable
 @id varchar(10)
 as
